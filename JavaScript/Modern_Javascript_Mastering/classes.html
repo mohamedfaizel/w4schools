@@ -1,0 +1,130 @@
+<section class="my-code">
+        <h1>Classes</h1>
+        <p>
+            1. class is used to inhert a object<br>
+            2. <strong>Every object must have a constructor.</strong>
+        </p>
+        <code>
+            class Person{
+                constructor(name, age){
+                    this.name = name;
+                    this.age = age;
+                }
+                greet(){
+                    console.log(`Hello ${this.name}!`);
+                }
+                static info(){
+                    console.log("information");
+                }
+            }
+
+            const person_1 = new Person("Lmj", 28);
+            person_1.greet(); //Hello Lmj!
+            
+            //access info();
+            Person.info(); //information //its working
+            person_1.info(); //Uncaught TypeError: person_1.info is not a function
+        </code>
+        <console>
+            Note : greet function is showed in console but info is not showed here.
+
+                Person {name: "Lmj", age: 28}
+                    age: 28
+                    name: "Lmj"
+                    __proto__:
+                        constructor: class Person
+                        greet: ƒ greet()
+                        __proto__: Object
+        </console>
+    </section>
+    <section class="my-code">
+            <h1>Classes - getter and setter</h1>
+            <p>
+               1. <strong>get</strong> and <strong>set</strong> is not a function. its a property, its used to assign or get a value.<br>
+               2. get() must no param<br>
+               3. set(value) must param
+            </p>
+            <code>
+                class Person{
+                    constructor(name, age){
+                        this.name = name;
+                        this.age = age;
+                    }
+                    greet(){
+                        console.log(`Hello ${this.name}!`);
+                    }
+                    static info(){
+                        console.log("information");
+                    }
+
+                    //<stong>get name()</stong> is not allowed, because its already declared in property;
+                    get Name(){ 
+                        return this.name;
+                    }
+                    set Name(value){
+                        this.name = value;
+                    }
+                }
+    
+                const person_1 = new Person("Lmj", 28);
+                person_1.greet(); 
+                console.log(`Before setter ${person_1.Name}`);
+                person_1.Name = "Suhail";
+                console.log(`After setter ${person_1.Name}`);
+            </code>
+            <console>
+                
+            </console>
+        </section>
+        <section class="my-code">
+                <h1>Classes - Extend</h1>
+                <p>
+                  if class <strong>extends</strong> another class the constructor inside must have the super constructor.
+                  super constructor call the parent constructor.
+                </p>
+                <code>
+                    class Person{
+                        constructor(name, age){
+                            this.name = name;
+                            this.age = age;
+                        }
+                        greet(){
+                            console.log(`Hello ${this.name}!`);
+                        }
+                        static info(){
+                            console.log("information");
+                        }
+    
+                        //<stong>get name()</stong> is not allowed, because its already declared in property;
+                        get Name(){ 
+                            return this.name;
+                        }
+                        set Name(value){
+                            this.name = value;
+                        }
+                    }
+
+                    class Developer extends Person {
+                        constructor(name, age, projects){
+                            super(name, age);
+                            this.projects = projects;
+                        }
+
+                        get Projects(){
+                            return this.projects;
+                        }
+                        set Projects(value){
+                            this.projects = value
+                        }
+                    }
+        
+                    const person_1 = new Person("Lmj", 28);
+                    person_1.greet(); 
+                    
+                    const person_2 = new Developer("Suhail", "2", [{id : 11, project :"ES6"}]);
+                    console.log(person_2.Projects)
+                </code>
+                <console>
+                    
+                </console>
+            </section>

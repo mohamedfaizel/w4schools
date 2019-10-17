@@ -1,0 +1,541 @@
+<section class="my-section">
+    <h1 class="my-title">Angular - Form : Binding Data with ngForm</h1>
+    <div class="my-notes">
+        <ul>
+            <li>There are 2 ypes of Form Designing in Angular</li>
+            <li>1. TDF (Template Design Form) </li>
+            <li>2. Reactive Form - used to Complex Form, Dynamic Field, etc..</li>
+        </ul>
+    </div>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Angular - TDF Form : Binding Data with ngForm</h1>
+    <div class="my-notes">
+        1. create new Component General Form<br>
+        2. add bootstrap css cdn to index.html<br>
+        3. Make simple Html Form in General-form.component.html<br>
+        <br>
+        Note<br>
+        =====<br>
+        Angular Magic <strong>behind</strong> the normal html template.<br>
+        Any time we use a form tag the angular automatically attach the ngForm  to the form tag and give the valuable information about that particular form.<br><br>
+        
+        Step:1<br>
+        =========
+        <ul>
+            <li>import FormsModule in app.module.ts and add to imports</li>
+            <li>&lt;form #userForm="ngForm">
+                <ul>
+                    <li>#userForm="ngForm" => ngForm directive exports itself as the string ngForm. and by assigning it to a reference variable itself we have refrence to the directive itself. </li>
+                    <li>The directive give the access to the values of the form controls. it does so using value property.</li>
+
+                </ul>
+            </li>
+            
+            <li>{{userForm.value}}
+                <ul>
+                    <li>Form control values</li>
+                    <li>It control only <strong>ngModel</strong>. not all form controls</li>
+                </ul>
+            </li>
+            <li>&lt;input type="text" class="form-control" name="name" ngModel>
+                <ul>
+                    <li>ngModel directve must have name property.</li>
+                </ul>
+            </li>
+            <li>&lt;div ngModelGroup="address">
+                <ul>
+                    <li>used to grouping the related fields in form like address</li>
+                </ul>
+                
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Angular - Form : Binding Data to a model</h1>
+    <div class="my-notes">
+        <ul>
+            <li>command : <strong>ng g class user</strong> - Create a class User</li>
+            <li><strong>user.ts</strong>add property to the constructor (name, email, contact et..)</li>
+            <li><strong>general-form.component.ts</strong><br>
+                import { User } from '../user';
+                public userModel = new User('Lmj', 'lmj@gmail.com', 7995445, '', 'morning', true);
+                <ul>
+                <li>This is used to bind the backend data to the HTML Template</li>
+                </ul>
+            </li>
+            <li><strong>general-form.component.html</strong><br>
+                &lt;input type="text" class="form-control" name="name" [(ngModel)]="userModel.name">
+                <ul>
+                    <li>[ngModel] = <strong>single binding</strong> - Class property value bind to the html, but if any changes made in html its not updated to class value.</li>
+                    <li>[(ngModel)] = <strong>Two-way Binding</strong></li>
+                </ul>
+            </li>
+            <li>{{userForm.value | json}}</li>
+            <li>This form refference get the current value of all the form controllers</li>
+            
+             <li>{{userModel.value | json}}</li>
+            <li>This class refference get the current value of all the class property values</li>
+        </ul>
+    </div>
+    <code title="1.User.ts" data-classes="col-md-6 col-sm-12">
+        export class User {
+            constructor(
+                public name: string,
+                public email: string,
+                public contact: number,
+                public interested: string,
+                public timePreference: string,
+                public subscribe: boolean,
+            ) {}
+        }
+       </code>
+    <code title="3.general-form.component.html" data-classes="col-md-6 col-sm-12 pull-right">  
+        <form #userForm="ngForm">
+
+            {{userForm.value | json}}
+
+            <hr>
+
+            {{userModel | json}}
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" name="name" [(ngModel)]="userModel.name">
+            </div>
+             
+             ............
+             ...........
+             ............
+            
+        </form>
+    </code>
+    <code title="2. general-form.component.ts" data-classes="col-md-6 col-sm-12"> 
+        import { User } from '../user';
+          public topics = ['Angular', 'React', 'Vue' ];
+          public userModel = new User('Lmj', 'lmj@gmail.com', 7995445, '', 'morning', true);
+        
+      </code>
+    
+</section>
+<section class="my-section">
+    <h1 class="my-title">Angular - TDS Form : Track Controll State and validity</h1>
+    <div class="my-notes">
+        <table>
+            <thead>
+                <tr>
+                    <th>State</th>
+                    <th>Class if true</th>
+                    <th>class if false</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>The Controll has been visited</td>
+                    <td><strong>ng-touched</strong></td>
+                    <td><strong>ng-untouched</strong></td>
+                </tr>
+                <tr>
+                    <td>The controlls value has changed</td>
+                    <td><strong>ng-dirty</strong></td>
+                    <td><strong>ng-pristine</strong></td>
+                </tr>
+                <tr>
+                    <td>The controll's value is valid</td>
+                    <td><strong>ng-valid</strong></td>
+                    <td><strong>ng-invalid</strong></td>
+                </tr>
+            </tbody>
+        </table><br>
+        <strong>How to access the ngModel Properties</strong><br>
+            <strong>&lt;input type="text" required #name="ngModel" class="form-control" name="name" [(ngModel)]="userModel.name"></strong>
+        <ul>
+            <li>Add reference to the controller - #name</li>
+            <li>Its point the input element of the DOM</li>
+            <li>By assigning it value of the ngModel, the reference variable now points to the ngModel this particular Form Controll.</li>
+            <li>Now we easily access the Property.</li>
+        </ul>
+        <strong>Ex</strong><br>
+        {{name.valid}} - {{name.value}}
+        <ul>
+            <li>The controller property values return only <strong>true or false</strong></li>
+        </ul>
+    </div>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Validation with Visual Effect </h1>
+    <div class="my-notes">
+        <strong>&lt;input type="text" required #name="ngModel" [class.is-invalid]="name.invalid" class="form-control" name="name" [(ngModel)]="userModel.name"></strong>
+        
+        <br>
+        <strong>[class.is-invalid]="name.invalid"</strong>
+        <ul>
+            <li>when the form field is invalid, the class "is-inalid" automatically added to the form controller.</li>
+            <li>Drawback : first time also the form field indicates the invalid status.</li>
+        </ul>
+        <br>
+        
+        <strong>&lt;input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" name="name" [(ngModel)]="userModel.name"></strong>
+        
+        <br>
+        <strong>[class.is-invalid]="name.invalid && name.touched"</strong>
+        <ul>
+            <li>when the form field is invalid and also check its new, the class "is-inalid" automatically added to the form controller.</li>
+        </ul>
+        
+        Additional
+        <strong>pattern="^\d{10}$"</strong> - validation for 10 digit number(contacts) - regEx.
+    </div>
+</section>
+ 
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Display Error Message </h1>
+    <div class="my-notes">
+       
+    </div>
+    <code title="1. general-form.component.html" data-classes="col-md-12 col-sm-12">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" name="name" [(ngModel)]="userModel.name">
+            <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+        </div>
+        
+         <div class="form-group">
+            <label>Contact</label>
+            <input type="tel" class="form-control" required pattern="^\d{10}$" #phone="ngModel" name="contact" [(ngModel)]="userModel.contact">
+            <!-- <small class="text-danger" [class.d-none]="name.valid || name.untouched">Phone number is required and must be 10 digit. </small> -->
+            <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+                <small class="text-danger"  *ngIf="phone.errors.required">Phone number is required</small>
+                <small class="text-danger" *ngIf="phone.errors.pattern">Phone number must be 10 digit</small>
+            </div>
+        </div>
+        
+        Validation without default value
+        ====================================
+         <div class="form-group">
+            <select required #topic="ngModel" class="topic.invalid && topic.touched" class="custom-select" name="interested" [(ngModel)]="userModel.interested">
+                <option value="" selected>I'm intrested in</option>
+                <option *ngFor="let topic of topics">{{topic}}</option>
+            </select>
+            <small class="text-danger" [class.d-none]="topic.valid || topic.untouched">Name is required</small>
+        </div>
+        
+        Validation with default value
+        ==============================
+        <div class="form-group">
+            <select (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" required #topic="ngModel" class="topicHasError && topic.touched" class="custom-select" name="interested" [(ngModel)]="userModel.interested">
+                <option value="default" selected>I'm intrested in</option>
+                <option *ngFor="let topic of topics">{{topic}}</option>
+            </select>
+            <small class="text-danger" [class.d-none]="!topicHasError  || topic.untouched">Please Choose a topic</small>
+        </div>
+      </code>
+    <code title="2. general-form.component.ts" data-classes="col-md-12 col-sm-12">   
+        public topicHasError = true;
+        validateTopic(value) {
+            if (value === 'default'){
+              this.topicHasError = true;
+            } else {
+              this.topicHasError = false;
+            }
+        }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Form Level validation </h1>
+    <div class="my-notes">
+       diabled the submit button based on form validation.
+    </div>
+    <code title="1. general-form.component.html" data-classes="col-md-12 col-sm-12">
+        <button [disabled]="userForm.form.invalid || topicHasError" type="submit" class="btn btn-primary">Submit</button>
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Submitting Form data</h1>
+    <div class="my-notes">
+        
+       <ul>
+            <li><strong>&lt;form #userForm="ngForm" novalidate></strong><br>
+            * Add the no validate attribute to form tag. Its prevent from browser validation.</li>
+           <li><strong>Generate enrollment service</strong><br>
+            create a new service <strong>ng g s enrollment</strong><br>
+               Import <strong>HttpClient</strong> and implement to the constructor
+           </li>
+           <li><strong>app.module.ts</strong><br>
+            Import <strong>HttpClientModule</strong> and add to the imports
+           </li>
+        </ul>
+    </div>
+    <code title="1. enrollment.service.ts" data-classes="col-md-6 col-sm-12">
+        import { Injectable } from '@angular/core';
+        import { HttpClient } from '@angular/common/http';
+        import { User } from './user';
+
+        @Injectable({
+          providedIn: 'root'
+        })
+        export class EnrollmentService {
+        url = 'http://localhost:3000/enroll';
+          constructor(private http: HttpClient) { }
+
+          enroll(user: User) {
+            return this.http.post&lt;any>(this.url, user);
+          }
+        }
+       </code>
+    <code title="2. general-form.component.ts" data-classes="col-md-6 col-sm-12 pull-right"> 
+        import { User } from '../user';
+        import { EnrollmentService } from '../enrollment.service';        
+        export class GeneralFormsComponent implements OnInit {
+          public submitted = false;
+        
+          constructor(private enrollmentService: EnrollmentService) { }
+
+          onSubmit() {
+            this.submitted = true;
+            this.enrollmentService.enroll(this.userModel)
+            .subscribe(
+              data => console.log('Success', data),
+              error => console.log('Error!', error)
+            );
+          }
+        }        
+    </code>
+    <code title="3.general-form.componet.html" data-classes="col-md-6 col-sm-12 pull-left"> 
+        <h1>Bootstrap Enrollment Form</h1>
+         <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+             ......
+             .......
+             ........
+            
+            <button [disabled]="userForm.form.invalid || topicHasError" type="submit" class="btn btn-primary">
+                Submit
+             </button>
+        </form>
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Server Response Error Handler</h1>
+    <div class="my-notes">
+        
+      
+    </div>
+    <code title="1.enrollment.service.ts" data-classes="col-md-4 col-sm-12">
+        import { catchError } from 'rxjs/operators';
+        import { throwError } from 'rxjs';
+        
+        enroll(user: User) {
+            return this.http.post&lt;any>(this.url, user)
+            .pipe(catchError(this.errorHandler));
+          }
+
+          errorHandler(error: HttpErrorResponse) {
+            return throwError(error);
+          }
+       </code>
+    <code title="2.general-forms.component.ts" data-classes="col-md-4 col-sm-12"> 
+        public errorMsg = '';
+        
+        onSubmit() {
+            this.submitted = true;
+            this.enrollmentService.enroll(this.userModel)
+            .subscribe(
+              data => console.log('Success', data),
+              error => this.errorMsg = error.statusText
+            );
+          }
+        
+        </code>
+    <code title="3. general-forms.component.html" data-classes="col-md-4 col-sm-12">
+        <div class="alert alert-danger" *ngIf="errorMsg">
+            {{errorMsg}}
+        </div>
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Angular TDS-FOrm : Overall</h1>
+    <div class="my-notes">
+        <ul>
+            <li>ngForm directives gives us the entier information about the enrollment form.</li>
+        </ul>
+        Note: add bootstrap css cdn to index.html
+      
+    </div>
+    <code title="1.general-form.component.html" data-classes="col-md-12 col-sm-12">
+        <h1>Bootstrap Enrollment Form</h1>
+        <div class="alert alert-danger" *ngIf="errorMsg">
+            {{errorMsg}}
+        </div>
+         <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+
+            {{userForm.value | json}}
+
+            <hr>
+
+            {{userModel | json}}
+
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" required #name="ngModel" [class.is-invalid]="name.invalid && name.touched" class="form-control" name="name" [(ngModel)]="userModel.name">
+                <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+            </div>
+                {{name.valid}}
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" required #email="ngModel" name="email" [(ngModel)]="userModel.email">
+                <small class="text-danger" [class.d-none]="email.valid || email.untouched">Email is required</small>
+            </div>
+
+            <div class="form-group">
+                <label>Contact</label>
+                <input type="tel" class="form-control" required pattern="^\d{10}$" #phone="ngModel" name="contact" [(ngModel)]="userModel.contact">
+                <!-- <small class="text-danger" [class.d-none]="name.valid || name.untouched">Phone number is required and must be 10 digit</small> -->
+                <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+                    <small class="text-danger"  *ngIf="phone.errors.required">Phone number is required</small>
+                    <small class="text-danger" *ngIf="phone.errors.pattern">Phone number must be 10 digit</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <select (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" required #topic="ngModel" class="topicHasError && topic.touched" class="custom-select" name="interested" [(ngModel)]="userModel.interested">
+                    <option value="default" selected>I'm intrested in</option>
+                    <option *ngFor="let topic of topics">{{topic}}</option>
+                </select>
+                <small class="text-danger" [class.d-none]="!topicHasError  || topic.untouched">Please Choose a topic</small>
+            </div>
+
+            <div class="mb-3">
+                <label>Time Preference</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" [(ngModel)]="userModel.timePreference" name="timePreference" value="morning">
+                    <label class="form-check-label">Morning (9AM - 12PM)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" [(ngModel)]="userModel.timePreference" name="timePreference" value="evening">
+                    <label class="form-check-label">Evening (5PM - 8PM)</label>
+                </div>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="userModel.subscribe" name="subscribe">
+                <label class="form-check-label">Send me promotional offer</label>
+            </div>
+
+            <button [disabled]="userForm.form.invalid || topicHasError" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+       </code>
+    <code title="2. general-form.copmponent.ts" data-classes="col-md-6 col-sm-12"> 
+        
+        import { Component, OnInit } from '@angular/core';
+        import { User } from '../user';
+        import { EnrollmentService } from '../enrollment.service';
+
+        @Component({
+          selector: 'app-general-forms',
+          templateUrl: './general-forms.component.html',
+          styleUrls: ['./general-forms.component.css']
+        })
+        export class GeneralFormsComponent implements OnInit {
+          public topics = ['Angular', 'React', 'Vue' ];
+          public userModel = new User('Lmj', 'lmj@gmail.com', 7995445443, '', 'morning', true);
+          public topicHasError = true;
+          public submitted = false;
+          public errorMsg = '';
+          constructor(private enrollmentService: EnrollmentService) { }
+
+          ngOnInit() {
+          }
+          validateTopic(value) {
+            if (value === 'default'){
+              this.topicHasError = true;
+            } else {
+              this.topicHasError = false;
+            }
+          }
+
+          onSubmit() {
+            this.submitted = true;
+            this.enrollmentService.enroll(this.userModel)
+            .subscribe(
+              data => console.log('Success', data),
+              error => this.errorMsg = error.statusText
+            );
+          }
+        }
+        
+       </code>
+    <code title="3.User.ts (class)" data-classes="col-md-6 col-sm-12"> 
+        export class User {
+            constructor(
+                public name: string,
+                public email: string,
+                public contact: number,
+                public interested: string,
+                public timePreference: string,
+                public subscribe: boolean,
+            ) {}
+        }
+        </code>
+    <code title="4. enrollment.service.ts" data-classes="col-md-6 col-sm-12">
+        import { Injectable } from '@angular/core';
+        import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+        import { User } from './user';
+        import { catchError } from 'rxjs/operators';
+        import { throwError } from 'rxjs';
+
+        @Injectable({
+          providedIn: 'root'
+        })
+        export class EnrollmentService {
+        url = 'http://localhost:3000/enroll';
+          constructor(private http: HttpClient) { }
+
+          enroll(user: User) {
+            return this.http.post&lt;any>(this.url, user)
+            .pipe(catchError(this.errorHandler));
+          }
+
+          errorHandler(error: HttpErrorResponse) {
+            return throwError(error);
+          }
+        }
+        </code>
+    <code title="5. app.module.ts" data-classes="col-md-6 col-sm-12">
+        
+        ================
+        import { FormsModule } from '@angular/forms';
+        import { HttpClientModule } from '@angular/common/http';
+        imports: [
+            BrowserModule, FormsModule, HttpClientModule
+          ],
+        </code>
+    <code title="6. server.js(Express Server)" data-classes="col-md-6 col-sm-12">
+        const express = require('express');
+        const bodyParser = require('body-parser');
+        const cors = require('cors');
+
+        const PORT = 3000;
+        const app = express();
+        app.use(bodyParser.json());
+        app.use(cors());
+
+        app.get('/', function(req, res) {
+            res.send('Hello from server');
+        })
+
+        app.post('/enroll', function(req, res) {
+            console.log(req.body);
+            res.status(401).send({'message' : 'Data Received'});
+        })
+
+        app.listen(PORT, function() {
+            console.log('Server running on localhost: '+ PORT)
+        })
+    </code>
+
+</section>

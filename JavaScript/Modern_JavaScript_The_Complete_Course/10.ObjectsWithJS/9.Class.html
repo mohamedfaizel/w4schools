@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>21. function()</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        pre {
+	width: 95%;
+	padding: 0;
+    margin-left:5%;
+    padding-left:5%;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	white-space: pre;
+}
+pre code {
+	padding: 10px;
+	color: #333;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2>Class</h2>
+        <hr>
+        <br>
+        <!-- Nav tabs -->
+        <h3>1. Creatin class</h3>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_0">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_0">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_0" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        class Client{
+                            constructor(name, balance){
+                                this.name = name;
+                                this.balance = balance;
+                            }
+                            membership(){
+                                if(this.balance > 10000){
+                                    return "Gold";
+                                }else if(this.balance > 5000){
+                                    return "Platinum";
+                                }else{
+                                    return "Normal";
+                                }
+                            }
+                            withdraw(amount){
+                                this.balance -= amount;
+                            }
+                            clientInfo(){
+                                return `Name : ${this.name} balance : ${this.balance}`
+                            }
+                        }
+                        const person1 = new Client("Lmj", 100000);
+                        console.log(person1);
+                        console.log(person1.clientInfo())
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_0" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            Client
+                                balance: 100000
+                                name: "Lmj"
+                                    __proto__:
+                                    constructor: class Client
+                                    membership: ƒ membership()
+                                    withdraw: ƒ withdraw(amount)
+                                    __proto__: Object
+
+                                    Name : Lmj balance : 100000
+                        </code>
+                    </pre>
+
+            </div>
+        </div>
+        <hr>
+        <h3>1. Creatin Inheritence and override</h3>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_1">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_1">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_1" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        class Bussiness extends Client{
+                            constructor(name, balance, phone, category){
+                                super(name, balance);
+                                this.phone = phone;
+                                this.category = category;
+                            }
+                            clientInfo(){
+                                return `Name : ${this.name} balance : ${this.balance} phone : ${this.phone}`
+                            }
+                        }
+                        const person2 = new Bussiness("Lmj_Bussiness", 80000000000, 9600467899, "Corporate");
+                        console.log(person2.clientInfo())
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_1" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            Name : Lmj_Bussiness balance : 80000000000 phone : 9600467899
+                        </code>
+                    </pre>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        class Client{
+                constructor(name, balance){
+                    this.name = name;
+                    this.balance = balance;
+                }
+                membership(){
+                    if(this.balance > 10000){
+                        return "Gold";
+                    }else if(this.balance > 5000){
+                        return "Platinum";
+                    }else{
+                        return "Normal";
+                    }
+                }
+                withdraw(amount){
+                    this.balance -= amount;
+                }
+                clientInfo(){
+                    return `Name : ${this.name} balance : ${this.balance}`
+                }
+            }
+            class Bussiness extends Client{
+                constructor(name, balance, phone, category){
+                    super(name, balance);
+                    this.phone = phone;
+                    this.category = category;
+                }
+                clientInfo(){
+                    return `Name : ${this.name} balance : ${this.balance} phone : ${this.phone}`
+                }
+            }
+            const person1 = new Client("Lmj", 100000);
+            console.log(person1);
+            console.log(person1.clientInfo())
+            const person2 = new Bussiness("Lmj_Bussiness", 80000000000, 9600467899, "Corporate");
+            console.log(person2.clientInfo())
+    </script>
+
+</body>
+
+</html>

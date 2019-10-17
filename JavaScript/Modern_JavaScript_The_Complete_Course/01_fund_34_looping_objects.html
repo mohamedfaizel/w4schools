@@ -1,0 +1,48 @@
+<section class="my-section">
+    <h1 class="my-title">1. for</h1>
+
+    <code data-name="Script">
+        let myCar= {model : "Camero", engine : 6.0, year : 1969, make : "Chevy"};
+        for(let key in  myCar){
+            console.log(`${key} : ${myCar[key]}`);
+        }
+    </code>
+    <code data-name="Console">
+         model : Camero
+        engine : 6.0
+        year : 1969
+        make : Chevy
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">2. forEach</h1>
+
+    <code data-name="Script">
+        let myCar= {model : "Camero", engine : 6.0, year : 1969, make : "Chevy"};
+        Object.keys(myCar).forEach(function(key) {
+            console.log(`${key} : ${myCar[key]}`);
+        })
+    </code>
+    <code data-name="Console">
+        model : Camero
+        engine : 6.0
+        year : 1969
+        make : Chevy
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">3. map</h1>
+
+    <code data-name="Script">
+        let myCar= {model : "Camero", engine : 6.0, year : 1969, make : "Chevy"};
+        Object.keys(myCar).forEach(function(key) {
+            console.log(`${key} : ${myCar[key]}`);
+        })
+    </code>
+    <code data-name="Console">
+        model : Camero
+        engine : 6.0
+        year : 1969
+        make : Chevy
+    </code>
+</section>

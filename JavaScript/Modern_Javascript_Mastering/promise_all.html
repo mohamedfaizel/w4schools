@@ -1,0 +1,31 @@
+<section class="my-code">
+    <h1>Promises All</h1>
+    <p>
+        Handling multiple promises
+
+    </p>
+    <code>
+            async function start(){
+                try{
+                    const f1 = fetch("http://dummy.restapiexample.com/api/v1/employees");
+                    const f2 = fetch("http://citibikenyc.com/stations/json");
+                    const f3 = fetch("http://ergast.com/api/f1/2004/1/results.json");
+            
+                    const res = await Promise.all([f1,f2,f3]);
+                    const dataPromise = res.map(data => data.json());
+            
+                    const [p1, p2, p3] = await Promise.all(dataPromise);
+                    console.log(p1);
+                    console.log(p2);
+                    console.log(p3);
+                }catch(err){
+                    throw err;
+                }            
+            }
+            start()
+            .catch(err => {console.log(err)});      
+        
+    </code>
+    <console>
+    </console>
+</section>

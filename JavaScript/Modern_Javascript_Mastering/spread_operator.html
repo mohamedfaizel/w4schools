@@ -1,0 +1,117 @@
+<section class="my-code">
+    <h1>Merge two arrays</h1>
+    <p>
+        spread operator seperate a element in array or group.
+    </p>
+    <code>
+        let persons = [];
+        let managers = ["Lmj", "Suhail", "Muttaqin"];
+        let employees = ["Mohamed", "Faizel"];
+
+        //old methods;
+        //persons.concat(managers);
+        //persons.concat(employees);
+        //persons.push("kevin");
+
+        //merge using spread operators
+        persons = [...managers, ...employees, "Kevin"];
+
+        //push 
+        let personsPush = ["Abbas", "Ismail", "Mubaraq"];
+        personsPush.push(...managers);
+    </code>
+    <console>
+        (6) ["Lmj", "Suhail", "Muttaqin", "Mohamed", "Faizel", "Kevin"]
+
+        //push methods
+        ["Abbas", "Ismail", "Mubaraq", "Lmj", "Suhail", "Muttaqin"];
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Copy array</h1>
+    <p>
+       in old method it have some drawbacks. so we rectify using spread methods
+    </p>
+    <code>
+        let persons = [];
+        let managers = ["Lmj", "Suhail", "Muttaqin"];
+        let employees = ["Mohamed", "Faizel"];
+        persons = [...managers, ...employees, "Kevin"];
+
+        //old copy method
+        const copiedPerson = persons;
+        copiedPerson[0] = "Mohammed";
+        console.log(persons);
+        console.log(copiedPerson);
+
+        //copy using spread
+        const copiedPersonSpread = [...persons];
+        copiedPersonSpread[0] = "Mohammed";
+        console.log(persons);
+        console.log(copiedPersonSpread);
+    </code>
+    <console>
+        //old copy method
+        (6) ["Mohammed", "Suhail", "Muttaqin", "Mohamed", "Faizel", "Kevin"]
+        (6) ["Mohammed", "Suhail", "Muttaqin", "Mohamed", "Faizel", "Kevin"]
+
+        //copy using spread
+        (6) ["Lmj", "Suhail", "Muttaqin", "Mohamed", "Faizel", "Kevin"]
+        (6) ["Mohammed", "Suhail", "Muttaqin", "Mohamed", "Faizel", "Kevin"]
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Array.from Vs spread operator</h1>
+    <p>
+        It both method will give same result.
+    </p>
+    <code>
+        <span class="person">Lmj</span>
+        <span class="person">Suhai</span>
+        <span class="person">Muttaqin</span>
+        <span class="person">Faizel</span>
+
+        let persons = document.querySelectorAll(".person");
+        let arrayFrom = Array.from(document.querySelectorAll(".person"));
+        let arraySpread = [...document.querySelectorAll(".person")];
+       
+    </code>
+    <console>
+        //persons - Here the prototype is NodeList
+        NodeList(4) [span.person, span.person, span.person, span.person]
+        0: span.person
+        1: span.person
+        2: span.person
+        3: span.person
+        length: 4
+        __proto__: NodeList
+
+        //arrayForm and arraySpread - here the bost result is same : prototype is array
+        (4) [span.person, span.person, span.person, span.person]
+            0: span.person
+            1: span.person
+            2: span.person
+            3: span.person
+            length: 4
+            __proto__: Array(0)
+    </console>
+</section>
+<section class="my-code">
+    <h1>Spread into function parameters</h1>
+    <p>
+       
+    </p>
+    <code>
+        let names = ["Suhail", "Muttaqin"];
+
+        function greetMsg(firstname, secondname){
+            alert(`Welcome ${firstname} and ${secondname}`)
+        }
+        greetMsg(...names)
+    </code>
+    <console>
+
+    </console>
+</section>

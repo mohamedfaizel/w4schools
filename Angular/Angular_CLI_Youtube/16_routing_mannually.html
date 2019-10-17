@@ -1,0 +1,88 @@
+<section class="my-section">
+    <h1 class="my-title">Routing Mannually</h1>
+    <div class="my-notes">
+        <strong>Part-1</strong>
+        <ol>
+            <li><strong>ng new employeeManagement</strong> => Create new project</li>
+            <li><strong>ng g c home</strong> => Create new Component - home </li>
+            <li><strong>ng g c employees</strong> => Create new Component - employees</li>
+            <li><strong>ng g c pageNotFound</strong> => Create new Component - pageNotFound</li>
+        </ol>
+        
+        <strong>Part-2</strong>
+        <ol>
+            <li>Set <strong>&lt;base href="/" /></strong> in index.html</li>
+            <li>Import the Router Module into the appliction root module AppModule (app.module.ts)</li>
+            <li>configure Routes(app.module.ts)</li>
+            <li>Specify where you want the router component view template to be displayed using <strong>&lt;router-outlet></strong> directive(app.component.html)</li>
+            <li>Tie the Routes to application menu</li>
+        </ol>
+    </div>
+    <code title="Step 2 : import Router Module (app.module.ts)" data-classes="col-sm-6"> 
+        import { RouterModule} from '@angular/router';
+        @NgModule({
+            declarations : [
+            ...
+            ],
+            imports : [
+                BrowserModule,
+                RouterModule
+            ],
+            providers : [],
+            bootstrap : [AppComponent]
+        
+        })
+        export class AppModule {
+            
+        }
+    </code>
+    <code title="Step 3 : configure Routes (app.module.ts)" data-classes="col-sm-6"> 
+        import { RouterModule, Routes} from '@angular/router';
+        const appRoutes: Routes = [
+            { path : 'home', component: HomeComponent},
+            { path : 'employees', component: employeesComponent},
+            { path : '', redirectTo : '/home', pathMatch : 'full'},
+            { path : '**', component: PageNotFoundComponent},
+        ]
+        @NgModule({
+            declarations : [
+            ...
+            ],
+            imports : [
+                BrowserModule,
+                RouterModule.forRoot(appRoutes)
+            ],
+            providers : [],
+            bootstrap : [AppComponent]
+        
+        })
+        export class AppModule {
+            
+        }
+    </code>
+    <code title="Step 4 : (app.component.html)" data-classes="col-sm-6">
+        <router-outlet></router-outlet>
+    </code>
+    <code  title="Step 5 : (app.component.html)" data-classes="col-sm-6">
+        <div style="padding:5px;">
+            <ul class="nav nav-tabs">
+                <li routerLinkActive="active">
+                    <a routerLink="home">Home</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="employees">Employees</a>
+                </li>
+            </ul>
+            <br>
+            <router-outlet></router-outlet>
+        </div>
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Installing Bootstrap</h1>
+    <div class="my-notes">
+        <strong>npm install bootstrap@3 --save</strong><br>
+        <strong>styles : ["../node_module/bootstrap/dist/css/bootstrap.min.css", "styles.css"]</strong> => uptade in  .angular-cli.json
+    </div>
+</section>

@@ -1,0 +1,62 @@
+<section class="my-section">
+    <h1 class="my-title">class</h1>
+    <code data-name="Script">
+        class Client{
+            constructor(name, balance){
+                this.name = name;
+                this.balance = balance;
+            }
+            membership(){
+                if(this.balance > 10000){
+                    return "Gold";
+                }else if(this.balance > 5000){
+                    return "Platinum";
+                }else{
+                    return "Normal";
+                }
+            }
+            withdraw(amount){
+                this.balance -= amount;
+            }
+            clientInfo(){
+                return `Name : ${this.name} balance : ${this.balance}`
+            }
+        }
+        const person1 = new Client("Lmj", 100000);
+        console.log(person1);
+        console.log(person1.clientInfo())
+    </code>
+    <code data-name="Console">
+        Client
+            balance: 100000
+            name: "Lmj"
+                __proto__:
+                constructor: class Client
+                membership: ƒ membership()
+                withdraw: ƒ withdraw(amount)
+                __proto__: Object
+
+                Name : Lmj balance : 100000
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">1. Create Inheritence and override</h1>
+
+    <code data-name="Script">
+        class Bussiness extends Client{
+            constructor(name, balance, phone, category){
+                super(name, balance);
+                this.phone = phone;
+                this.category = category;
+            }
+            clientInfo(){
+                return `Name : ${this.name} balance : ${this.balance} phone : ${this.phone}`
+            }
+        }
+        const person2 = new Bussiness("Lmj_Bussiness", 80000000000, 9600467899, "Corporate");
+        console.log(person2.clientInfo())
+    </code>
+    <code data-name="Console">
+        Name : Lmj_Bussiness balance : 80000000000 phone : 9600467899
+    </code>
+</section>

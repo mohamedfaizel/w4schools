@@ -1,0 +1,48 @@
+<section class="my-section">
+    <h1 class="my-title">Linting Typescript</h1>
+    <div class="my-notes">
+        <ul>
+            <li><strong>quotemark</strong> => string values rules specifies wheather you want "single" or "double" qoutes.
+                <br>Error => <strong>let message = "mesasge";</strong>  
+                <br>Pass => <strong>let message = 'mesasge';</strong>
+                <br><strong>Note: ng lint --fix</strong> => automatically fix this errors
+            </li> 
+            <li><strong>no-trailing-whitespace</strong> => disallow trailing whitespace at the end of a line
+                <br>Error => <strong>let message = 'mesasge'; &nb_sp;</strong> => Error
+                <br>Pass => <strong>let message = 'mesasge';</strong> 
+                <br><strong>Note: ng lint --fix</strong> => automatically fix this errors
+            </li>
+            <li><strong>semicolon</strong> => rule specifies that a line should be terminated with a semicolon.
+                <br>Error => <strong>let message = 'mesasge'</strong>
+                <br>Pass => <strong>let message = 'mesasge';</strong>
+                <br><strong>Note: ng lint --fix</strong> => automatically fix this errors
+            </li>
+            <li><strong>comment-format</strong>single line comment must begin with space 
+                <br>Error => <strong>//type your comment</strong>
+                <br>Pass => <strong>// type your comment</strong>
+            </li>
+            <li><strong>component-class-suffix</strong> => rule enforce that a component class shold end with the suffix Component
+                <br>Error => <strong>export class App {...}</strong>
+                <br>Pass => <strong>export class AppComponent {...}</strong>
+            </li>
+            <li><strong>use-life-cycle-interface</strong> => that you add the implement keyword for every lifecycle hook you use</li>
+        </ul>
+        
+    </div>
+    <code title="wrong" data-classes="col-sm-6"> 
+                    import { Component, OnInit} from '@angular/core';
+                    export class AppComponent {
+                        ngOnInit: void{
+                    
+                        }
+                    }
+                    </code>
+                <code title="pass" data-classes="col-sm-6"> 
+                    import { Component, OnInit} from '@angular/core';
+                    export class AppComponent implements OnInit{
+                        ngOnInit: void{
+                    
+                        }
+                    }
+                    </code> 
+</section>

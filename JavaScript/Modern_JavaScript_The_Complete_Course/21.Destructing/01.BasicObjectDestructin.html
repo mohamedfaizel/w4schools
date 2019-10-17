@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>21. function()</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        pre {
+	width: 95%;
+	padding: 0;
+    margin-left:5%;
+    padding-left:5%;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	white-space: pre;
+}
+pre code {
+	padding: 10px;
+	color: #333;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2>Functions</h2>
+        <hr>
+        <br>
+        <!-- Nav tabs -->
+        <h3>1. Destructing</h3>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_0">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_0">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_0" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        function helloprogram(fname="fname_def", lname="lname_def"){
+                            console.log(`Hello ${fname} ${lname} & welcome to our website`)
+                        }
+                        helloprogram("Lmj");
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_0" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            Hello Lmj lname_def & welcome to our website
+                        </code>
+                    </pre>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const client = {name : "Lmj", membership : "Premium"}
+        let {name, membership} = client;
+        console.log(name);
+        console.log(membership) // spelling changes not allowed
+
+        console.log("program 2");
+        let name_1, membership_1;
+        const client_1 =  { name_1 : 'Lmj1', membership_1 : 'Premium1'};
+        name_1 = "test name";
+        membership_1 = "test member";
+        ({name_1, membership_1} = client_1) //()Paranthis must
+        console.log(name_1);
+        console.log(membership_1)
+    </script>
+
+</body>
+
+</html>

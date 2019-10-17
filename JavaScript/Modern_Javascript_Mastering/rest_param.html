@@ -1,0 +1,38 @@
+<section class="my-code">
+    <h1>rest parameter</h1>
+    <p>
+      last n no.of values come to single variable.
+    </p>
+    <code>
+        function submitBlogPost(title, content, ...categories){
+            console.log(categories);
+        }
+
+        submitBlogPost('ES6 Post',
+        'Blog Post Conter Here',
+        'Javascript',
+        'Express Js',
+        'Node Js',
+        'GraphQl',
+        'Es6'
+        );
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>rest parameter - Destructing</h1>
+    <p>
+      create anew variable and assign the array values using 
+    </p>
+    <code>
+        const persons = ["Lmj", "lmj@gmail.com", 'Javascript', 'Express Js', 'Node Js', 'GraphQl', 'Es6'];
+
+        const [name, email, ...course] = persons;
+    </code>
+    <console>
+
+    </console>
+</section>

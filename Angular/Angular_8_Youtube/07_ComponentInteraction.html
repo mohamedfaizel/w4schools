@@ -1,0 +1,79 @@
+<section class="my-section">
+    <h1 class="my-title">Access the Parent Property</h1>
+    <div class="my-notes">
+          * get the data from the parent component.   
+    </div>
+    <code title="1. componentinteraction.component.ts" data-classes="col-md-6 col-sm-12">           
+            import { Component, OnInit, Input } from '@angular/core';
+            /*import Input - Its used to get the parent Data to Child Component - Library*/
+            @Component({
+              selector: 'app-componentinteraction',
+              template: `
+              <section>
+                <h2>Hello {{parentData}}</h2>
+              </section>
+              `,
+              styles: []
+            })
+            export class ComponentinteractionComponent implements OnInit {
+              /*@Input() - access the parent Property*/
+              @Input() public parentData;
+
+              constructor() { }
+
+              ngOnInit() {
+              }
+
+            }
+    </code>
+    <code title="2. app.component.ts" data-classes="col-md-6 col-sm-12">
+       
+            public parentName = 'Lmj';
+    </code>
+    <code title="3. app.component.html" data-classes="col-md-6 col-sm-12">
+        
+            <app-componentinteraction [parentData]="parentName"></app-componentinteraction>
+     </code>
+    
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Access the Child Property</h1>
+    <div class="my-notes">
+          * Parent component get the data from the child component.   
+    </div>
+    <code title="1. componentinteraction.component.ts" data-classes="col-md-6  col-sm-12"> 
+        import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+        /*import Otput - used to access the Child data to parent data- Library;
+        EventEmitter - 
+        */
+        @Component({
+          selector: 'app-componentinteraction',
+          template: `
+          <section>
+            <button (click)="fireEvent()"></button>
+          </section>
+          `,
+          styles: []
+        })
+        export class ComponentinteractionComponent implements OnInit {
+          @Output() public childEvent = new EventEmitter();
+          constructor() { }
+
+          ngOnInit() {
+          }
+
+          fireEvent(){
+            this.childEvent.emit('Hey Angular');
+          }
+
+        }
+    </code>
+    <code title="2. app.component.html" data-classes="col-md-6 col-sm-12"> 
+            <h1>{{message}}</h1>
+            <app-componentinteraction (childEvent)="message=$event" ></app-componentinteraction> 
+        </code>
+    <code title="3. app.component.ts" data-classes="col-md-6 col-sm-12"> 
+            public message = '';
+    </code>
+</section>

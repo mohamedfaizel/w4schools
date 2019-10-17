@@ -1,0 +1,264 @@
+<section class="my-section">
+    <h1 class="my-title">Property Binding</h1>
+    <div class="my-notes">
+       <strong>Html Attribuite Vs DOM Property</strong><br>
+        <ul>
+            <li>Open Console</li>
+            <li>$0 - reperesent the first input values</li>
+            <li>console : $0.getAttribute('value') //Suhail</li>
+            <li>console : $0.value //Suhail</li>
+            <li>Change the input Value "Suhail" to "Muttaqin" </li>
+            <li>console : $0.getAttribute('value') //Suhail</li>
+            <li>console : $0.value //Muttaqin</li>
+        </ul>
+        <ol>
+            <li>Attributes and Property is not same</li>
+            <li>Attribute - Html</li>
+            <li>Property - Dom</li>
+            <li>attribute initialize DOM properties and then they are done. Attributes values cannot change Once they are initialized</li>
+            <li>Property value however can change.</li>
+        </ol>
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12">    
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+    <div>
+      <strong> HTML Attribute Vs DOM Property</strong><br>
+      <input types="text" values="Suhail">
+    </div>
+  `,
+  styleUrls: []
+})
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Property Binding</h1>
+    <div class="my-notes">
+       
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12">    
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+    <div>
+      <strong>Set Html Id Attribute via Dom Property</strong> : <input [id]="MyId" type="text" value="Suhail"><br>
+      <strong>Set Id Attribute via interpolation</strong> : <input id={{MyId}} type="text" value="Muttaqin">
+    </div>
+    <hr>
+    <div>
+        <strong>Why HTML Attribute set Via Dom Property ([id]="MyId")</strong><br>
+        <p>Because Input tag some Boolean attributres are not working. Example : disbled is work, but disabled="false" is not work</p>
+        <strong>Solutions</strong>
+        <ul>
+            <li><input bind-disabled="isDisabled" [id]="MyId" type="text" value="Mohammed"></li>
+            <li>[disabled]="false"</li>
+            <li>[disabled]="isDiabled"</li>
+            <li>bind-disabled="isDisabled"</li>
+        </ul>
+    </div>
+  `,
+  styleUrls: []
+})
+    export class BindingComponent implements OnInit {
+        public MyId = "testId";
+         public isDisabled = false;
+        constructor() { }
+        ngOnInit() { }
+    }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Class Binding</h1>
+    <div class="my-notes">
+       
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12"> 
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+    <div>
+        <strong>Class Binding</strong>
+        <h3 class="text-success">Regular class</h3>
+        <h3 [class]="successClass">Set Via DOM Property</h3>
+        <h3 class="text-special" [class]="successClass">at same time Both are not working. Direct html class attribute will silent.</h3>
+        <h3 [class.text-error]="hasError">toggle Class via property</h3>
+        <h3 [ngClass]="multiClasses">ngClass or Multi Classes</h3>
+    </div>
+  `,
+  styles: [`
+    .text-success{
+      color : green;
+    }
+    .text-error{
+      color : red;
+    }
+    .text-special{
+      font-style : italic;
+    }
+  `]
+})
+    export class BindingComponent implements OnInit {
+          public successClass = 'text-success';
+  public hasError = true;
+  public isSpecial = true;
+  public multiClasses = {
+    'text-success' : !this.hasError,
+    'text-error' : this.hasError,
+    'text-special' : this.isSpecial
+  }
+        constructor() { }
+        ngOnInit() { }
+    }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Style Binding</h1>
+    <div class="my-notes">
+       
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12"> 
+    
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+   <div>
+        <strong>Inline Style Binding</strong>
+        <h3 [style.color]="'orange'">Direct</h3>
+        <h3 [style.color]="hasError ? 'red' : 'green'">ternary operation</h3>
+        <h3 [style.color]="highlightColor">Set Via DOM Property</h3>
+        <h3 [ngStyle]="multiStyle">Multi Inline style</h3>
+    </div>
+  `,
+  styles: []
+})
+    export class BindingComponent implements OnInit {
+          public highlightColor = 'orange';
+          public multiStyle = {
+            color : 'blue',
+            fontStyle : 'italic'
+          }
+        constructor() { }
+        ngOnInit() { }
+    }
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Event Binding</h1>
+    <div class="my-notes">
+       
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12"> 
+    
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+   <div>
+        <strong>Event Binding</strong>
+        <button (click)="MyClick()">Greet</button>
+        <button (click)="MyClickEvent($event)">Special argument</button>
+        <button (click)="greetMsg='Angular Inline value assigning, not click function callback';">Inline Code</button>
+        {{greetMsg}}<br>
+
+    </div>
+  `,
+  styles: []
+})
+    export class BindingComponent implements OnInit {
+          public greetMsg = '';
+        constructor() { }
+        ngOnInit() { }
+        
+         MyClick() {
+    this.greetMsg = 'Welcome to Angular click';
+  }
+
+  MyClickEvent(event) {
+      this.greetMsg = event.type + ' function called with event argument';
+  }
+    }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Template Reference Variables</h1>
+    <div class="my-notes">
+       #Myinput - Its a special reference variable in angular.
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12"> 
+    
+    
+@Component({
+  selector: 'app-binding',
+  template: `    
+   <div>
+      <strong> Template Reference</strong><br>
+      <input #Myinput type="text">
+      <button (click)="MyLog(Myinput.value)">Log</button>
+    </div>
+  `,
+  styles: []
+})
+    export class BindingComponent implements OnInit {
+        constructor() { }
+        ngOnInit() { }
+        
+        MyLog(val) {
+    console.log(val);
+  }
+
+    }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Two Way Binding</h1>
+    <div class="my-notes">
+      * [(ngModule)]='Variable name' <br>
+      * [] - for property binding (data flow from the class to Html Template).<br>
+      * () - for Event Binding (data flow from Html template to the class).<br>
+      * this is form modal. so we must import this ion app.module.ts
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-md-6">
+    @Component({
+      selector: 'app-binding',
+      template: `    
+       <div>
+          <strong> Two Way Binding</strong><br>
+          <input [(ngModel)]="twoWayInput" type="text">
+          {{twoWayInput}}
+        </div>
+      `,
+      styles: []
+    })
+    export class BindingComponent implements OnInit {
+        public twoWayInput = '';
+        constructor() { }
+        ngOnInit() { }
+        
+    }
+      </code>  
+    <code title="2. app.module.ts" data-classes="col-md-6">
+        import { FormsModule } from '@angular/forms';
+        @NgModule({
+          declarations: [
+            AppComponent,
+            TestComponent,
+            BindingComponent
+          ],
+          imports: [
+            BrowserModule, FormsModule
+          ],
+          providers: [],
+          bootstrap: [AppComponent]
+        })
+    </code>
+</section>

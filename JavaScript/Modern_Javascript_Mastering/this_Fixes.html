@@ -1,0 +1,132 @@
+<section class="my-code">
+        <h1> using 'this' in different places </h1>
+        <p>
+            1. using callback function<br>
+            2. assigning in variable function<br>
+            3. inner function(closure) access the outer object key<br>
+            4. inner function closure assess the outer object key using arrow function<br>
+        </p>
+        
+    </section>
+<section class="my-code">
+    <h1> Fix this when method passed as callback </h1>
+    <p>if you trying to parse a <strong>callback function</strong> as reference, then you need to fix this, <strong>this</strong> keyword in this object </p>
+    <code>
+        var user = {
+        fname : "Lmj",
+        lname : "Faizel",
+        clickHandler : function(event){
+            console.log(this);
+            console.log(this.fname +" "+ this.lname)
+            }
+        }
+        $("button").click(user.clickHandler); // error : function this keyword takes button object;
+        $("button").click(user.clickHandler.bind(user));
+
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
+        <h1> Fix this when method assigned to variable </h1>
+        <p>if you trying to parse a callback function as reference, then you need to fix this, this keyword this object </p>
+        <code>
+                var user = {
+                    owner : Muhammed,
+                    data : [
+                        {
+                        fname : "Lmj",
+                        lname : "Faizel",
+                        }, {
+                        fname : "Suhail",
+                        lname : "Muttaqin",
+                        }
+                    ],
+                    clickHandler : function(){
+                        this.data.forEach(function(person)){
+                        console.log(person.fname +" "+ this.lname)
+                        }
+                    }
+                }
+                const userHandler = user.clickHandler;
+                userHandler.bind(user)();
+    
+        </code>
+        <console>
+    
+        </console>
+    </section>
+<section class="my-code">
+    <h1>this - arrow function Vs function</h1>
+    <p>inner function 'this' cant assess the outer variable, so set the 'this' to variable </p>
+    <code>
+        var user = {
+            owner : Muhammed,
+            data : [
+                {
+                fname : "Lmj",
+                lname : "Faizel",
+                }, {
+                fname : "Suhail",
+                lname : "Muttaqin",
+                }
+            ],
+            clickHandler : function(){
+                this.data.forEach(function(person)){
+                console.log(this); // this indicates the window object
+                console.log(person.fname +" "+ this.lname)
+                }
+            },
+            clickHandler2 : function(){
+                let self = this;
+                this.data.forEach(function(person){
+                console.log(this); // this indicates the window object
+                console.log(person.fname +" "+ self.lname)
+                })
+            },
+            clickHandler3 : function(){
+                this.data.forEach( person => {
+                console.log(self); // this indicates the outer object
+                console.log(person.fname +" "+ this.lname)
+                })
+            }
+        }
+        user.clickHandler(); // inner function 'this' cant assess the outer variable
+        user.clickHandler2(); // solution 1 - older style: set variable
+        user.clickHandler3(); // solution 2 - using arrow function
+
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>arrow function - this</h1>
+    <p>understnading this in arroaw function </p>
+    <code>
+        let test = () => {
+            console.log(this) //indicates global window object
+        }
+        test();
+
+        let person = {
+            name : "malik",
+            logName : function(){
+                setTimeout(function () {
+                    console.log(this); // indictates Global(window) object
+                }, 1000)
+            },
+            logName2 : function(){
+                setTimeout(()=> {
+                    console.log(this); // indictates person(outer) object
+                }, 1000)
+            }
+        }
+        person.logName();
+    </code>
+    <console>
+
+    </console>
+</section>

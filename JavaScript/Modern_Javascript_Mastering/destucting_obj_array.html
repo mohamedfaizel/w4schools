@@ -1,0 +1,88 @@
+<section class="my-code">
+    <h1>Destucting - Object</h1>
+    <p>get a value from a object from easy way</p>
+    <code>
+        const person = {
+            fname : "Lmj",
+            lname : "Faizel",
+            contact : 9600467890,
+            twitter : "@Lmj_faize"
+            address : {
+                city : "Thanjavur",
+                state : "Tammil Nadu",
+                country : "India",
+                location : {
+                    lat : "2123",
+                    lon : "1234"
+                }
+            }
+        }
+
+        let {fname, lname, twitter} = person;
+        let {lat, lon} = person.address.location;
+        lat {lat:lattitude, lon:longitude} = person.address.location; //with aliase name       
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
+    <h1>Destucting - Array</h1>
+    <p>get a value from an Array from easy way</p>
+    <code>
+        const data = ["Lmj", "faizel", 1, 28];
+        const [fname, lname, id, age] = data;
+        
+        const text = "1135,1453,24,Chennai";
+        const [lat, lon, wheatherId, city] = text;
+
+        const employees = ["Sundar", "Suresh", "varun", "aanandh", "sathish", "Lmj"];
+        const [CEO, CTO, TL, ...developers] = employees;
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
+    <h1>swap - using Destucting</h1>
+    <p>two variables values can changed without temp variable</p>
+    <code>
+        let admin = "Lmj";
+        let superAdmin = "Suhail";
+
+        <!-- let temp = admin;
+        admin = superAdmin;
+        superAdmin = temp; -->
+
+        [admin, superAdmin] = [superAdmin, admin]; //dont use let in front because the variable already assigned;
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
+    <h1>Destucting - function arguments</h1>
+    <p>argumenrts order can't changed. so we set it in Object.</p>
+    <code>
+        function getPersons({total=0, page, perPage, query sort, sortDir }){
+            return{
+                persons : [{fname : "Lmj", lname :"Faizel"}, {fname : "Suhail", lname :"Muttaqin"}],
+                total : 2,
+                page,
+                perPage
+            }
+        }
+
+        const persons = getPersons({
+            total : 0,
+            perPage : 10,
+            page : 1,
+            query : "id",
+            sort : "ASC",
+            sortDir : "id"
+        })
+    </code>
+    <console>
+
+    </console>
+</section>

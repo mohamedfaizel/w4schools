@@ -1,0 +1,42 @@
+<section class="my-section">
+    <h1 class="my-title">Fetch Loat Text</h1>
+
+    <code data-name="Script">
+        loadTxt();
+        function loadTxt(){
+            fetch("/JavaScript/Modern_JavaScript_The_Complete_Course/data.txt").then(function(response){
+                return response.text();
+            }).then(function(data){
+                console.log(data);
+            }).catch(function(error){
+                console.log(error);
+            })
+        }
+    </code>
+    <code data-name="Console">
+        hi this is text
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Fetch Load Json</h1>
+    <code data-name="Script">
+        loadJSON()
+        function loadJSON(){
+            fetch("/JavaScript/Modern_JavaScript_The_Complete_Course/employee.json").then(function(response){
+                return response.json();
+            }).then(function(data){
+                data.forEach(element => {
+                console.log(`${element.name} - ${element.id}`);
+                });
+            }).catch(function(error){
+                console.log(error);
+            })
+        }
+    </code>
+    <code data-name="Console">
+        name_1 - 1
+        name_2 - 2
+        name_3 - 3
+        name_4 - 4
+    </code>
+</section>

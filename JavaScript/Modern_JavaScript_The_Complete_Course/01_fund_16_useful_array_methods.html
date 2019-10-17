@@ -1,0 +1,59 @@
+<section class="my-section">
+    <h1 class="my-title">Const Aaray & Insert new Element in Different place</h1>
+    <code data-name="Script">
+         
+        const months = ["Jan", "Feb", "Mar", "Apr", "May"];
+        months[0] = "January"; // No Error
+        months[1] = "February"; // No Error
+        months = ["January", "February", "March", "April"] // Error
+        
+    </code>
+    <code data-name="Output">
+        TypeError: Assignment to constant variable.
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">program 2 - Inserting</h1>
+
+    <code data-name="Script">
+       
+        const months = ["Jan", "Feb", "Mar", "Apr", "May"];
+        console.log(Array.isArray(months)) // check if this is an array
+        console.log(Array.isArray("Test")) // check if this is an array
+        console.log(months.indexOf("Dec")) // Find somthing in the array
+
+        months.push("June") // Add more in the array(end of the array)
+        console.log(months) 
+
+        months.unshift("month 0") // Add more in the array(at begining of the array)
+        console.log(months) 
+        months.splice("3", null, "a new months") // Add a element in the middle
+        console.log(months) 
+    </code>
+    <code data-name="Output">
+        true
+        false
+        -1
+        (6) ["Jan", "Feb", "Mar", "Apr", "May", "June"]
+        (7) ["month 0", "Jan", "Feb", "Mar", "Apr", "May", "June"]
+        (8) ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May", "June"]
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">program 3 - Removing</h1>
+    <code data-name="Script">       
+        const months = ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May", "June"];
+        months.pop() // Remove Element from the end
+        console.log(months) 
+
+        months.shift() // remove element from the begining
+        console.log(months) 
+        months.splice("3", 1) // remove  element in the middle
+        console.log(months) 
+    </code>
+    <code data-name="Output">
+        (7) ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May"]
+        (6) ["Jan", "Feb", "a new months", "Mar", "Apr", "May"]
+        (5) ["Jan", "Feb", "a new months", "Apr", "May"]
+    </code>
+</section>

@@ -1,0 +1,60 @@
+<section class="my-code">
+    <h1>this - Global object</h1>
+    <p>this indicates the closest parent object</p>
+    <code>
+            console.log(this); // indicates window object
+            function test(){
+                console.log(this) // here the closest parent object is window
+            }
+
+            var greet = {
+                name : "Lmj"
+            }
+
+            test.call(greet);  // test function console print the greet object because of closest parent object is greet;
+
+    </code>
+    <console>
+            Window {postMessage: ƒ, blur: ƒ, focus: ƒ, close: ƒ, parent: Window, …}
+            {name: "Lmj"}
+    </console>
+</section>
+
+<section class="my-code">
+        <h1>this - inside object</h1>
+        <p>nested object this indicates the which one is closest parent object</p>
+        <code>
+                var person = {
+                    fname : "syed", lname : "abbas", fullname : function (){
+                        console.log(this.fname +' '+this.lname)
+                    },
+                    owner: {
+                        fname : "Lmj", lname : "faizel", fullname : function (){
+                        console.log(this.fname +' '+this.lname)
+                    }
+                }
+            }
+                person.fullname(); // syed abbas
+                person.owner.fullname() // Lmj faizel
+    
+        </code>
+        <console>
+    
+        </console>
+    </section>
+
+    <section class="my-code">
+            <h1>this - in new keyword</h1>
+            <p></p>
+            <code>
+                function car(model){
+                    this.model = model
+                }
+                var mycar = new car("Escape");
+                console.log(mycar); // car{model:"Escape"}
+        
+            </code>
+            <console>
+        
+            </console>
+        </section>

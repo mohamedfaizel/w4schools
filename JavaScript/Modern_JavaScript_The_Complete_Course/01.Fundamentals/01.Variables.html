@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>01. Variables</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        pre {
+	width: 95%;
+	padding: 0;
+    margin-left:5%;
+    padding-left:5%;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	white-space: pre;
+}
+pre code {
+	padding: 10px;
+	color: #333;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2>Variables</h2>
+        <hr>
+        <br>
+        <!-- Nav tabs -->
+        <h3>1. var</h3>
+        <p>possible to declare Multiple times, if we initialte one time we can get from anyware.</p>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        var newvar = "a";
+                            var newvar = "b";
+                        console.log("newvar : " + newvar);
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 2</h4>
+                <pre>
+                    <code class="pre-scrollable">
+                        for(var i = 0; i < 2; i++){
+                            var newvar_2 = 10;
+                        }
+                        console.log("newvar_2 : " + newvar_2)
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            newvar : b
+                        </code>
+                    </pre>
+                <hr>
+                <h4>program 2</h4>
+                <pre>
+                    <code>
+                        newvar_2 : 10
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <hr>
+        <h3>2. let</h3>
+        <p>Only one time can declare but Multiple times values can be assigned or changed.</p>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_1">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_1">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_1" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        let newvar = "a";
+                        let newvar = "b"; // Error
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 2</h4>
+                <pre>
+                    <code class="pre-scrollable">
+                        let newvar = "a";
+                        newvar = "c";
+                        console.log("newvar : " + newvar)
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_1" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            Uncaught SyntaxError: Identifier 'newvar' has already been declared
+                        </code>
+                    </pre>
+                <hr>
+                <h4>program 2</h4>
+                <pre>
+                    <code>
+                        newvar : c
+                    </code>
+                </pre>
+            </div>
+        </div>
+        
+        <hr>
+        <h3>3. const</h3>
+        <p>Only one time can declare at the same value should be assigned.</p>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_2">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_2">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_2" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        const newvar = "a";
+                        newvar = "b";
+                        console.log("newvar : " + newvar)
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_2" class="container tab-pane fade">
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        Uncaught TypeError: Assignment to constant variable.
+                    </code>
+                </pre>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

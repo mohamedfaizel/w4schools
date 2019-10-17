@@ -1,0 +1,29 @@
+<section class="my-section">
+    <h1 class="my-title">Template Strings / String Concatenation</h1>
+    <code data-name="Description">
+        possible to declare Multiple times, if we initialte one time we can get from anyware.
+    </code>
+    <code data-name="Script">
+        const product1 = "Abaya", price1 = "1500", product2 = "dhup", price2 = "2500";
+        let html = `
+            &lt;ul&gt;
+                                    &lt;li&gt;item : ${product1}&lt;/li&gt;
+                                    &lt;li&gt;price : ${price1}&lt;/li&gt;
+                                    &lt;li&gt;item : ${product2}&lt;/li&gt;
+                                    &lt;li&gt;price : ${price2}&lt;/li&gt;
+                                    &lt;li&gt;Totla :$ ${total(price1 , price2)}&lt;/li&gt;
+                                &lt;/ul&gt;
+        `;
+        function total(val1 , val2){
+            return parseInt(val1) + parseInt(val2);
+        }
+        document.querySelector('#codeId').innerHTML = html;
+    </code>
+    <code data-name="Output">
+        .    item : Abaya
+        .    price : 1500
+        .    item : dhup
+        .    price : 2500
+        .    Totla :$ 4000
+    </code>
+</section>

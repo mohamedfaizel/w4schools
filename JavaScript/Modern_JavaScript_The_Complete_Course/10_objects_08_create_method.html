@@ -1,0 +1,27 @@
+<section class="my-section">
+    <h1 class="my-title">Object Create Method</h1>
+    <code data-name="Description">
+        Its not popular way to coding. Just for understanding
+    </code>
+    <code data-name="Script">
+        const Client = {
+            getBalance : function(){
+                return this.balance;
+            },
+            withdraw : function(amount){
+                return this.balance -= amount;
+            }
+        }
+
+        const Lmj = Object.create(Client);
+        Lmj.name = "Lmj";
+        Lmj.balance = 100000;
+
+        console.log(Lmj) 
+    </code>
+    <code data-name="Console">
+        balance: 100000 
+        name: "Lmj"
+        __proto__: Object
+    </code>
+</section>

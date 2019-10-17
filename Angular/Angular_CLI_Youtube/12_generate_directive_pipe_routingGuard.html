@@ -1,0 +1,24 @@
+<section class="my-section">
+    <h1 class="my-title">generate directive</h1>
+    <div class="my-notes">
+        <ul>
+            <li><strong>ng generate directive directiveName</strong> or <strong>ng g d directiveName</strong> => To generate a directive.<br>
+            <strong>Note :</strong>more than one module it will makes error <strong>More then one module matches</strong>
+                <ul>
+                    <li><strong>ng g d directiveName --skip-import</strong> => Do not attempt to import this directive into any module. Later we can mannually imported to where we needed</li>
+                    <li><strong>ng g d directiveName -m=app.module</strong> => To generate a directive and import it into module </li>
+                </ul>
+            </li>
+            <li><strong>ng g m moduleName -m=app.module</strong> =>  To generate a module and import it into anothher module</li>           
+        </ul>    
+    </div>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">generate pipes and routing guard</h1>
+    <div class="my-notes">
+        <strong>ng generate pipe pipeName</strong> or <strong>ng g p pipeName</strong><br>
+        <strong>ng generate guard guardName</strong> or <strong>ng g g guardName</strong>
+        <strong> Note : </strong> it does not make an error if we have more then one module also, because it doesn't try to import or register anything.    
+    </div>
+</section>

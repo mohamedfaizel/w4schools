@@ -1,0 +1,201 @@
+ <section class="my-code">
+     <h1>Array.from</h1>
+     <p>
+         here we convert the <strong>arguments</strong> value to proper array of arguments. show th result in console
+     </p>
+     <code>
+         function sum(){
+         const nums = Array.from(arguments);
+         console.log(nums)
+         console.log("===============");
+         console.log(arguments);
+         }
+         sum(35, 45, 87, 99);
+     </code>
+     <console>
+        (4) [35, 45, 87, 99]
+0: 35
+1: 45
+2: 87
+3: 99
+length: 4
+__proto__: Array(0)
+
+===============
+//Its not array some  array methods not use here
+Arguments(4) [35, 45, 87, 99, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+0: 35
+1: 45
+2: 87
+3: 99
+callee: ƒ sum()
+length: 4
+Symbol(Symbol.iterator): ƒ values()
+__proto__: Object
+     </console>
+ </section>
+
+ <section class="my-code">
+     <h1>Array.from with map</h1>
+     <p>
+         create some span tag
+     </p>
+     <code>
+         <span class="person">Lmj</span>
+         <span class="person">Suhai</span>
+         <span class="person">Muttaqin</span>
+         <span class="person">Faizel</span>
+
+         const persons = document.querySelectorAll(".person");
+         const personsArray = Array.from(persons, (p)=>{
+         return p.textContent;
+         })
+         console.log(personsArray)
+     </code>
+     <console>
+         (4) ["Lmj", "Suhai", "Muttaqin", "Faizel"]
+         0: "Lmj"
+         1: "Suhai"
+         2: "Muttaqin"
+         3: "Faizel"
+         length: 4
+         __proto__: Array(0)
+     </console>
+ </section>
+ <section class="my-code">
+     <h1>Array.of</h1>
+     <p>Arra.of convert a comma seprate values to array. </p>
+     <code>
+         const fruits = Array.of("Jack fruit", "Orange", "Banana", "Mango");
+         console.log(fruits);
+     </code>
+     <console>
+         (4) ["Jack fruit", "Orange", "Banana", "Mango"]
+         0: "Jack fruit"
+         1: "Orange"
+         2: "Banana"
+         3: "Mango"
+         length: 4
+         __proto__: Array(0)
+     </console>
+ </section>
+
+ <section class="my-code">
+     <h1>Array.some</h1>
+     <p>find the value in array and return true or false </p>
+     <code>
+         const courses = ["ES6", "Javascript", "NodeJs", "GraphQl"];
+         const result = courses.some(c => c ==="Javascript");
+         console.log(result);
+     </code>
+     <console>
+         //result
+         true
+     </console>
+ </section>
+ <section class="my-code">
+     <h1>Array.every</h1>
+     <p> in Array, every element must pass this test. it return true or false </p>
+     <code>
+         const ages = [25, 36, 48, 26];
+         const check_age = ages.every(age => age >= 18);
+     </code>
+     <console>
+         //check_age
+         true;
+     </console>
+ </section>
+ <section class="my-code">
+     <h1>Array find, filter, findIndex</h1>
+     <p>
+         1. find the single record and return the record <br>
+         2. multiple records find is not work here
+         3. multiple records find use Array.filter for return all same values
+     </p>
+     <code>
+         const todos = [
+         {
+         "userId" : 1,
+         "id" : 1,
+         "course" : "Javascript",
+         completed : true
+         },{
+         "userId" : 1,
+         "id" : 2,
+         "course" : "PHP",
+         completed : true
+         },{
+         "userId" : 1,
+         "id" : 3,
+         "course" : "Angular",
+         completed : false
+         },{
+         "userId" : 1,
+         "id" : 4,
+         "course" : "NodeJs",
+         completed : false
+         },{
+         "userId" : 1,
+         "id" : 5,
+         "course" : "Ionic",
+         completed : false
+         },{
+         "userId" : 1,
+         "id" : 6,
+         "course" : "TypeScript",
+         completed : true
+         },{
+         "userId" : 2,
+         "id" : 7,
+         "course" : "Javascript",
+         completed : true
+         },{
+         "userId" : 2,
+         "id" : 8,
+         "course" : "PHP",
+         completed : true
+         },{
+         "userId" : 2,
+         "id" : 9,
+         "course" : "Angular",
+         completed : false
+         },{
+         "userId" : 2,
+         "id" : 10,
+         "course" : "NodeJs",
+         completed : false
+         },{
+         "userId" : 2,
+         "id" : 11,
+         "course" : "Ionic",
+         completed : false
+         },{
+         "userId" : 2,
+         "id" : 12,
+         "course" : "TypeScript",
+         completed : true
+         }
+         ]
+
+         const todo = todos.find(todo => todo.id === 11);
+         const todo_find_multi = todos.find(todo => todo.course === "Ionic"); // return first matched element
+         const todo_filter_multi = todos.filter(todo => todo.course === "Ionic"); // return all matched elementsconst
+         const todo_findIndex = todos.findIndex(todo => todo.id === 10);
+
+     </code>
+     <console>
+         //todo
+         {userId: 2, id: 11, course: "Ionic", completed: false}
+
+         //todo_find_multi
+         {userId: 1, id: 5, course: "Ionic", completed: false}
+
+         //todo_filter_multi
+         {userId: 1, id: 5, course: "Ionic", completed: false}
+         {userId: 2, id: 11, course: "Ionic", completed: false}
+
+         //todo_findIndex
+         9
+
+     </console>
+ </section>

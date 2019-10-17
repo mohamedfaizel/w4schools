@@ -1,0 +1,132 @@
+<section class="my-code">
+    <h1>Template - Introduction </h1>
+    <p> Combine multiple strings </p>
+    <code>
+           const fname = "Lmj";
+           const lname = "Faizel";
+           const age = "29";
+           const data = `Personal Info : ${fname} ${lname} Age ${age}`;
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Template - Using HTML </h1>
+    <p> create a HTML Template </p>
+    <code>
+          const person = [
+            {fname : "Lmj", lname : "Faizel"},
+            {fname : "Suhail", lname : "Muttaqin"}            
+          ];
+
+          const renderPerson = function(persons){
+                return (
+                    `${persons.map(p => 
+                        `<li>${p.fname} ${p.lname}</li>`
+                    ).join('')}`
+                );
+          }
+
+          const markup = `<ul> ${renderPerson(person)}</ul>`;
+
+          document.body.innerHTML = markup;
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Tagged Template Littral </h1>
+    <p> using this method we can septate a string and parameters in sepratly in array form. here we simply add a span tag to every parameter and a css to it. </p>
+    <code>
+         css
+         ===
+         span{
+             color : red;
+         }
+         ============
+          function highlight(strings, ...values){
+            debugger;// here the strings have array of ["Welcome to ES6 Course", "contact :", "you will recive email"]
+            //...values have arra of ["LMJ", "Faizel", 123456789, "mohamed.faizel@aparinnosys.com"]
+            let str = "";
+            strings.forEach((string, i) => {
+                str += `${string} <span>${(values[i] || "" )}</span>`; // using the span tag we can style the css
+            });
+            return str;
+          }
+
+          const fname = "LMJ";
+          const lname = "Faizel";
+          const mobile = 123456789;
+          const email = "mohamed.faizel@aparinnosys.com";
+          const greetMsg = highlight`Welcome to ES6 Course ${fname} ${lname} contact : ${mobile} 
+          you will recive email ${email}`;
+
+          document.body.innerHTML = greetMsg;
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
+    <h1>Sanitize data - using Template string </h1>
+    <p> Dompurify is used to remove the js code  like "onclick" in elements; its veri use full to web safe and security.  </p>
+    <code>
+
+        <div class="about"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.11/purify.js"> </script>
+
+        function sanitize(strings, ...values){
+            debugger;
+            const dirty = string.reduce((prev, next, i) => `${prev} ${next}${values[i] || ""}`, "");
+            return DOMPurify.sanitize(dirty);
+        }
+
+        const aboutMe =`Beautiful pics <img onload="alert('Bad Stuf!!');" src="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />`;
+
+        const html = sanitize`<p>${aboutMe}</p>`;
+
+        const about = document.querySelector(".about");
+        about.innerHTML = html;
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+        <h1>Extra - array reduce() </h1>
+        <p> The array reduce() method in JavaScript is used to reduce the array to a single value.
+             and executes a provided function for each value of the array (from left-to-right) and the return value of the function is stored in an accumulator.  
+
+             <strong>Syntax</strong>
+             array.reduce( function(total, currentValue, currentIndex, arr), initialValue )
+
+             <strong>paramrters</strong>
+             <ul>
+                 <li>function(total, currentValue, index, arr): It is the required parameter and used to run for each element of array. It contains four parameter which are listed below:
+                     <ul>
+                            <li>total: It is required parameter and used to specify the initialValue, or the previously returned value of the function.</li>
+                            <li>currentValue: It is required parameter and used to specify the value of the current element.</li>
+                            <li>currentIndex: It is optional parameter and used to specify the array index of the current element.</li>
+                            <li>arr: It is optional parameter and used to specify the array object the current element belongs to.</li>
+                    </ul>
+                 </li>
+                 <li>initialValue: It is optional parameter and used to specify the value to be passed to the function as the initial value.</li>
+            </ul>
+        </p>
+        <code>
+                var arr = [1.5, 20.3, 11.1, 40.7]; 
+   
+                function sumofArray(sum, num) { 
+                    return sum + Math.round(num); 
+                } 
+                document.body.innerHTML = arr.reduce(sumofArray, 0);
+        </code>
+        <console>
+    
+        </console>
+    </section>

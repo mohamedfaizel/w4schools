@@ -1,0 +1,96 @@
+<section class="my-code">
+        <h1>Generators</h1>
+        <p>
+           <strong>function*</strong> keyword used to create a generators
+        </p>
+        <code>
+            function* listContacts(){
+                yield "Mohammed";
+                yield "Faizel";
+                yield "Suhail";
+                yield "Muttaqin";
+                yield "Lmj";
+            }
+
+            const contacts = listContacts();
+            console.log(contacts.next())
+        </code>
+        <console>
+                {value: "Mohammed", done: false} // done false mean Loop is not end
+        </console>
+    </section>
+
+<section class="my-code">
+        <h1>Generators - Array</h1>
+        <p>
+        </p>
+        <code>
+            const persons = [{id : 1, name : "Suhail"}, {id : 2, name : "Lmj"}];
+
+            function* loop(arr){
+                for(let p of persons){
+                    yield p;
+                }
+            }
+
+            const personGen = loop(persons);
+        </code>
+        <console>
+                
+        </console>
+    </section>
+
+<section class="my-code">
+    <h1>Generators - Example</h1>
+    <p> Perfect usecase for Generator a syncronous task in series. if you want to run synchronous task in waterfall methods 3rd task depend on 2nd task and 2nd task depend on 1st task. 
+    </p>
+    <code>
+        function networkRequest(url){
+            fetch(url).then(data => data.json()).then(data => dataGen.next()) 
+        }
+
+        function* asyncTask(){
+            console.log("fetching beers");
+            const beers = yield networkRequest("http://api.react.beer");
+            console.log(beers);
+
+            console.log("fetching haider");
+            const wes = yield networkRequest("http://api.github.haider");
+            console.log(wes);
+
+            console.log("fetching Joe");
+            const joe = yield networkRequest("http://api.discogs.com");
+            console.log(joe);
+
+        }
+
+        const dataGen = asyncTask();
+        dataGen.next() //start the generator
+    </code>
+    <console>
+            
+    </console>
+</section>
+<section class="my-code">
+    <h1>Looping in Generators </h1>
+    <p>
+        for of loop also used insted .next() in every time
+    </p>
+    <code>
+        function* listContacts(){
+            yield "Mohammed";
+            yield "Faizel";
+            yield "Suhail";
+            yield "Muttaqin";
+            yield "Lmj";
+        }
+
+        const contacts = listContacts();
+        for(let name of contacts){
+            console.log(name);
+        }
+    </code>
+    <console>
+        
+    </console>
+</section>

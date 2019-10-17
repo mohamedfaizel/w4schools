@@ -1,0 +1,41 @@
+<section class="my-section">
+    <h1 class="my-title">Compiler</h1>
+    <div class="my-notes">
+        <strong>In Angular we have 2 models of compiler</strong>
+        <ul>
+            <li>JIT - Just in time compiler</li>
+            <li>AOT - Ahead of time compiler</li>
+        </ul>
+        
+        <strong>JIT VS AOT</strong>
+        <ul>
+            <li></li>
+            <li><strong>JIT</strong> => Compiles the application  just in time in the browser at run time</li>
+            <li><strong>AOT</strong> => Compiles the application  at build time</li>
+
+            <li><strong>JIT</strong> => For jit compilation the browser needs to download the angular compiler</li>
+            <li><strong>AOT</strong> =>AOT Compilation does not have to</li>
+            
+            <li><strong>JIT</strong> => the applicatiojn is beign JIT compiled in the browser, User have to wait</li>
+            <li><strong>AOT</strong> => the application is pre compiled so there is no such wait</li>
+            
+            <li><strong>JIT</strong> => template binding errors are only know at run time</li>
+            <li><strong>AOT</strong> => will come to know about them at build time</li>
+        </ul>
+        <strong>By defaultthe following 2 commands use jit compilation</strong>
+        <ul>
+            <li>ng build</li>
+            <li>ng serve</li>
+        </ul>
+        <strong>with either of thecommand we can use --aot option to turn on AOT</strong>
+        <ul>
+            <li>ng build --aot true</li>
+            <li>ng serve --aot true</li>
+        </ul>
+        
+        <strong>To turn off AOT for the production build, set --aot option to false </strong>
+        <ul>
+            <li>ng build --prod --aot false</li>
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,383 @@
+<section class="my-section">
+    <h1 class="my-title">Routing</h1>
+    <div class="my-notes">
+       <strong>Command : ng g module app-routing --flat --module=app</strong><br>
+        --flat puts the file in src/app instead of its own folder.<br>
+        --module=app tells the CLI to register it in the imports array of the AppModule.<br>
+    </div>
+    <code title="1. app.module.ts" data-classes="col-md-12  col-sm-12">        
+         * automatically routing will updated.
+      </code>
+    <code title="2. src/app/app-routing.module.ts (updated)" data-classes="col-md-6  col-sm-12">    
+        import { RouterModule, Routes } from '@angular/router';
+        
+        import { TestComponent } from './test/test.component';
+        import { BindingComponent } from './binding/binding.component';
+        import { ComponentinteractionComponent } from './componentinteraction/componentinteraction.component';
+        import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
+        import { EmployeeListComponent } from './employee-list/employee-list.component';
+        import { PipesComponent } from './pipes/pipes.component';
+        import { StructuraldirectiveComponent } from './structuraldirective/structuraldirective.component';
+
+        const routes: Routes = [
+          { path: '', redirectTo: '/test', pathMatch: 'full' },
+          { path: 'test', component: TestComponent },
+          { path: 'binding', component: BindingComponent },
+          { path: 'componentinteraction', component: ComponentinteractionComponent },
+          { path: 'employeeDetailComponent', component: EmployeeDetailComponent },
+          { path: 'employeeList', component: EmployeeListComponent },
+          { path: 'pipes', component: PipesComponent },
+          { path: 'structuralDirective', component: StructuraldirectiveComponent }
+        ];
+        @NgModule({
+          imports: [RouterModule.forRoot(routes)],
+          exports: [RouterModule]
+        })
+        export const AppRoutingComponents = [TestComponent, BindingComponent, 
+        ComponentinteractionComponent, EmployeeDetailComponent, 
+        EmployeeListComponent, PipesComponent, StructuraldirectiveComponent];
+        //this is good practise for add the component in array
+      </code>
+    <code title="3. app.module.ts" data-classes="col-md-6  col-sm-12">            
+        a. Remove below Lines
+        import { TestComponent } from './test/test.component';
+        import { BindingComponent } from './binding/binding.component';
+        import { StructuraldirectiveComponent } from './structuraldirective/structuraldirective.component';
+        import { ComponentinteractionComponent } from './componentinteraction/componentinteraction.component';
+        import { PipesComponent } from './pipes/pipes.component';
+        import { EmployeeListComponent } from './employee-list/employee-list.component';
+        import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
+        
+        b. replace
+        i) import { AppRoutingModule, AppRoutingComponents } from './app-routing.module';
+        ii) declarations: [
+                AppComponent,
+                AppRoutingComponents
+              ],
+       </code>
+    <code title="4. app.comonent.html" data-classes="col-md-6  col-sm-12">   
+        <nav>
+            <a routerLink="/test">Test</a>&nbsp;
+            <a routerLink="/binding">Binding</a>&nbsp;
+            <a routerLink="/componentinteraction">Component Interaction</a>&nbsp;
+            <a routerLink="/employeeDetailComponent">Employee Details</a>&nbsp;
+            <a routerLink="/employeeList">Employee List</a>&nbsp;
+            <a routerLink="/pipes">pipes</a>&nbsp;
+            <a routerLink="/structuralDirective">Structural Directive</a>&nbsp;
+          </nav>
+          <router-outlet></router-outlet>
+        
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">wild card Routing</h1>
+    <div class="my-notes">
+       <strong>redirect the page in wrong url.</strong>
+        <ul>
+            <li> Add new Component (page-not-found)</li>
+            <li><strong class="highlight">command : ng g c page-not-found -it -is</strong></li>
+            <li>-it : inline template</li>
+            <li>-is : inline style</li>
+        </ul>
+    </div>    
+    <code title="1.app-routing.modules.ts" data-classes="col-md-6  col-sm-12">    
+        a) import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+        b) const routes : { path: '**', component: PageNotFoundComponent} // this must be in last line
+        c) const AppRoutingComponents : [PageNotFoundComponent]        
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title"> Route parameter</h1>
+    <div class="my-notes">
+         <ul>
+            <li> Add new Component (employee-role)</li>
+            <li><strong class="highlight">command : ng g c employee-role -it -is</strong></li>
+            <li>-it : inline template</li>
+            <li>-is : inline style</li>
+        </ul>
+    </div>    
+    <code title="1.app-routing.modules.ts" data-classes="col-md-6 col-sm-12">  
+        a) import { EmployeeRoleComponent } from './employee-role/employee-role.component';
+        b) const routes : { path: 'employeeList/:role', component: EmployeeRoleComponent} // this must be in last line
+        c) const AppRoutingComponents : [EmployeeRoleComponent]
+        
+    </code>
+    <code title="3.employee-role.component.ts" data-classes="col-md-6  col-sm-12 pull-right">   
+        import { ActivatedRoute } from '@angular/router';
+        @Component({
+          selector: 'app-employee-role',
+          template: `
+            <p>
+              employee-role = {{role}}!
+            </p>
+          `,
+          styles: []
+        })
+        
+        export class EmployeeRoleComponent implements OnInit {
+          public role = '';
+          constructor(private route: ActivatedRoute) { }
+
+          ngOnInit() {
+            const id: number = parseInt(this.route.snapshot.paramMap.get('id'));
+            if (id > 0 && id &lt; 4 ) {
+              this.role = 'Admin';
+            } else if (id &lt; 10 ) {
+              this.role = 'Managers';
+            } else if (id &lt; 20 ) {
+              this.role = 'Team Leads';
+            } else if (id &lt; 40 ) {
+              this.role = 'Engineers';
+            } else if (id &lt; 100 ) {
+              this.role = 'Others';
+            } else {
+                this.role = 'Un Known';               
+             }
+          }
+        }        
+    </code>
+    <code title="2.employee-list.component.ts" data-classes="col-md-6 col-sm-12">
+        import { Router } from '@angular/router';
+        @Component({
+          selector: 'app-employee-list',
+          template: `
+          <h2>Employee List</h2>
+          <ul *ngFor="let employee of employees">
+            <li (click)="onSelect(employee)">{{employee.name}}</li>
+          </ul>
+          `,
+          styles: []
+        })
+        
+        constructor(private employeeService: EmployeeService, private router: Router ) {}
+        
+        onSelect(employee) {
+            this.router.navigate(['/employeeList', employee.id]);
+          }
+     </code>
+    
+</section>
+    
+<section class="my-section">
+    <h1 class="my-title"> ParamMap Observable</h1>
+    <div class="my-notes">
+        <strong>Drawback : router.snapshot.paramMap</strong>
+        <p>this.route.snapshot the page redirect to another page at the time only it will work perfect.  So, In that situation Use (router.paramMap.subscribe) will used to route the data</p>
+        <ul>
+            <li>Add Navigate Button</li>
+            <li>import { ActivatedRoute, Router, ParamMap } from '@angular/router';</li>
+            <li>add ParamMap to the constructor to create the instance.</li>
+            <li>update ngOnInit() : this.route.snapshot.paramMap() to this.route.paramMap.subscribe(parrams: paramMap)</li>
+
+        </ul>
+    </div>
+    <code title="1.employee-role.component.ts" data-classes="col-md-12 col-sm-12">
+        import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+        @Component({
+          selector: 'app-employee-role',
+          template: `
+            <p>
+              employee-role = {{role}}!
+            </p>
+        <button (click)="goPrevious()">previous</button> <button (click)="goNext()">Next</button>
+          `,
+          styles: []
+        })
+        
+        export class EmployeeRoleComponent implements OnInit {
+          public role = '';
+           public employeeId;
+            constructor(private route: ActivatedRoute, private router: Router) { }
+
+          ngOnInit() {
+            this.route.paramMap.subscribe((params: ParamMap) => {
+              const id = parseInt(params.get('id'));
+              this.employeeId = id;
+
+              if (id > 0 && id &lt; 4 ) {
+                this.role = 'Admin';
+              } else if (id &lt; 10 ) {
+                this.role = 'Managers';
+              } else if (id &lt; 20 ) {
+                this.role = 'Team Leads';
+              } else if (id &lt; 40 ) {
+                this.role = 'Engineers';
+              } else if (id > 40 ) {
+                this.role = 'Others';
+              }
+            });
+          }
+
+        }
+    </code>
+</section>
+    
+        <section class="my-section">
+    <h1 class="my-title"> Optional Param</h1>
+    <div class="my-notes">
+        if you back too the previous page, it will select the last selected. that time like.
+        <ul>
+            <li>1.employee-role.component.ts</li>
+            <li>a. import router and paramMap and implement in constructor.</li>
+            <li>b. Add Back button and function with routing</li>
+        </ul>
+        <br>
+        <ul>
+            <li>2. emloyee-list.component.ts</li>
+            <li>a. import router and paramMap and implement in constructor.</li>
+            <li>b. add style and implement in templet with boolean return function.</li>
+            <li>c. subsribe the paramMap in ngOnInit().</li>
+        </ul>
+    </div> 
+    <code title="1. employee-role.component.ts" data-classes="col-md-6 col-sm-12">  
+        import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+        @Component({
+          selector: 'app-employee-role',
+          template: `
+            <p>
+              employee-role = {{role}}!
+            </p>
+            <button (click)="goPrevious()">previous</button> <button (click)="goNext()">Next</button>
+            <button (click)="gotoEmployeeList()">Back</button>
+          `,
+          styles: []
+        })
+        
+        ngOnInit() {
+            this.route.paramMap.subscribe((params: ParamMap) => {
+              const id = parseInt(params.get('id'));
+              this.employeeId = id;
+            })
+        }
+        
+        gotoEmployeeList() {
+            const selectedId = this.employeeId ? this.employeeId : null;
+            this.router.navigate(['/employeeList', {id: selectedId}] );
+          }
+        
+       </code> 
+    <code title="2.employee-list.component.ts" data-classes="col-md-6 col-sm-12"> 
+        import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+        @Component({
+          selector: 'app-employee-list',
+          template: `
+          <h2>Employee List</h2>
+          <ul>
+            <li (click)="onSelect(employee)" [class.selected]="isSelected(employee)" *ngFor="let employee of employees">
+              {{employee.name}}
+            </li>
+          </ul>
+          `,
+          styles: [`
+          .selected {
+            color : red;
+          }
+          `]
+        })
+        
+       export class EmployeeListComponent implements OnInit {
+          public employees = [];
+          public selectId;
+          // local Variable _employeeService is the instance for the EmployeeService
+          constructor(private employeeService: EmployeeService, private router: Router, private route: ActivatedRoute ) {
+
+          }
+
+          ngOnInit() { // Life cycle hook : gets called once the components has been initialized
+             this.employeeService.getEmployees().subscribe(data => this.employees = data);
+             this.route.paramMap.subscribe((params: ParamMap) => {
+               // tslint:disable-next-line:radix
+               const id = parseInt(params.get('id'));
+               this.selectId = id;
+             });
+          }
+          onSelect(employee) {
+            this.router.navigate(['/employeeList', employee.id]);
+          }
+          isSelected(employee) {
+            return this.selectId === employee.id;
+          }
+
+        }
+        
+    </code>
+</section>
+    
+<section class="my-section">
+    <h1 class="my-title"> Relative Navigation </h1>
+    <div class="my-notes">
+        after the Program developed, In some reason we suddenly change the url. <br>
+        Example
+        1. http://localhost:4200/employeeList => http://localhost:4200/employee-list
+        2. http://localhost:4200/employeeList/2 => http://localhost:4200/employee-list/2
+        
+        Now its handled by 2 ways.<br>
+        1. HTML Template direct Link => routes > path > redirectTo (Check the routing: src/app/app-routing.module.ts)<br>
+        2. Angular router.navigate() => this will handled by <strong>relativeTo</strong> 
+        
+        <strong>relativeTo => This get the current path from the url</strong> 
+        
+    </div>
+    <code title="1. app-routing.module.ts (Change Path)" data-classes="col-md-6 col-sm-12">
+        a. {path: employeeList, ...} => {path: employee-list, ...}  
+        b. {path: employeeList/:id, ...} => {path: employee-list/:id, ...}
+     </code> 
+    <code title="3. employee-role.component.ts" data-classes="col-md-6 col-sm-12 pull-right"> 
+        goPrevious() {
+            const prvId = this.employeeId - 1;
+            // this.router.navigate(['/employeeList', prvId]);
+            this.router.navigate([prvId], {relativeTo : this.route} );
+
+          }
+
+          goNext() {
+            const nextId = this.employeeId + 1;
+            // this.router.navigate(['/employeeList', nextId]);
+            this.router.navigate([nextId], {relativeTo : this.route} );
+          }
+
+          gotoEmployeeList() {
+            const selectedId = this.employeeId ? this.employeeId : null;
+            // this.router.navigate(['/employeeList', {id: selectedId}] );
+            this.router.navigate(['../', {id: selectedId}], {relativeTo: this.route}); // go one directory back
+          }
+        
+    </code>
+    <code title="2. employee-list.component.ts" data-classes="col-md-6 col-sm-12">   
+        onSelect(employee) {
+            // this.router.navigate(['/employeeList', employee.id]); // this is static (/employeeList)
+            this.router.navigate([employee.id], {relativeTo : this.route} ); 
+          }
+       </code> 
+    
+</section>
+    
+<section class="my-section">
+    <h1 class="my-title"> Child Routing </h1>
+    <div class="my-notes">
+        
+        <ul>
+            <li>Create 2 new component.</li>
+            <li>a. employee-overview</li>
+            <li>b. employee-contact</li>
+        </ul>
+    </div>   
+    <code title="1. app-route.module.ts" data-classes="col-md-6 col-sm-12">   
+        import { EmployeeOverviewComponent } from './employee-overview/employee-overview.component';
+        import { EmployeeContactComponent } from './employee-contact/employee-contact.component';
+        
+        export const AppRoutingComponents = [ EmployeeOverviewComponent, EmployeeContactComponent];
+        
+        {
+            path: 'employee-list/:id',
+            component: EmployeeRoleComponent,
+            children: [
+              {path: 'contact', component: EmployeeContactComponent},
+              {path: 'overview', component: EmployeeOverviewComponent}
+            ]
+          }
+        
+    </code>
+</section>

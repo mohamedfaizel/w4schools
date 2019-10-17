@@ -1,0 +1,92 @@
+<section class="my-code">
+    <h1>Proxy </h1>
+    <p>
+        the proxy object used to define a custom behaviour for fundamental operations (e.g : property lookup, assignment, enumeratuon, function invocation etc..)
+    </p>
+    <code>
+        const perosn = {
+            name : "Suhail",
+            age : 1
+        }
+
+        //handler : get, set, getPrototypeOf, setPrototypeOf, ....
+        const p = new Proxy(person, 
+        {get(target, name){
+            return name in target ? target[name] : "Key Doesn't exist";
+        }});
+
+        console.log(p.name)
+        console.log(p.age)
+        console.log(p.cnicn)
+    </code>
+    <console>
+        
+    </console>
+</section>
+<section class="my-code">
+    <h1>Proxy Examples</h1>
+    <p>
+    </p>
+    <code>
+        let handler = {
+            set (target, name, value){
+                if(name === "age"){
+                    if(!Number.isInteger(value)){
+                        throw new TypeError('The Must be an Integer');
+                    }else if(value > 200){
+                        throw new RangeError("The Age Must be in 200")
+                    }
+                }
+                target[name] = value;
+                return true;
+            }
+        }
+
+        let person = new Proxy({}, handler);
+        person.age(100);
+        person.age("abc");
+        person.age(300);
+    </code>
+    <console>
+        
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Singleton class using Proxy</h1>
+    <p>
+        singleton patron means allow to you create a only one instance of the class.
+        both object have same values
+    </p>
+    <code>
+        function makeSingleton(func){
+            let instance;
+            let handler = {
+                construct(target, args){
+                    if(!instance){
+                        instance = new func();
+                    }
+                    return instance;
+                }
+            };
+            return new Proxy(func, handler);
+        }
+
+        function Counter(){
+            this.value = 0;
+        }
+        const C1 = new Counter();
+        const C2 = new Counter();
+
+        const SinglettonCounter = makeSingleton(Counter);
+        s1 = new SinglettonCounter();
+        s1.value = 123;
+        s2 = new SinglettonCounter();
+        console.log(s2.value) //123 //Both the values are same.
+        
+
+    </code>
+    <console>
+        
+    </console>
+</section>

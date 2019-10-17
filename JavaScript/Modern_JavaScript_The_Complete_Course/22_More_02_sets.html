@@ -1,0 +1,71 @@
+<section class="my-section">
+    <h1 class="my-title">Sets</h1>
+    <code data-name="Description">
+       Like array but no duplicate values
+    </code>
+    <code data-name="Script">
+        let shoppingCart = new set();
+        shoppingCart.add("shirt");
+        shoppingCart.add("Album #1");
+        shoppingCart.add("Album #2");
+        shoppingCart.add("Album #3");
+        shoppingCart.add("Album #3"); // duplicate value not accepted
+        shoppingCart.add("Album #4");
+
+        console.log(shoppingCart)
+    </code>
+    <code data-name="Console">
+        Set(6) {"shirt", "Album #1", "Album #2", "Album #3", "Album #4", …}
+        size: (...)
+        __proto__: Set
+        [[Entries]]: Array(5)
+            0: "shirt"
+            1: "Album #1"
+            2: "Album #2"
+            3: "Album #3"
+            4: "Album #4"
+            length: 5
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title"> Sets methods</h1>
+
+    <code data-name="Script">
+        //check if value Exist on a list
+        console.log(shoppingCart.has("Album #4")) ;
+
+        //remove from the set
+        console.log(shoppingCart.delete("Guitar")) ;
+        console.log(shoppingCart);
+        // clear all set
+        //shoppingCart.clear();
+
+        shoppingCart.forEach( (element, index, ispart) => {
+            console.log(`${index} : ${element}`);
+            console.log(ispart === shoppingCart)
+        });
+
+        // converting Set to Array
+        const shoppingCartArray = [...shoppingCart];
+        console.log(shoppingCartArray);
+    </code>
+    <code data-name="Console">
+        true
+        true
+        Set(5) {"shirt", "Album #1", "Album #2", "Album #3", "Album #4"}
+
+        shirt : shirt
+        true
+        Album #1 : Album #1
+        true
+        Album #2 : Album #2
+        true
+        Album #3 : Album #3
+        true
+        Album #4 : Album #4
+        true
+
+        ["shirt", "Album #1", "Album #2", "Album #3", "Album #4"]
+    </code>
+</section>

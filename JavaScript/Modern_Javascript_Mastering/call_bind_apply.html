@@ -1,0 +1,25 @@
+<section class="my-code">
+    <h1>call, bind, apply</h1>
+    <p> </p>
+    <code>
+            function add(c, d){
+                console.log(this.a + this.b + c + d)
+            }
+            var numberObj = {
+                a : 1, b : 2
+            }
+
+            add.call(numberObj, 3, 4);
+            add.appy(numberObj, [3, 4]);
+            
+            // if you dont knw about arguments use bind function;
+            // bind function always return a new function
+
+            let addBoundFunc = add.bind(numberObj);
+            addBoundFunc(3, 4);
+    </code>
+    <console>
+
+    </console>
+</section>
+

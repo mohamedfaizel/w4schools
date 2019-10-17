@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>16. Array</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        pre {
+	width: 95%;
+	padding: 0;
+    margin-left:5%;
+    padding-left:5%;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	white-space: pre;
+}
+pre code {
+	padding: 10px;
+	color: #333;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h2>Array</h2>
+        <hr>
+        <br>
+        <!-- Nav tabs -->
+        <h3>Const Aaray & Insert new Element in Different place</h3>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                            const months = ["Jan", "Feb", "Mar", "Apr", "May"];
+                            
+                            months[0] = "January"; // No Error
+                            months[1] = "February"; // No Error
+                            months = ["January", "February", "March", "April"] // Error
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 2 - Inserting</h4>
+                <pre>
+                    <code>
+                        const months = ["Jan", "Feb", "Mar", "Apr", "May"];
+                        console.log(Array.isArray(months)) // check if this is an array
+                        console.log(Array.isArray("Test")) // check if this is an array
+                        console.log(months.indexOf("Dec")) // Find somthing in the array
+
+                        months.push("June") // Add more in the array(end of the array)
+                        console.log(months) 
+
+                        months.unshift("month 0") // Add more in the array(at begining of the array)
+                        console.log(months) 
+                        months.splice("3", null, "a new months") // Add a element in the middle
+                        console.log(months) 
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 3 - Removing</h4>
+                <pre>
+                    <code>
+                        const months = ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May", "June"];
+                        months.pop() // Remove Element from the end
+                        console.log(months) 
+
+                        months.shift() // remove element from the begining
+                        console.log(months) 
+                        months.splice("3", 1) // remove  element in the middle
+                        console.log(months) 
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab" class="container tab-pane fade">
+                <h4>program 1</h4>
+                <pre>
+                    <code id="outputId">
+                        TypeError: Assignment to constant variable.
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 2</h4>
+                <pre>
+                    <code>
+                        true
+                        false
+                        -1
+                        (6) ["Jan", "Feb", "Mar", "Apr", "May", "June"]
+                        (7) ["month 0", "Jan", "Feb", "Mar", "Apr", "May", "June"]
+                        (8) ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May", "June"]
+                    </code>
+                </pre>
+                <hr>
+                <h4>program 3</h4>
+                <pre>
+                    <code>
+                        (7) ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May"]
+                        (6) ["Jan", "Feb", "a new months", "Mar", "Apr", "May"]
+                        (5) ["Jan", "Feb", "a new months", "Apr", "May"]
+                    </code>
+                </pre>
+            </div>
+        </div>
+        <div id="codeId">
+
+        </div>
+    </div>
+    <script>
+       const months = ["month 0", "Jan", "Feb", "a new months", "Mar", "Apr", "May", "June"];
+                        months.pop() // Remove Element from the end
+                        console.log(months) 
+
+                        months.shift() // remove element from the begining
+                        console.log(months) 
+                        months.splice("3", 1) // remove  element in the middle
+                        console.log(months)
+
+    </script>
+
+</body>
+
+</html>

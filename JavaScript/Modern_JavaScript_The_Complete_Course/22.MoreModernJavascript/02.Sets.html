@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>21. function()</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/bootstrap-4.0.0/dist/css/bootstrap.min.css">
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
+    <script src="../assets/bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
+    <style>
+        pre {
+	width: 95%;
+	padding: 0;
+    margin-left:5%;
+    padding-left:5%;
+	overflow: auto;
+	overflow-y: hidden;
+	font-size: 12px;
+	line-height: 20px;
+	background: #efefef;
+	border: 1px solid #777;
+	white-space: pre;
+}
+pre code {
+	padding: 10px;
+	color: #333;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container mt-3">
+        <h3>1. Sets</h3>
+        <p>Like array but no duplicate values</p>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_0">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_0">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_0" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        let shoppingCart = new set();
+                        shoppingCart.add("shirt");
+                        shoppingCart.add("Album #1");
+                        shoppingCart.add("Album #2");
+                        shoppingCart.add("Album #3");
+                        shoppingCart.add("Album #3"); // duplicate value not accepted
+                        shoppingCart.add("Album #4");
+
+                        console.log(shoppingCart)
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_0" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            Set(6) {"shirt", "Album #1", "Album #2", "Album #3", "Album #4", …}
+                                size: (...)
+                                __proto__: Set
+                                [[Entries]]: Array(5)
+                                    0: "shirt"
+                                    1: "Album #1"
+                                    2: "Album #2"
+                                    3: "Album #3"
+                                    4: "Album #4"
+                                    length: 5
+                        </code>
+                    </pre>
+
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h3>2. Sets methods</h3>
+        <ul class="nav nav-tabs border border-info">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#scriptTab_1">Script</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#outputTab_1">Output</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content border border-top-0 border-info">
+            <div id="scriptTab_1" class="container tab-pane active"><br>
+                <h4>program 1</h4>
+                <pre>
+                    <code>
+                        console.log("--------------program 2-----------");
+                        //check if value Exist on a list
+                        console.log(shoppingCart.has("Album #4")) ;
+
+                        //remove from the set
+                        console.log(shoppingCart.delete("Guitar")) ;
+                        console.log(shoppingCart);
+                        // clear all set
+                        //shoppingCart.clear();
+
+                        shoppingCart.forEach( (element, index, ispart) => {
+                            console.log(`${index} : ${element}`);
+                            console.log(ispart === shoppingCart)
+                        });
+
+                        // converting Set to Array
+                        const shoppingCartArray = [...shoppingCart];
+                        console.log(shoppingCartArray);
+                    </code>
+                </pre>
+            </div>
+            <div id="outputTab_1" class="container tab-pane fade">
+                    <h4>program 1</h4>
+                    <pre>
+                        <code>
+                            --------------program 2-----------
+                            true
+                            true
+                            Set(5) {"shirt", "Album #1", "Album #2", "Album #3", "Album #4"}
+
+                            shirt : shirt
+                            true
+                            Album #1 : Album #1
+                            true
+                            Album #2 : Album #2
+                            true
+                            Album #3 : Album #3
+                            true
+                            Album #4 : Album #4
+                            true
+
+                            ["shirt", "Album #1", "Album #2", "Album #3", "Album #4"]
+                        </code>
+                    </pre>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        let shoppingCart = new Set();
+        shoppingCart.add("shirt");
+        shoppingCart.add("Album #1");
+        shoppingCart.add("Album #2");
+        shoppingCart.add("Album #3");
+        shoppingCart.add("Album #3"); // duplicate value not accepted
+        shoppingCart.add("Album #4");
+        shoppingCart.add("Guitar");
+        console.log(shoppingCart);
+
+        console.log("--------------program 2-----------");
+        //check if value Exist on a list
+        console.log(shoppingCart.has("Album #4")) ;
+
+        //remove from the set
+        console.log(shoppingCart.delete("Guitar")) ;
+        console.log(shoppingCart);
+
+        // clear all set
+        //shoppingCart.clear();
+
+        shoppingCart.forEach( (element, index, ispart) => {
+            console.log(`${index} : ${element}`);
+            console.log(ispart === shoppingCart)
+        });
+
+        // converting Set to Array
+        const shoppingCartArray = [...shoppingCart];
+        console.log(shoppingCartArray);
+    </script>
+
+</body>
+
+</html>

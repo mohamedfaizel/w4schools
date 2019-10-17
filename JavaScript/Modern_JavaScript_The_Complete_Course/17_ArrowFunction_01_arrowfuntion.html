@@ -1,0 +1,76 @@
+<section class="my-section">
+    <h1 class="my-title">Arrow functions</h1>
+    <code data-name="Script">
+        const newvar_1 = function(){
+            console.log("normal function");
+        }
+        newvar_1()
+
+        const newvar_2 = () => {
+            console.log("arrow function")
+        }
+        newvar_2()
+
+        const newvar_3 = () => console.log("arrow function is one line");
+        newvar_3()
+
+        const newvar_4 = () => "return a value";
+        console.log(newvar_4())
+
+        const newvar_5 = () =>({title : "object making", description : "() is must for make an object"})
+        console.log(newvar_5())
+
+        const newvar_6 = (arg_1) => console.log(`arrow ${arg_1} function example`);
+        newvar_6("parameter")
+
+        const newvar_7 = arg_1 => console.log(`arrow function have only one ${arg_1}, () is not needed in function declaring time`);
+        newvar_7("parameter")
+
+        const newvar_8 = (arg_1, arg_2) => console.log(`arrow function have more then one ${arg_1}, () is ${arg_2}`);
+        newvar_8("parameter", "mandatory")
+    </code>
+    <code data-name="Console">
+        normal function
+        arrow function
+        arrow function is one line
+        return a value
+        {title: "object making", description: "() is must for make an object"}
+        arrow parameter function example
+        arrow function have only one parameter, () is not needed in function declaring time
+        arrow function have more then one parameter, () is mandatory
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Callback Arrow functions</h1>
+    <code data-name="Script">
+        //Example for genral function to arrow function
+        const shoppingCart = ["Album", "Shirt", "Gittar"];
+        const productQuantityLength = shoppingCart.map(function(product){
+            return product.length;
+        })
+        console.log(productQuantityLength)
+
+        console.log("step 1 : remove function add arrow")
+        const productQuantityLength_step1 = shoppingCart.map((product) => {
+            return product.length;
+        })
+        console.log(productQuantityLength_step1)
+
+        console.log("step 2 : function body is one line so remove the {} and return also must remove")
+        const productQuantityLength_step2 = shoppingCart.map((product) => product.length )
+        console.log(productQuantityLength_step2)
+
+        console.log("step 3 : arrow function have only one parameter, so remove the ()")
+        const productQuantityLength_step3 = shoppingCart.map(product => product.length )
+        console.log(productQuantityLength_step3)
+    </code>
+    <code data-name="Console">
+        [5, 5, 6]
+        step 1 : remove function add arrow
+        [5, 5, 6]
+        step 2 : function body is one line so remove the {} and return also must remove
+        [5, 5, 6]
+        step 3 : arrow function have only one parameter, so remove the ()
+        [5, 5, 6]
+    </code>
+</section>

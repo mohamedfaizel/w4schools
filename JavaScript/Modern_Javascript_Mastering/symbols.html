@@ -1,0 +1,68 @@
+<section class="my-code">
+    <h1>Symbols</h1>
+    <p>
+        Symbol is another primitive type in javascript.
+        Symbol is used to create a duplicate key in Json Object;
+        Object.getOwnPropertySymbols(obj); method to get symbol keys in object
+
+        Note : in Json Object for in loop not work for get symbol keys.
+    </p>
+    <code>
+        without Symbol
+        =============
+        let obj_1 = {
+            'emp' : {
+                name : 'Lmj',
+                age : 25,
+                phone : 123
+            },
+            'emp' : {
+                name : 'Suhail',
+                age : 2,
+                phone : 456
+            },
+            'emp' : {
+                name : 'Muttaqin',
+                age : 2,
+                phone : 789
+            }
+        }
+
+        console.log(obj_1);
+
+        with Symbol
+        =============
+        let obj_2 = {
+            [Symbol('emp')] : {
+                name : 'Lmj',
+                age : 25,
+                phone : 123
+            },
+            [Symbol('emp')] : {
+                name : 'Suhail',
+                age : 2,
+                phone : 456
+            },
+            [Symbol('emp')] : {
+                name : 'Muttaqin',
+                age : 2,
+                phone : 789
+            }
+        }
+        const sync = Object.getOwnPropertySymbols(obj_2);
+        const results = sync.map( e => obj_2[e]);
+        console.log(result);
+    </code>
+    <console>
+        without Symbol
+        =========
+        emp: {name: "Muttaqin", age: 2, phone: 789}
+
+
+        with Symbol
+        =============
+        0: {name: "Lmj", age: 25, phone: 123}
+        1: {name: "Suhail", age: 2, phone: 456}
+        2: {name: "Muttaqin", age: 2, phone: 789}
+    </console>
+</section>

@@ -1,0 +1,66 @@
+<section class="my-section">
+    <h1 class="my-title">Variables</h1>
+    <code data-name="Description">
+        possible to declare Multiple times, if we initialte one time we can get from anyware.
+    </code>
+    <code data-name="Script">
+        <h4>program 1</h4>
+        var newvar = "a";
+        var newvar = "b";
+        console.log("newvar : " + newvar);
+        
+        <h4>program 2</h4>
+        for(var i = 0; i &lt; 2; i++){
+            var newvar_2 = 10;
+        }
+        console.log(newvar_2);
+    </code>
+    <code data-name="Console">
+        <h4>program 1</h4>
+        newvar : b
+        
+        <h4>program 2</h4>
+        newvar_2 : 10
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">2. let</h1>
+    <code data-name="Description">
+        Only one time can declare but Multiple times values can be assigned or changed.
+    </code>
+    <code data-name="Script">
+        <h4>program 1</h4>
+        let newvar = "a";
+        let newvar = "b"; // Error
+        
+        <h4>program 2</h4>
+        let newvar = "a";
+        newvar = "c";
+        console.log("newvar : " + newvar)
+    </code>
+    <code data-name="Console">
+        <h4>program 1</h4>
+        Uncaught SyntaxError: Identifier 'newvar' has already been declared
+        
+        <h4>program 2</h4>
+        newvar : c
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">3. const</h1>
+    <code data-name="Description">
+        Only one time can declare at the same value should be assigned.
+    </code>
+    <code data-name="Script">
+        <h4>program 1</h4>
+        const newvar = "a";
+        newvar = "b";
+        console.log("newvar : " + newvar)
+    </code>
+    <code data-name="Console">
+        <h4>program 1</h4>
+        Uncaught TypeError: Assignment to constant variable.
+    </code>
+</section>

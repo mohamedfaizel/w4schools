@@ -1,0 +1,50 @@
+<section class="my-section">
+    <h1 class="my-title">Routing Mannually with separate file</h1>
+    <div class="my-notes">
+        <strong>Part-1 :</strong>
+        <ol>
+            <li><strong>ng new employeeManagement --routing</strong> => Create new project with separate routing files with basics codes</li>
+            <li><strong>ng g c home --module=app-routing.module</strong> => Create new Component - home </li>
+            <li><strong>ng g c employees --module=app-routing.module</strong> => Create new Component - employees</li>
+            <li><strong>ng g c pageNotFound --module=app-routing.module</strong> => Create new Component - pageNotFound</li>            
+        </ol>
+        <strong>Using the above commands the Angular CLI automatically do all the small stuff </strong>
+        
+    </div>
+    <code title="app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+        const routes: Routes = [
+          { path: '', redirectTo: '/home', pathMatch: 'full' },
+          { path: 'home', component: HomeComponent },
+          { path: 'employees', component: EmployeesComponent },
+          { path : '**', component: PageNotFoundComponent }
+        ];
+        
+        export class AppRoutingModule {}
+        
+        export const AppRoutingComponents = [HomeComponent, EmployeesComponent, PageNotFoundComponent];
+        //this is good practise for add the component in array
+        
+    </code>
+    <code title="app.module.ts" data-classes="col-md-6  col-sm-12">            
+        i) import { AppRoutingModule, AppRoutingComponents } from './app-routing.module';
+        ii) declarations: [
+                AppComponent,
+                AppRoutingComponents
+              ],
+           imports:[AppRoutingModule]
+       </code>
+    <code title="app.comonent.html" data-classes="col-md-6  col-sm-12">   
+        <div style="padding:5px;">
+            <ul class="nav nav-tabs">
+                <li routerLinkActive="active">
+                    <a routerLink="home">Home</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="employees">Employees</a>
+                </li>
+            </ul>
+            <br>
+            <router-outlet></router-outlet>
+        </div>
+    </code>
+</section>

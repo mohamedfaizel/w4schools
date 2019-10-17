@@ -1,0 +1,102 @@
+<section class="my-section">
+    <h1 class="my-title">Component</h1>
+    <div class="my-notes">
+       <strong>Component is a collection of Template + class + metadata</strong><br>
+        <ul>
+            <li>Template represent view : This is created using HTML</li>
+            <li>Class is nothing but Code : This is created using  TypeScript. it also contains Data & methods to control View Logic</li>
+            <li>Metadata : This is <strong>Information</strong> that angular needs to decide, Particular Class Infact angular Component or just a regular class.<br>
+                Decorator :  Just a  function provides the information about the class attached to it. Components have component Decorator.
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Component</h1>
+    <div class="my-notes">
+       <strong>app.component.ts</strong><br>
+        <p>metadata (@Component) : its Contains both metadata and templates</p>
+        <Strong>app.components is the main Componetnts all others comes under the main component only.</Strong>>
+        <ul>
+            <li>Selector : This indicates where the template(HTML + CSS) will placed in index.html<br>
+                <ul>
+                    <li>custom-tag : <strong>'app-root'</strong> => <strong> &lt;app-root> .... &lt;/app-root> </strong></li>
+                    <li>class name : <strong>'.app-root'</strong> => <strong> &lt;div class="app-root"> .... &lt;/div> </strong></li>
+                    <li>attribute : <strong>'[app-root]'</strong> => <strong> &lt;div app-root> ..... &lt;/div> </strong></li>
+                </ul>
+            </li>
+            <li>Template / TemplateUrl
+                <ul>
+                    <li>TemplateUrl : './test.component.html'</li>
+                    <li>Template : '&lt;div> Inline Templat &lt;/div>'</li>
+                    <li>Template : `&lt;div> MultiLine Template &lt;/div>`</li>
+                </ul>
+            </li>
+            <li>StyleUrls / Styles : Its array
+                <ul>
+                    <li>StyleUrls : ['./test.component.css']</li>
+                    <li>Styles : [`div { color : red; }`]</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <code title="1. app.component.ts" data-classes="col-sm-12"> 
+        import { Component } from '@angular/core';
+        
+        //MetaData, its specific Component Decorator, the component Decorator attach function write below it(@Component). In our case AppComponet Class is the function for this. Its tell the Angular its not a regular class, Its Component.
+        @Component({
+          selector: 'app-root',
+          templateUrl: './app.component.html',
+          styleUrls: ['./app.component.css']
+        })
+        export class AppComponent { //Its a class, AppComponent is the name of the class, its contain methods and property.
+          title = 'hello-world';
+        }
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Add new Component</h1>
+    <div class="my-notes">
+       <strong>command : ng g c test</strong>
+        <p>g - generates, c - components, test - components name</p>
+        <p>Its generates the new componets and update the modules. we can explain it step by step.</p>
+        <ul>
+            <li>Step 1 : its create a new forder test under src > app > test</li>
+            <li>Step 2 : test folder contains 4 files.<br>
+                1. test.component.css, 2. test.component.html, 3. test.component.spec.ts, 4. test.component.ts
+            </li>
+            <li>step 3: app.module.ts will updated<br>
+                <ul>
+                <li>import {TestComponent} from './test/test.component'</li>
+                <li>declarations: [AppComponent, TestComponent] // TestComponent is added</li>
+                </ul>
+            </li>
+            <li> step 1, 2, 3 is automaticali done by Angular CLI</li>
+        </ul>
+        <strong>Implemenet <strong>test.Component</strong> in <strong>app.component.html</strong></strong>
+        <ul>
+            <li>Step 1: get the selector name in <strong>test.component.ts</strong> (app-test)</li>
+            <li>Step 2: Open <strong>app.Component.html</strong> and create the custom tag <strong>app-test</strong> where you want to place the <strong>test.component.html</strong></li>
+        </ul>    
+        
+    </div>
+    <code title="1. test.component.ts" data-classes="col-sm-12"> 
+        import { Component, OnInit } from '@angular/core';
+
+        @Component({
+          selector: 'app-test',
+          templateUrl: './test.component.html',
+          styleUrls: ['./test.component.css']
+        })
+        export class TestComponent implements OnInit {
+
+          constructor() { }
+
+          ngOnInit() {
+          }
+
+        }
+    </code>
+</section>

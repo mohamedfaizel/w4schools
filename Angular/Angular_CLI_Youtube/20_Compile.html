@@ -1,0 +1,26 @@
+<section class="my-section">
+    <h1 class="my-title">Compile Angular App</h1>
+    <div class="my-notes">
+        <strong>ng serve</strong>
+        <ul>
+             <li>compile and serve the application from memory</li>
+            <li>Does not write the build file to the disk</li>
+            <li>Typically used to run the applicatioon local development machine </li>
+            <li>Cannot be used for deploying the build to another server(Ex : Testing, staging or Production server) </li>
+        </ul>
+        <strong>ng build</strong>
+        <ul>
+            <li>Compiles the application to the "dist" folder.</li>
+            <li>Can be used to produce both development and production builds.</li>
+            <li>Typically used to deploy the application on another server.</li>
+            <li><strong>ng build</strong> or <strong>ng build --dev</strong> => development build</li>
+            <li><strong>ng build --prod</strong> => production builds </li>
+        </ul>
+        <strong>Production Vs Development build</strong>
+        <ul>
+            <li>Production build file sizes are significantly less then develoment build file sizes</li>
+            <li>production file does not generate source map files</li>
+            <li>Production build extract css from global styles onto css files instead of js</li>
+        </ul>
+    </div>
+</section>

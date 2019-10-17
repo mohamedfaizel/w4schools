@@ -1,0 +1,56 @@
+<section class="my-code">
+    <h1>Dont use arrow function - Examples </h1>
+    <p> function declared in the object key, Instant use the normal function </p>
+    <code>
+            var counter = {
+                increment : 10,
+                score_1 : () =>{
+                    console.log(this); // window object
+                    this.increment++;
+                },
+                score_2 : function(){
+                    console.log(this); // counter object
+                    this.increment++
+                },
+                score_3(){
+                    console.log(this) // counter object - new dclartion type
+                    this.increment++;
+                } 
+            }
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+        <h1>Dont use arrow function - Examples 2 </h1>
+        <p> prototype function declaration </p>
+        <code>
+               class person {
+                   constructor (fname, lname){
+                    this.fname = fname;
+                    this.lname = lname;
+                   }
+               }
+
+               person.prototype.fullname_1 = () => {
+                   console.log(this); // window object
+                    return `Fullname : ${this.firstname} ${this.lname}`;
+               } 
+
+               person.prototype.fullname_2 = function(){
+                    console.log(this); // person object
+                    return `Fullname : ${this.firstname} ${this.lname}`;
+               }
+
+               person.prototype.
+               const person1 = new person("LMJ", "Faizel");
+               const person2 = new person("Suhail", "Muttaqin");
+
+        </code>
+        <console>
+    
+        </console>
+    </section>
+

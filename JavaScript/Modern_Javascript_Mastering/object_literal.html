@@ -1,0 +1,67 @@
+<section class="my-code">
+    <h1>Object Literal - create Techniq</h1>
+    <p>
+      in Es6 allows both the key and value variable are same, then remove the value variable. we can also rename the variable.
+    </p>
+    <code>
+        const first = "Lmj";
+        const last = "Mohammed";
+        const age = 29;
+        const phone = 9600467899
+
+        let person = {
+            firstname : first,
+            last,
+            age,
+            phone
+        }
+        console.log(person);
+    </code>
+    <console>
+        {firstname: "Lmj", last: "Mohammed", age: 29, phone: 9600467899}
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Object Literal - create Method</h1>
+    <p>
+      Dont use arrow function inside the object literal because 'this' operatror will create a problem
+    </p>
+    <code>
+        const productController = {
+            create_old : function(req, res){
+
+            },
+            update_old : function(req, res){
+
+            },
+            create_new(req, res){
+
+            },update_new(req, res){
+                
+            }
+        }
+    </code>
+    <console>
+
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Object - Computed properties</h1>
+    <p>
+        assigning the key in different ways
+    </p>
+    <code>
+        const propName = "code";
+        const propValue = "Javascript";
+        const params = {
+            [propName] : true,
+            [`data${propName.toUpperCase()}`] : propValue,
+            [`${propName}_Lmj`] : "JS Course"
+        }
+    </code>
+    <console>
+        {code: true, dataCODE: "Javascript", code_Lmj: "JS Course"}
+    </console>
+</section>

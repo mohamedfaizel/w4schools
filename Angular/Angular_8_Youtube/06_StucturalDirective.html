@@ -1,0 +1,61 @@
+<section class="my-section">
+    <h1 class="my-title">ngIf</h1>
+    <div class="my-notes">
+       ngIf Vs Dispaly:none => inspect element we can find the eleemnt but angular not.        
+    </div>
+    <code title="1. StructuraldirectiveComponent.component.ts" data-classes="col-sm-12"> 
+        @Component({
+          selector: 'app-structuraldirective',
+          template: `
+          <h2 *ngIf="true" >NgIf Direct true</h2>
+          <h2 *ngIf="displayTitle" >ngIf class property value </h2>
+          <h2 *ngIf="displayTitle; else elseBlock" >ngIf else using Template Reference : if Block</h2>
+          <ng-template #elseBlock>
+          <h2>ngIf else using Template Reference : else Block</h2>
+          </ng-template>
+        <div *ngIf="displayTitle; then thenBlock; else elseBlock2"></div>
+          <ng-template #thenBlock>
+            <h2>then Block</h2>
+          </ng-template>
+          <ng-template #elseBlock2>
+            <h2>else block 2</h2>
+          </ng-template>
+          `,
+          styles: []
+        })
+        export class StructuraldirectiveComponent implements OnInit {
+          public displayTitle = true;
+          constructor() { }
+
+          ngOnInit() {
+          }
+        }
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">ngSwitch</h1>
+    <div class="my-notes">
+             
+    </div>
+    <code title="1. StructuraldirectiveComponent.component.ts" data-classes="col-sm-12"> 
+       @Component({
+          selector: 'app-structuraldirective',
+          template: `
+            <div [ngSwitch]="color">
+                <div *ngSwitchCase="'red'">You picked Red Color !</div>
+                <div *ngSwitchCase="'green'">You picked Green Color !</div>
+                <div *ngSwitchCase="'blue'">You picked Blue Color !</div>
+                <div *ngSwitchDefault>Pick again !</div>
+             </div>
+          `,
+          styles: []
+        })
+        export class StructuraldirectiveComponent implements OnInit {
+           public color = 'green';
+          constructor() { }
+
+          ngOnInit() {
+          }
+        }
+    </code>
+</section>

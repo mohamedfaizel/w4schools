@@ -1,0 +1,71 @@
+<section class="my-code">
+    <h1>Set</h1>
+    <p>
+        1. Sets is like array, Sets do not allow the duplicates.
+        2. Iterates (.next()) is possible
+        3. methods : add(), delete(), has(), size(),clear(), values(), next()
+    </p>
+    <code>
+        const persons = new Set();
+        persons.add("Lmj");
+        persons.add("Suhail");
+        persons.add("Muttaqin");
+
+        persons.has("Lmj");
+        persons.delete("Lmj");
+
+        const iter = persons.values();
+        console.log(iter.next());
+        console.log(iter.next());
+
+        for(p of persons){
+            console.log(p);
+        }
+
+        // Direct values
+        const developers = new Set(["Lmj", "Mohamed", "Faizel", "Suhail", "Muttaqin"]);
+        console.log(developers.size());
+
+        //dynamic Values
+        const students = ["S1", "S2", "S3", "S4"];
+        const studentSet = new Set(students);
+        console.log(studentSet.size());
+        studentSet.clear();
+        console.log(studentSet.size());
+
+    </code>
+    <console>
+        {value: "Suhail", done: false}
+        {value: "Muttaqin", done: false}
+
+        Suhail
+        Muttaqin
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Map</h1>
+    <p>
+        1. Map is like Object(Key and Values)
+        2. methods : set(), delete(), has(), clear()
+    </p>
+    <code>
+        const persons = new Map();
+        persons.set("ACTIVE", 2);
+        persons.set("INACTIVE", 1);
+        persons.set("DELETE", 0);
+
+        persons.has("ACTIVE");
+        persons.delete("ACTIVE");
+        persons.clear();
+
+        persons.forEach((val, key) => console.log(key, val));
+
+        for(let [key, value] of persons){ //Destructing
+            console.log(key, values)
+        }
+    </code>
+    <console>
+        
+    </console>
+</section>

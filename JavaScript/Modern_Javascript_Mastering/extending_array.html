@@ -1,0 +1,37 @@
+<section class="my-code">
+        <h1>Array Extending</h1>
+        <p>
+           
+        </p>
+        <code>
+            class SongsCollections extends Array{
+                constructor(name, ...songs){
+                    super(songs);
+                    this.name = name;
+                }
+
+                addSongs(song){
+                    this.push(song);
+                }
+            }
+
+            const mySong = new SongsCollections("My Favour",
+                {id : 1, name : "All of me"},
+                {id : 2, name : "Animals"}
+            );
+            mySong.addSongs({id : 3, name : "New Song Name"});
+
+            //for of - used to get the song list
+            for(song of mySong){
+                console.log(song);
+            }
+
+            //for in - used to get song collection name
+            for(s in mySong){
+                console.log(s)
+            }
+        </code>
+        <console>
+            
+        </console>
+    </section>

@@ -1,0 +1,26 @@
+<section class="my-section">
+    <h1 class="my-title">Variables</h1>
+    <code data-name="Description">
+    
+    </code>
+    <code data-name="Script">
+        const applyDiscount = new Promise(function(resolve, reject){
+            const discount = true;
+
+            if(discount){
+                resolve("Discount Applied..");
+            }else {
+                reject("Dicount Failed");
+            }
+        });
+
+        applyDiscount.then(function(result){
+            console.log(result);
+        }).catch(function(result){
+            console.log(result)
+        })
+    </code>
+    <code data-name="Console">
+        Discount Applied..
+    </code>
+</section>

@@ -1,0 +1,142 @@
+<section class="my-code">
+    <h1>For Loops</h1>
+    <p>
+        * 4 types of For loops<br>
+        1. for loop (old method)<br>
+        2. forEach<br>
+        3. for In<br>
+        4. for of
+    </p>    
+</section>
+<section class="my-code">
+    <h1>For Loop - old style</h1>
+    <p>
+       Drawbacks
+       1. Complex logic
+       2. async, await, generators its not used        
+    </p>
+    <code>
+        const friends = ["Lmj", "Faizel", "Suhail", "Muttaqin"];
+
+        function var_commonLoop(){
+            for(var cnt =0; cnt < friends.length; cnt++){
+                setTimeout(function(){
+                    console.log("For Loop Var val :" + cnt)
+                    console.log("For Loop Var :" + friends[cnt])
+                }, 1000);
+            } 
+        }
+        function var_privateLoop(){
+            for(var cnt =0; cnt < friends.length; cnt++){
+                (function(index){
+                    setTimeout(function(){
+                        console.log("For Loop Var in private Function :" + friends[index])
+                    }, 1000);
+                })(cnt)
+            }
+        }
+        
+        function let_commonLoop(){
+            for(let cnt =0; cnt < friends.length; cnt++){
+                setTimeout(function(){
+                    console.log("For Loop let :" + friends[cnt])
+                }, 1000);
+            }
+        }
+        var_commonLoop();
+        var_privateLoop();
+        let_commonLoop();
+    </code>
+    <console>
+        For Loop Var val :4
+        For Loop Var :undefined
+        For Loop Var val :4
+        For Loop Var :undefined
+        For Loop Var val :4
+        For Loop Var :undefined
+        For Loop Var val :4
+        For Loop Var :undefined
+
+        For Loop Var in private Function :Lmj
+        For Loop Var in private Function :Faizel
+        For Loop Var in private Function :Suhail
+        For Loop Var in private Function :Muttaqin
+
+        For Loop let :Lmj
+        For Loop let :Faizel
+        For Loop let :Suhail
+        For Loop let :Muttaqin
+    </console>
+</section>
+
+
+<section class="my-code">
+    <h1>For Each</h1>
+    <p>
+       Drawbacks
+       1. we dont use break and continue;      
+    </p>
+    <code>
+        let friends = ["Lmj", "Faizel", "Suhail", "Muttaqin"];
+        friends.forEach(f => {
+            console.log(f)
+            if(f=="Faizel"){
+                break;
+            }
+        })
+    </code>
+    <console>
+        <error>Uncaught SyntaxError: Illegal break statement</error>
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>For In</h1>
+    <p>
+        * Break and continue working.
+        * its perfect for object values.
+       Drawbacks
+       1. in array object values also printed;      
+    </p>
+    <code>
+        let friends = ["Lmj", "Faizel", "Suhail", "Muttaqin"];
+        friends.random = "foo";
+        friends.shape = "round";
+
+        for(let index in friends){
+            console.log(friends[index])
+        }
+    </code>
+    <console>
+        Lmj
+        Faizel
+        Suhail
+        Muttaqin
+        foo
+        round
+    </console>
+</section>
+
+<section class="my-code">
+        <h1>For of</h1>
+        <p>
+           * perfect for array, it take only array,
+           * its also work in async, await and generator  
+        
+        </p>
+        <code>
+            let friends = ["Lmj", "Faizel", "Suhail", "Muttaqin"];
+            friends.random = "foo";
+            friends.shape = "round";
+    
+            for(let f of friends){
+                console.log(f);
+            }
+        </code>
+        <console>
+            Lmj
+            Faizel
+            Suhail
+            Muttaqin
+        </console>
+    </section>

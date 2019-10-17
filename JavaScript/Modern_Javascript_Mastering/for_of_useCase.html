@@ -1,0 +1,70 @@
+<section class="my-code">
+        <h1>For of - entries</h1>
+        <p>
+           * entries make a every array value to object (key is index);<br>
+           * we can iterator the value using next method<br>
+           Example<br>
+                const iterator = friends.entries();<br>
+                console.log(iterator.next()); // first object value print<br>
+                console.log(iterator.next()); // second object value print        
+        </p>
+        <code>
+            let friends = ["Lmj", "Faizel", "Suhail", "Muttaqin"];    
+            for(let [index, friend] of friends.entries()){
+                console.log(`key :${index} value : ${friend}`);
+            }
+        </code>
+        <console>
+                key :0 value : Lmj
+                key :1 value : Faizel
+                key :2 value : Suhail
+                key :3 value : Muttaqin
+        </console>
+    </section>
+    <section class="my-code">
+            <h1>For of - function aruments</h1>
+            <p>
+               * function arguments are not complete array. some of the _prototype_method completly different.       
+            </p>
+            <code>
+                function sum()
+                {
+                    console.log([1,2,3])
+                    console.log(arguments)
+                    let total = 0;
+                    for(let n of arguments){
+                        total += n;
+                    }
+                    console.log(total);
+                }
+
+                sum(24,25,2);
+            </code>
+            <console>
+                    (3) [1, 2, 3]
+                        __proto__: Array(0)
+                    Arguments(3) [24, 25, 2, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+                    51
+            </console>
+        </section>
+
+        <section class="my-code">
+                <h1>For of - event handler</h1>
+                <p>
+                   * create a 4 span tag for this example      
+                </p>
+                <code>
+                    <span class="mysapn"></span>
+                    <span class="mysapn"></span>
+                    <span class="mysapn"></span>
+                    <span class="mysapn"></span>
+
+                    const spanList = document.querySelectorAll("span.myspan");
+                    for(let span of spanList){
+                        span.addEventListner("click", () => {console.log("span Clicked")})
+                    } 
+                </code>
+                <console>
+                        
+                </console>
+            </section>

@@ -1,0 +1,30 @@
+<section class="my-code">
+        <h1>Prototype - Inheritence</h1>
+        <p>
+            
+        </p>
+        <code>
+            function Person(name, age){
+                this.name = name;
+                this.age = age;
+            }
+
+            Person.prototype.greet = function () {
+                console.log(`Hi ${this.name}!`);
+            };
+            Person.prototype.getName = function () {
+                return this.name;                
+            };
+
+            const person_1 = new Person("Lmj", 28); 
+            const person_2 = new Person("Suhail", 1); 
+
+            console.log(person_1.greet());
+            console.log(person_2.greet());
+            console.log(person_1.getName());
+            console.log(person_2.getName());
+        </code>
+        <console>
+           
+        </console>
+    </section>

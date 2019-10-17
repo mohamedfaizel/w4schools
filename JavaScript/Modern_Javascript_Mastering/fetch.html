@@ -1,0 +1,30 @@
+<section class="my-code">
+        <h1>Fetch</h1>
+        <p>
+               <strong>fetch()</strong> allows you to make network requests similar to XMLHttpRequest (XHR).
+                The main difference is that the Fetch API uses Promises, which enables a simpler and cleaner API,
+                avoiding callback hell and having to remember the complex API of XMLHttpRequest.
+            Note : all ajax action will do in efficient way.
+            More Reference : <a href="https://javascript.info/fetch">Click Here</a>
+        </p>
+        <code>
+           //syntax
+           let promise = fetch(url, [options])
+             . url – the URL to access.
+             . options – optional parameters: method, headers etc.
+        </code>
+        <console>
+        </console>
+    </section>
+    <section class="my-code">
+            <h1>Fetch</h1>
+            <p>          </p>
+            <code>
+                    fetch("http://dummy.restapiexample.com/api/v1/employees")
+                    .then(data => data.json()) //1.Callback execute when the promises in resolved, this will execute after the query data fetched 2.here arrow function return the data as json format.
+                    .then(employee => console.table(employee))
+                    .catch(err => {console.log(err)})
+            </code>
+            <console>
+            </console>
+        </section>

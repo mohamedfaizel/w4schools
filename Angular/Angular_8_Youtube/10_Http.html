@@ -1,0 +1,102 @@
+<section class="my-section">
+    <h1 class="my-title">HTTP</h1>
+    <div class="my-notes">
+        <ul>
+            <li>
+                <strong>1. app.module.ts</strong>
+                <ul>
+                    <li>import http</li>
+                    <li>impements in imports[]</li>
+                </ul>
+            </li>
+            <li>
+                <strong>2. employees.json</strong>
+                <ul>
+                    <li>Create a json file with data</li>
+                    <li>File Path : src > app > assets > data > employees.json</li>
+                    <li>employee records</li>
+                </ul>
+            </li>
+            <li>
+                <strong>3. employee.service.ts</strong>
+                <ul>
+                    <li>import http for http action</li>
+                    <li>http istance assigned to a local variable (private http: HttpClient) </li>
+                    <li>getEmployee() => get the data from the URL. </li>
+                </ul>
+            </li>
+            <li>
+                <strong>4. employee.ts</strong>
+                <ul>
+                    <li>make a Interfate for do a different actions in future</li>
+                    <li>Create a new file employees.ts</li>
+                    <li>File Path : src > app > employees.ts</li>
+                </ul>
+            </li>
+            <li>
+                <strong>5. employee.service.ts</strong>
+                <ul>
+                    <li>import interface and rxjs for observe the http response</li>
+                    <li>Interface add to the http request and method</li>
+                </ul>
+            </li>
+            <li>
+                <strong>4. employee-detail.component.ts and employee-list.component.ts</strong>
+                <ul>
+                    <li>add subscribe() to the getEmployees method</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <code title="1. app.module.ts" data-classes="col-md-4  col-sm-12">
+        
+        
+        import { HttpClientModule } from '@angular/common/http';
+        imports: [BrowserModule, HttpClientModule]
+        
+        
+    </code>
+    <code title="2.employees.json" data-classes="col-md-4  col-sm-12"> 
+        
+        [
+            {"id" : 1, "name" : "Lmj", "age": 29},
+            {"id" : 2, "name" : "Suhail", "age": 1},
+            {"id" : 3, "name" : "Muttaqin", "age": 2},
+            {"id" : 4, "name" : "Mohammed", "age": 64},
+            {"id" : 5, "name" : "Faizel", "age": 28}
+          ]
+        
+    </code>
+    <code title="3.employee.service.ts" data-classes="col-md-4  col-sm-12">             
+        import { HttpClient } from '@angular/common/http';
+        
+        export class EmployeeService {
+          private url = '/assets/data/employees.json';
+          constructor(private http: HttpClient) { }
+          getEmployees(){ 
+            return this.http.get(this.url);
+          }
+        }
+      </code>
+    <code title="4. employee.ts" data-classes="col-md-4  col-sm-12">   
+        
+        export interface IEmployee {
+            id: number;
+            name: string;
+            age: number;
+        }
+     </code>
+    <code title="5.employee.service.ts" data-classes="col-md-4  col-sm-12"> 
+        import { IEmployee } from './emplyees';
+        import { Observable } from 'rxjs';
+        
+        getEmployees(): Observable&lt;IEmployee[]>{
+            return this.http.get&lt;IEmployee[]>(this.url);
+          }        
+    </code>
+    <code title="6. employee-detail.component.ts and employee-list.component.ts" data-classes="col-md-6  col-sm-12">   
+         ngOnInit() { // Life cycle hook : gets called once the components has been initialized
+            this.employeeService.getEmployees().subscribe(data => this.employees = data);
+          }
+    </code>
+</section>

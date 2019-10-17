@@ -1,0 +1,44 @@
+<section class="my-section">
+    <h1 class="my-title">Compiler</h1>
+    <div class="my-notes">
+        <strong>ng build --prod --base-href /ePortal/</strong><br>
+        <p>/ePortal/ => Application name (localhoost/ePortal/home)</p>
+        
+        <ul>
+            <li>Build your angular application "ng build --prod --base-href /ePortal/"</li>
+            <li>Create a new folder(c:\ProductionBuild) in iis server installed machine</li>
+            <li>copy all the content of the <strong>"dist"</strong> folder ("dist" is angular build folder )</li>
+            <li>Create an application in iis and point it into the folder(step 2 folder path) 
+                <ul>
+                    <li><strong>inetmgr</strong> => open in run window</li>
+                    <li>root(Desktop) > sites > DefaultWebSite(Right Click) > Add Application</li>
+                    <li>Alias = "ePortal" and Physical Path = Project folder path (step 2 folder path)</li>
+                    <li>okay</li>
+                    <li>root(Desktop) > sites > DefaultWebSite > ePortal(Right Click) > Manage Application > Browse</li>
+                    <li><strong>Note : if we refresh it will make 404 error, so include the following URL Rewite rule in your wenb.config file (step 2 folder path).</strong></li>
+                </ul>
+                
+            </li>
+        </ul>
+    </div>
+    <code title="1. web.config" data-classes="col-sm-12">
+        <?xml version="1.0" encoding="utf-8"?>
+        <configuration>
+            <system.webServer>
+                <rewrite>
+                    <rules>
+                        <rule name="AngularJs routes" stopProcessing="true">
+                            <match url=".*" />
+                            <conditions logicalGrouping="MatchAll">
+                                <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                                <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                                <add input="{REQUEST_URI}" pattern="^/(api)" negate="true" />
+                            </conditions>
+                            <action type="Rewrite" url="/ePortal" />
+                        </rule>
+                    </rules>
+                </rewrite>
+            </system.webServer>
+        </configuration>
+    </code>
+</section>

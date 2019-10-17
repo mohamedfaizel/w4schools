@@ -1,0 +1,45 @@
+<section class="my-section">
+    <h1 class="my-title">Interpolation</h1>
+    <div class="my-notes">
+       <strong>Interpolation - Binding the dynamic data.</strong><br>
+        <p>Create a new component binding</p>
+        <strong>What we can do in Interpolation</strong>
+        <ul>
+            <li>Access Property and methods</li>
+            <li>Concatination number and string</li>
+            <li>do some angular functions</li>
+                
+        </ul>
+    </div>
+    <code title="1. binding.component.ts" data-classes="col-sm-12"> 
+        @Component({
+          selector: 'app-binding',
+          template: `
+            <h1>What we Do</h1>
+            <h2>accessProperty :  Welcome {{name}} </h2>
+            <h2>Concatination Number : {{2 + 2}}</h2>
+            <h2>Concadination string and variables : {{"Welcome "+ name}}</h2>
+            <h2>Variabl Length :{{name.length}}</h2>
+            <h2>angular function : {{name.toUpperCase()}}</h2>
+            <h2>JS Global value via property: {{locationUrl}}</h2>
+            <h1>What we Can't Do</h1>
+            <h2>assigning operation "a = 2 + 2"</h2>
+            <h2>Javascript Global Values "Ex : window.location.href"</h2>
+          `,
+          styleUrls: []
+        })
+        export class BindingComponent implements OnInit {
+
+          public name = 'Lmj';
+          public locationUrl = window.location.href;
+          constructor() { }
+          ngOnInit() {
+          }
+
+          greetUser() {
+            return 'Hello ' + this.name;
+          }
+
+        }
+    </code>
+</section>

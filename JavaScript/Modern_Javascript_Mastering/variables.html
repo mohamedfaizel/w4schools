@@ -1,0 +1,67 @@
+<section class="my-code">
+    <h1>Var - Declared Inside the function</h1>
+    <p>when variable cannot acces from the outside when its declared inside the function</p>
+    <code>
+        function greet(){
+            var msg = "Hello World!";
+            console.log("inside function console :"+ msg);
+        }
+        greet();
+        console.log("Outside function console :"+ msg);
+    </code>
+    <console>
+        ReferenceError: msg is not defined
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>var - Declared in if conditions</h1>
+    <p>This can access from the outside of the scope</p>
+    <code>
+        function greetnew(){
+            let msg = "Hello World!";
+            console.log(msg);
+        }
+        greetnew();
+        var language = "en";
+        if(language == "en"){
+            var greetMsg = "Welcome Message";
+        }
+        console.log(greetMsg);
+    </code>
+    <console>
+        
+    </console>
+</section>
+<section class="my-code">
+    <h1>var - In for Loop</h1>
+    <p>This can access from the outside of the scope</p>
+    <code>
+            for(var cnt = 0 ; cnt < 10 ; cnt++){
+                setTimeout(function(){
+                    $(".output_frame").append('the value of count :' + cnt);
+                }, 500)
+            }
+        console.log("modrate in outside :" + (cnt + 10))
+    </code>
+    <console>
+        
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>let - understanding</h1>
+    <p>This can-not access from the outside of the scope</p>
+    <code>
+        let greetMsg = "Welcome Message";
+        let language = "en";
+        if(language == "en"){
+            let greetMsg = "Inside Scope Welcome Message";
+            console.log(greetMsg);
+        }
+        console.log(greetMsg);
+    </code>
+    <console>
+        
+    </console>
+</section>

@@ -1,0 +1,76 @@
+<section class="my-section">
+    <h1 class="my-title">Routing Mannually with separate file</h1>
+    <div class="my-notes">
+        <strong>Part-1</strong>
+        <ol>
+            <li><strong>ng new employeeManagement</strong> => Create new project</li>
+            <li><strong>ng g module app-routing --flat --module=app</strong> => Create new module for routing</li>
+            <li><strong>ng g c home --module=app-routing.module</strong> => Create new Component - home </li>
+            <li><strong>ng g c employees --module=app-routing.module</strong> => Create new Component - employees</li>
+            <li><strong>ng g c pageNotFound --module=app-routing.module</strong> => Create new Component - pageNotFound</li>
+            
+        </ol>
+        
+        <strong>Part-2</strong>
+        <ol>
+            <li>Set <strong>&lt;base href="/" /></strong> in index.html</li>
+            <li>create seprate routing module file  (app-routing.module.ts)</li>
+            <li>import the RouterModulae into your application routing Module(app-routing.module.ts).Also don't forget to  re-export RouterModule  </li>
+            <li>Configure the application Routes (app-routing.module.ts)</li>
+            <li>import the application routing moduke(app-routing.module.ts) in the root app moduke(app.module.ts)</li>
+            <li>Specify where you want the router component view template to be displayed using <strong>&lt;router-outlet></strong> directive(app.component.html)</li>
+            <li>Tie the Routes to application menu</li>
+        </ol>
+    </div>
+    <code title="2. src/app/app-routing.module.ts (updated)" data-classes="col-md-6  col-sm-12">  
+        import { NgModule } from '@angular/core';
+        import { RouterModule, Routes } from '@angular/router';
+        
+        import { HomeComponent } from './home/home.component';
+        import { EmployeesComponent } from './employees/employees.component';
+
+        const routes: Routes = [
+          { path: '', redirectTo: '/home', pathMatch: 'full' },
+          { path: 'home', component: HomeComponent },
+          { path: 'employees', component: EmployeesComponent },
+          { path : '**', component: PageNotFoundComponent }
+        ];
+        @NgModule({
+          imports: [RouterModule.forRoot(routes)],
+          exports: [RouterModule]
+        })
+        export class AppRoutingModule {}
+        export const AppRoutingComponents = [TestComponent, BindingComponent, 
+        ComponentinteractionComponent, EmployeeDetailComponent, 
+        EmployeeListComponent, PipesComponent, StructuraldirectiveComponent];
+        //this is good practise for add the component in array
+      </code>
+    <code title="3. app.module.ts" data-classes="col-md-6  col-sm-12">            
+        a. Remove below Lines
+        import { HomeComponent } from './home/home.component';
+        import { EmployeesComponent } from './employees/employees.component';
+        
+        b. replace
+        i) import { AppRoutingModule, AppRoutingComponents } from './app-routing.module';
+        ii) declarations: [
+                AppComponent,
+                AppRoutingComponents
+              ],
+           imports:[AppRoutingModule]
+       </code>
+    <code title="4. app.comonent.html" data-classes="col-md-6  col-sm-12">   
+        <div style="padding:5px;">
+            <ul class="nav nav-tabs">
+                <li routerLinkActive="active">
+                    <a routerLink="home">Home</a>
+                </li>
+                <li routerLinkActive="active">
+                    <a routerLink="employees">Employees</a>
+                </li>
+            </ul>
+            <br>
+            <router-outlet></router-outlet>
+        </div>
+        
+    </code>
+</section>

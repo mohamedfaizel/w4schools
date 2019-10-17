@@ -1,0 +1,213 @@
+<section class="my-section">
+    <h1 class="my-title">Services</h1>
+    <div class="my-notes">
+          A class with a specific purposes
+        <ul>
+            <li>Share Data - share data across multiple components.</li>
+            <li>Implement application Logic <br>
+                Example : employee enter the DateOfBirth, we need to calculate there age. now we can logic to do that. this doesn't need view. logic is reusable code which shoud be independent for any individual component, this senario we create a service
+            </li>
+            <li>External Interaction <br>
+                Example : Database communication
+            </li>
+        </ul>
+        
+        <strong>Naming Convention : fileName.service.ts</strong>
+    </div>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Without Dependency Injection</h1>
+    <div class="my-notes">
+          Dependency Injection is a coding pattern in which a class receives its dependencies from extrnal sources rather then creating them itself.
+        <strong>Drawback of Without DI</strong>
+        <ul>
+            <li>new Engine() and new Tires() - is a another class with empty parameters</li>
+            <li>In case we add a new parameter to the Engine() and Tire() class. It will make a error in Car() class</li>
+            <li>So the code is not flexible.</li>
+        </ul>
+    </div>
+        <code title="Example: Without Dependency Injection" data-classes="col-md-6 col-sm-12"> 
+            
+            
+            
+            
+        //Without DI
+        class Engine{
+            constructor(){} //if we add new parameter here, car class new Engine() also need parameter. so its make error.
+        }
+            
+        class Tires{
+            constructor(){}
+        }
+            
+        class car{
+            engine;
+            tires;
+            constructor(){
+                this.engine = new Engine();
+                this.tires = new Tires();
+            }
+        }        
+        
+            
+    </code>
+    <code title="Example : With Dependency Injection" data-classes="col-md-6  col-sm-12"> 
+        //With DI
+        class car{
+            engine;
+            tires;
+            constructor(engine, tire){
+                this.engine = engine;
+                this.tires = tire;
+            }
+        }
+        
+        //Example 1
+        var myEngine = new Engine();
+        var myTire = new Tires();
+        var myCar = new Car(myEngine, myTire);
+        
+        //Example 2
+        var myEngine = new Engine(parameters);
+        var myTire = new Tires();
+        var myCar = new Car(myEngine, myTire);
+        
+        //Example 3
+        var myEngine = new Engine(parameters);
+        var myTire = new Tires(parameter);
+        var myCar = new Car(myEngine, myTire);
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">why Dependency Injection</h1>
+    <div class="my-notes">   
+        <strong>Lots of dependency will make a development complex. let see the below exmple. </strong>
+        <br>
+        Di framework make a developer job that much more easier.
+        
+        <ul>
+            <li>Define the service class (EmployeeService)</li>
+            <li>Register with Injector</li>
+            <li>Declare as dependency in EmplList and EmpDetail</li>
+        </ul>
+    </div>
+    <code title="Example : why Dependency Injection" data-classes="col-md-12  col-sm-12"> 
+        var myEngine = new Engine();
+        var myTire = new Tires();
+        var depA = new dependency();        
+        var depB = new dependency();
+        var depAB = new dependency();
+        var depZ = new dependency(depAB); //before that we must create the depAB dependency
+
+        var myCar = new Car(myEngine, myTire);
+        
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Service and DI Example</h1>
+    <div class="my-notes">   
+        <strong>create Service Command : ng g s servicename</strong>
+        <ul>
+            <li>g - generate</li>
+            <li>s - service</li>
+            <li>servicename - name of the service</li>
+            <li>service file create in the app folder (filename.service.ts)</li>
+        </ul>
+        <strong>Example</strong>
+        <ul>
+            <li>Step 1 : Create EmployeeList component </li>            
+            <li>Step 2 : Create EmployeeDetail component </li>
+            <li>Step 3 : Create Employee Service </li>
+        </ul>
+    </div>
+    <code title="1. employee-detail.copmponent.ts" data-classes="col-md-6  col-sm-12"> 
+        
+        import { Component, OnInit } from '@angular/core';
+        import { EmployeeService } from '../employee.service';
+
+        @Component({
+          selector: 'app-employee-detail',
+          template: `
+          <h2>Employee Details</h2>
+          <ul *ngFor="let employee of employees">
+            <li>{{employee.id}} - {{employee.name}} - {{employee.age}}</li>
+          </ul>
+          `,
+          styles: []
+        })
+        export class EmployeeDetailComponent implements OnInit {
+          public employees = [];
+          constructor(private employeeService: EmployeeService ) { // local Variable _employeeService is the instance for the EmployeeService
+
+          }
+
+          ngOnInit() { // Life cycle hook : gets called once the components has been initialized
+            this.employees = this.employeeService.getEmployees();
+          }
+
+        }
+         </code>
+    <code title="2. employee-list.copmponent.ts" data-classes="col-md-6  col-sm-12"> 
+        
+        import { Component, OnInit } from '@angular/core';
+        import { EmployeeService } from '../employee.service';
+
+        @Component({
+          selector: 'app-employee-detail',
+          template: `
+          <h2>Employee List</h2>
+          <ul *ngFor="let employee of employees">
+            <li>{{employee.name}}</li>
+          </ul>
+          `,
+          styles: []
+        })
+        export class EmployeeDetailComponent implements OnInit {
+          public employees = [];
+          constructor(private employeeService: EmployeeService ) { // local Variable _employeeService is the instance for the EmployeeService
+
+          }
+
+          ngOnInit() { // Life cycle hook : gets called once the components has been initialized
+            this.employees = this.employeeService.getEmployees();
+          }
+
+        }
+    </code>
+    <code title="3. employee.service.ts" data-classes="col-md-6  col-sm-12"> 
+
+        import { Injectable } from '@angular/core';
+        @Injectable({
+          providedIn: 'root'
+        })
+        export class EmployeeService {
+
+          constructor() { }
+
+          getEmployees(){
+            return [
+              {id : 1, name : 'Lmj', age: 29},
+              {id : 2, name : 'Suhail', age: 1},
+              {id : 3, name : 'Muttaqin', age: 2},
+              {id : 4, name : 'Faizel;', age: 28}
+            ]
+          }
+        }
+    </code>
+    <code title="4. app.module.ts" data-classes="col-md-6  col-sm-12">        
+        import { EmployeeService } from './employee.service';
+        @NgModule({
+          declarations: [            
+            EmployeeListComponent,
+            EmployeeDetailComponent
+          ],
+          imports: [
+            BrowserModule, FormsModule
+          ],
+          providers: [EmployeeService],
+          bootstrap: [AppComponent]
+        })
+         </code>
+    
+</section>

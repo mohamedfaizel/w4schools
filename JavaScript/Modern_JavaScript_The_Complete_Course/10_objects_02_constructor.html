@@ -1,0 +1,116 @@
+<section class="my-section">
+    <h1 class="my-title">Object Constructor</h1>
+    <code data-name="Script">
+        function Client(name,balance){
+            this.name = name;
+            this.balance = balance;
+            this.membership = function(){
+                if(this.balance > 10000){
+                    return "Gold";
+                }else if(this.balance > 5000){
+                    return "Platinum";
+                }else{
+                    return "Normal";
+                }
+            }
+        }
+        const person = new Client("Lmj", 10000000)
+        console.log(person)
+        console.log(person.membership())
+    </code>
+    <code data-name="Console">
+        Client {name: "Lmj", balance: 10000000, membership: ƒ}
+        balance: 10000000
+        membership: ƒ ()
+        name: "Lmj"
+        __proto__:
+            constructor: ƒ Client(name,balance)
+            __proto__: Object
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Object Prototype</h1>
+
+    <code data-name="Script">
+        function Client(name,balance){
+            this.name = name;
+            this.balance = balance;
+
+        }
+        Client.prototype.membership = function(){
+            if(this.balance > 10000){
+                return "Gold";
+            }else if(this.balance > 5000){
+                return "Platinum";
+            }else{
+                return "Normal";
+            }
+        }
+        const person = new Client("Lmj", 10000000)
+        console.log(person)
+        console.log(person.membership())
+    </code>
+    <code data-name="Console">
+        Client {name: "Lmj", balance: 10000000}
+        balance: 10000000
+        name: "Lmj"
+        __proto__:
+            membership: ƒ ()
+            constructor: ƒ Client(name,balance)
+            __proto__: Object
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Object Inheritence</h1>
+
+    <code data-name="Script">
+        function Client(name,balance){
+            this.name = name;
+            this.balance = balance;
+
+        }
+        Client.prototype.membership = function(){
+            if(this.balance > 10000){
+                return "Gold";
+            }else if(this.balance > 5000){
+                return "Platinum";
+            }else{
+                return "Normal";
+            }
+        }
+
+        function Bussiness (name, balance, phone, category){
+            Client.call(this, name, blance);
+            this.phone = phone;
+            this.category = category;
+        }
+        //Inherit the prortotype
+        Bussiness.prototype = Object.create(Client.prototype);
+
+        //Return the constructor as Bussiness
+        Business.prototype.constructor = Business;
+
+        const business = new Client("Lmj", 10000000, 9865071881, "Master")
+        console.log(business)
+        console.log(business.membership())
+    </code>
+    <code data-name="Console">
+        Business {name: "Lmj", balance: 10000000, phone: 9865071881, category: "Master"}
+        balance: 10000000
+        category: "Master"
+        name: "Lmj"
+        phone: 9865071881
+        __proto__: 
+            Clientconstructor: ƒ Business(name, balance, phone, category)
+            arguments: null
+            caller: null
+            length: 4
+            name: "Business"
+            prototype: Client {constructor: ƒ}
+            __proto__: ƒ ()
+            [[FunctionLocation]]: 2.ObjectConstructor.html:225
+            [[Scopes]]: Scopes[2]
+             __proto__: Object
+        Gold
+    </code>
+</section>

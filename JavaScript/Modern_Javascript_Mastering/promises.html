@@ -1,0 +1,220 @@
+<section class="my-code">
+    <h1>Promises</h1>
+    <p>
+        Generarly promises handle callback function sequentially. one action completed another one will called.
+
+        It have 3 states
+        1. pending
+        2. Resolved
+        3. Rejected
+
+    </p>
+    <code>
+        console.log(`fetching API Employees Data`);
+        fetch("http://dummy.restapiexample.com/api/v1/employees")
+        .then(data => data.json()) //1.Callback execute when the promises in resolved, this will execute after the query
+        //data fetched 2.here arrow function return the data as json format.
+        .then(employee => console.table(employee))
+        .catch(err => {console.log(err)})
+    </code>
+    <console>
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Promises - Custom</h1>
+    <p></p>
+    <code>
+        let prom = new Promise((resolve, reject) => {
+        setTimeout(() => {
+        console.log(`Any Network / Database request completed`);
+        }, 1000)
+        });
+
+        let prom_err = new Promise((resolve, reject) => {
+        setTimeout(() => {
+        reject(`something Error`);
+        }, 1000)
+        });
+
+        prom.then(data => console.log(data))
+        .catch(err => console.log(err));
+
+        prom_err.then(data => console.log(data))
+        .catch(err => console.error(err))
+    </code>
+    <console>
+    </console>
+</section>
+
+<section class="my-code">
+    <h1>Promises - Example</h1>
+    <p></p>
+    <code>
+        // Assume here the below data eill come from server
+        let posts = [
+        {title : "NodeJs", id : 1},
+        {title : "GraphQL", id : 2},
+        {title : "Koa", id : 3},
+        {title : "Express", id : 4},
+        {title : "Sails", id : 5},
+        {title : "MongoDB", id : 6},
+        {title : "Javascript", id : 7},
+        ]
+
+        function getPostById(id){
+        return new Promise((resolve, reject) => {
+        //deley for server response
+        setTimeout(() => {
+        const post = posts.find(eachObj => eachObj.id === id);
+        if(post){
+        resolve(post);
+        }else{
+        reject(`No post found`);
+        }
+        }, 1000)
+        })
+        }
+
+        getPostById(4).then(data => console.log(data))
+        .catch(err => console.error(err));
+    </code>
+    <console>
+        //result will execute after 1 sec.
+        {title: "Express", id: 4}
+    </console>
+</section>
+<section class="my-code">
+    <h1>Promises - chaining Example</h1>
+    <p>
+        One Promise is depend on another Promise use <strong>Chaining</strong> Method.
+    </p>
+    <code>
+        // Assume here the below data eill come from server
+        let posts = [
+        {title : "NodeJs", id : 1, authorId : 11},
+        {title : "GraphQL", id : 2, authorId : 12},
+        {title : "Koa", id : 3, authorId : 13},
+        {title : "Express", id : 4, authorId : 14},
+        {title : "Sails", id : 5, authorId : 15},
+        {title : "MongoDB", id : 6, authorId : 16},
+        {title : "Javascript", id : 7, authorId : 17},
+        ]
+
+        let authors = [
+        {name : "Lmj", id : 11},
+        {name : "Suhail", id : 12},
+        {name : "Muttaqin", id : 13},
+        {name : "Mohammed", id : 14},
+        {name : "Faizel", id : 15},
+        {name : "Jibril", id : 16},
+        {name : "Family", id : 17},
+        ]
+
+        function getCourseById(id){
+        return new Promise((resolve, reject) => {
+        //deley for server response
+        setTimeout(() => {
+        const course = posts.find(eachObj => eachObj.id === id);
+        if(course){
+        resolve(course);
+        }else{
+        reject(Error(`No post found`));
+        }
+        }, 1000)
+        })
+        }
+
+        function getAuthorByCourse(course){
+        return new Promise((resolve, reject) => {
+        //deley for server response
+        setTimeout(() => {
+        const author = authors.find(author => author.id === course.authorId);
+        if(author){
+        resolve(author);
+        }else{
+        reject(Error(`No author found`));
+        }
+        }, 1000)
+        })
+        }
+
+        getCourseById(4)
+        .then(course => {
+        console.log(course);
+        return getAuthorByCourse(course);
+        }).then(author => console.log(author))
+        .catch(err => console.error(err));
+    </code>
+    <console>
+        //1 sec later after we get this result
+        {title: "Express", id: 4, authorId: 14}
+
+        //again 1 sec later we get the author result
+        {name: "Mohammed", id: 14}
+    </console>
+</section>
+
+<section class="my-code">
+        <h1>Promises all</h1>
+        <p>
+            if Promise is independent on each other, like you dont need  one promise result to each other, use Promise.all to run parallel.
+    
+        </p>
+        <code>
+                const wheather = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve({
+                            tmp : 12,
+                            conditional : "Cool"
+                        });
+    
+                    },2000);
+                });
+    
+                const tweets = new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve([`Welcome to ES6 Course`]);
+                    }, 700);
+                });
+    
+                Promise.all([wheather, tweets])
+                .then(result => {
+                    console.log(result)
+                    const [wheather_result, tweets_result] = result; // Destructing and name change
+                    console.log(wheather_result);
+                    console.log(tweets_result);
+                })
+                .catch(err => console.log(Error(err)));
+        </code>
+        <console>
+        </console>
+    </section>
+
+    <section class="my-code">
+            <h1>Promises all - Example</h1>
+            <p></p>
+            <code>
+                    const employees = fetch('http://dummy.restapiexample.com/api/v1/employees');
+                    const posts = fetch('https://jsonplaceholder.typicode.com/posts');
+
+                Promise.all([employees, posts])
+                .then(results => {
+                    //here the result is not readable. so we convert it into json
+                    return Promise.all(results.map(data => data.json()))
+                })
+                .then(response => {
+					console.log(response);
+                    const [employees, posts] = response;
+					console.log(employees)
+					console.log(posts)
+                }).catch(err => console.error(err))
+            </code>
+            <console>
+                    (2) [Array(7949), Array(100)]
+
+                    (7949) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, …]
+
+                    (100) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
+            </console>
+        </section>
