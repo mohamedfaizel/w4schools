@@ -1,0 +1,121 @@
+<section class="my-section">
+  <h1 class="my-title">New Project Creation Step By Step</h1>
+  <div class="my-notes">
+    <strong></strong><br />
+    <ul>
+      <li>
+        New Project always creating with routing <br />
+        <kbd>ng new projectname --routing</kbd>
+      </li>
+      <li>
+        Existing Project check "app-routing.module.ts". if doesn't exist, Please
+        create it and register with "app-module.ts". <br />
+        <kbd>ng g m app-routing --flat=true -m=app.module</kbd>
+      </li>
+      <li>
+        Create a module for each section (Group of Components) like
+        <strong>"authentication", "pages", "Admin" etc..</strong> with
+        module.<br />
+        <kbd>ng g m main/authentication --routing</kbd> <br />
+        <ul>
+          <li><strong>authentication</strong> - new Folder Created</li>
+          <li>
+            <strong>authentication-routing.module.ts</strong> - new Routing
+            module created.
+          </li>
+          <li>
+            <strong>authentication.module.ts</strong> - new section module
+            created.
+          </li>
+        </ul>
+        Note : main is a sub folder for src > app > main,
+      </li>
+      <li>
+        Create a "Component" for pages and register with
+        <strong>"section-routing.module".</strong> <br />
+        Example for authentication module pages. <br />
+        <kbd>
+          ng g c main/authentication/login --spec=false
+          -m=authentication-routing
+        </kbd>
+        <br />
+        <kbd>
+          ng g c main/authentication/forgot-password --spec=false
+          -m=authentication-routing
+        </kbd>
+        <br />
+        <kbd>
+          ng g c main/authentication/reset-password --spec=false
+          -m=authentication-routing
+        </kbd>
+        <br />
+        <kbd>
+          ng g c main/authentication/mail-confirm --spec=false
+          -m=authentication-routing
+        </kbd>
+        <br />
+        <kbd>
+          ng g c main/authentication/lock --spec=false -m=authentication-routing
+        </kbd>
+        <br />
+      </li>
+      <li>
+        Create <strong>"Pasge-not-found"</strong> Component in authentication
+        folder but register with <strong>"app-routing.module"</strong>. <br />
+        Because its global routing access <br />
+        <kbd>
+          ng g c main/authentication/page-not-found --spec=false -m=app-routing
+        </kbd>
+      </li>
+      <li>
+        Note: "-m=authentication-routing" automatically import and declared the
+        component. otherwise it will do manually. <br />
+        component <strong> import and declaration</strong> in
+        "section-routing.module" is best code practise. <br />
+        otherwise it will <strong> import </strong> in both place.
+        <strong>Routes</strong> for <strong>section-routing-module</strong> and
+        <strong>declartion</strong> for <strong>section.module</strong>.
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="my-section">
+  <h1 class="my-title">@NgModule</h1>
+  <div class="my-notes">
+    <a href="https://angular.io/guide/ngmodule-api">angular page</a>
+  </div>
+  <!-- prettier-ignore -->
+  <code title="Sharing Modules" data-classes="col-sm-6">
+        import { CommonModule } from '@angular/common';
+        import { NgModule } from '@angular/core';
+        import { FormsModule } from '@angular/forms';
+        import { CustomerComponent } from './customer.component';
+        import { NewItemDirective } from './new-item.directive';
+        import { OrdersPipe } from './orders.pipe';
+
+        @NgModule({
+        imports:      [ CommonModule ],
+        declarations: [ CustomerComponent, NewItemDirective, OrdersPipe ],
+        exports:      [ CustomerComponent, NewItemDirective, OrdersPipe,
+                        CommonModule, FormsModule ]
+        })
+        export class SharedModule { }
+      </code>
+  <!-- prettier-ignore -->
+  <code title="NgModule API" data-classes="col-sm-6">
+        @NgModule({
+            // Static, that is compiler configuration
+            declarations: [], // Configure the selectors
+            entryComponents: [], // Generate the host  (A list of components that can be dynamically loaded into the view.)
+          
+            // Runtime, or injector configuration
+            providers: [], // Runtime injector configuration
+          
+            // Composability / Grouping
+            imports: [], // composing NgModules together
+            exports: [] // making NgModules available to other parts of the app
+          })
+  </code>
+  <div></div>
+</section>
