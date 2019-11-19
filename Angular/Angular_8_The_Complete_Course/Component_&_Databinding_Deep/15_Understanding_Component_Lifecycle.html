@@ -1,0 +1,121 @@
+<section class="my-section">
+    <h1 class="my-title">Understanding Component Life-cycle Hooks</h1>
+    <div class="my-notes">
+        If a new component is created in angular or initiated. Example, it will initiate a new version of that component and add it into the DOM.<br>
+        So once a new Component is initiated, Angular Goes through a couple of different phases in this creation process and it will actually give us a chance to hook into these phases and execute some code. <br>
+        Note:
+        <ul>
+            <li>1st time component initiated
+                <ol>
+                    <li>Constructor()</li>
+                    <li>ngOnchanges()</li>
+                    <li>ngOnInit()</li>
+                    <li>ngDoCheck()</li>
+                </ol> 
+            </li>
+            <li>
+                2nd Time Onchange Button Clicked<ul>
+                    <li>ngOnchanges()</li>
+                    <li>ngDoCheck()</li>                    
+                </ul>
+            </li>
+            <li>3rd time component called Again (AddServerButton())
+                    <ol>
+                        <li>Constructor()</li>
+                        <li>ngDoCheck()</li>
+                        <li>ngOnchanges()</li>
+                        <li>ngOnInit()</li>
+                        <li>ngDoCheck()</li>
+                    </ol> 
+                </li>
+                <li>Orders for all hooks component initiated
+                <ol>
+                    <li>Constructor()</li>
+                    <li>ngOnchanges()</li>
+                    <li>ngOnInit()</li>
+                    <li>ngDoCheck()</li>
+                    <li>ngAfterContentInit()</li>
+                    <li>ngAfterContentChecked()</li>
+                    <li>ngAfterViewInit()</li>
+                    <li>ngAfterViewChecked()</li>
+                    <li>ngOnDestroy()</li>
+                </ol> 
+            </li>
+        </ul>
+        <strong> Note-2:</strong>
+        <p><strong>@ViewChild</strong> Element we cant access the value in <strong>ngOnInit()</strong>but <strong>ngAfterViewInit()</strong> here we can access the @viewChild element value.</p>
+        <p><strong>@ContentChild</strong> Element we cant access the value in <strong>ngOnInit()</strong>but <strong>ngAfterContentInit()</strong> here we can access the @viewChild element value.</p><br>
+        <strong> Life Cycle of hooks</strong>
+        <ol>
+            <li>
+                <kbd>ngOnChanges</kbd> <strong>Called after a bound input property changes</strong>
+                <ul>
+                    <li>It executes multiple times</li>
+                    <li>After the <strong>constructor()</strong> called, This is first hook called</li>
+                    <li>It's execute right at the start when a new component is created</li>
+                    <li>thereafter. it's also always called whenever one of our bound properties changes and with that, I mean Properties decorated @input, so whenever these properties received new values. </li>
+                    <li>This  is the only hook have the parameters <strong>(ngOnchanges(changes: SimpleChanges){})</strong></li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngOnInit</kbd> <strong>Called once the component is initialized</strong>
+                <ul>
+                    <li>This is second hook</li>
+                    <li>this method gets executed once the component has been initialized.</li>
+                    <li>It has not been added to the DOM. it has not been displayed yet but angular finished the basic initialization, our properties can now be accessed and initialized</li>
+                    <li>Example : you could say "the Object was created."</li>
+                    <li>ngOnInit will run after the constructor</li>
+                </ul>
+            </li> 
+            <li>
+                <kbd>ngDoCheck </kbd><strong>Called during every change detection run</strong>
+                <ul>
+                    <li>This method will executed a lot because this will run whenever change detection runs</li>
+                    <li>ngDoCheck is a hook executed on every check Angular makes.now important, on <strong>every check</strong></li>
+                    <li>Any Events : like click, onChange, Selected, properties changes, value changes, timerfiered, observable and resolved, </li>
+                    <li>Angular works pretty great and doesn't cost a lot of performance</li>
+                    <li>ngDoCheck is a great method to use if you want to do something on every change detection cycle. like maybe manually inform Angular about some changes it would not be able to detect otherwise, through that is very advanced use case. </li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngAfterContentInit</kbd> <strong>Clled after content (ng-content) has been projected into view</strong>
+                <ul>
+                    <li>Especially the part which will get added to our component through ng-content.</li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngAfterContentChecked</kbd><strong></strong>
+                <ul>
+                    <li>It's executed whenever change detection checked this content we're projecting into pur component  </li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngAfterViewInit</kbd><strong>Called every time the view (and child Views) has been checked</strong>
+                <ul>
+                    <li>The view of our own component has been finised initializing.</li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngAfterViewChecked</kbd><strong>called every time the view(and child views) have been checked</strong>
+                <ul>
+                    <li>Once we are sure that either all changes which had to be done were displayed in the view or no changes were detected by angular.</li>
+                    <li></li>
+                </ul>
+            </li>
+            <li>
+                <kbd>ngOnDestroy</kbd><strong>Ccalled once the component is about to be destroyed</strong>
+                <ul>
+                    <li>Example : if you placed <strong>ngIf</strong> on it and this gets then set to false and therefore  it removes it from the DOM, ngOnDestroy is called</li>
+                    <li>Here is the great placed to do some cleanup work because this is called right before the object itself will be destroy by Angular.</li>
+                </ul>
+            </li>
+            <li>
+                <kbd></kbd><strong></strong>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</section>

@@ -1,0 +1,151 @@
+<section class="my-section">
+  <h1 class="my-title">Custom Event andProperty Binding</h1>
+  <div class="my-notes">
+    * Here 2 sibling component Interaction throught Parent component Examples is
+    gived. This is not a good idea for a complex solution but such a case its a
+    best tool.
+  </div>
+  <code title="1. app.component.html" data-classes="col-md-6 col-sm-12">
+    <div class="container">
+      <app-cockpit
+        (serverCreated)="onServerAdded($event)"
+        (bpCreated)="onBluePrintAdded($event)"
+      ></app-cockpit>
+
+      <hr />
+      <div class="row">
+        <div class="col-xs-12">
+          <app-server-element
+            *ngFor="let serverElement of serverElements"
+            [srvElement]="serverElement"
+          ></app-server-element>
+        </div>
+      </div>
+    </div>
+  </code>
+  <code title="2. app.component.ts" data-classes="col-md-6 col-sm-12">
+    import { Component } from '@angular/core';
+
+    @Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+    })
+    export class AppComponent {
+        serverElements = [
+            { type: 'server', name: 'Test Server', content: 'Just a Test' }
+        ];
+
+        onServerAdded(serverData: { serverName: string; serverContent: string }) {
+            this.serverElements.push({
+            type: 'server',
+            name: serverData.serverName,
+            content: serverData.serverContent
+            });
+        }
+
+        onBluePrintAdded(bluePrint: { serverName: string; serverContent: string }) {
+            this.serverElements.push({
+            type: 'blueprint',
+            name: bluePrint.serverName,
+            content: bluePrint.serverContent
+            });
+        }
+    }
+
+  </code>
+  <code title="3. cockpit.component.html" data-classes="col-md-6 col-sm-12">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>Add new Servers or blueprints!</p>
+        <label>Server Name</label>
+        <input type="text" class="form-control" [(ngModel)]="newServerName" />
+        <label>Server Content</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newServerContent"
+        />
+        <br />
+        <button class="btn btn-primary" (click)="onAddServer()">
+          Add Server
+        </button>
+        <button class="btn btn-primary" (click)="onAddBlueprint()">
+          Add Server Blueprint
+        </button>
+      </div>
+    </div>
+  </code>
+  <code title="4. cockpit.component.ts" data-classes="col-md-6 col-sm-12">
+    import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+
+    @Component({
+      selector: 'app-cockpit',
+      templateUrl: './cockpit.component.html',
+      styleUrls: ['./cockpit.component.css']
+    })
+    export class CockpitComponent implements OnInit {
+      @Output() serverCreated = new EventEmitter<{
+        serverName: string;
+        serverContent: string;
+      }>();
+      // tslint:disable-next-line: no-output-rename
+      @Output('bpCreated') bluePrintCreated = new EventEmitter<{
+        serverName: string;
+        serverContent: string;
+      }>();
+      newServerName = '';
+      newServerContent = '';
+      constructor() {}
+    
+      ngOnInit() {}
+    
+      onAddServer() {
+        this.serverCreated.emit({
+          serverName: this.newServerName,
+          serverContent: this.newServerContent
+        });
+      }
+    
+      onAddBlueprint() {
+        this.bluePrintCreated.emit({
+          serverName: this.newServerName,
+          serverContent: this.newServerContent
+        });
+      }
+    }
+    
+  </code>
+  <code title="5. server-element.component.html" data-classes="col-md-6 col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ element.name }}</div>
+        <div class="panel-body">
+          <p>
+            <strong *ngIf="element.type === 'server'" style="color: red">{{
+              element.content
+            }}</strong>
+            <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
+          </p>
+        </div>
+      </div>
+      
+  </code>
+  <code title="6. server-element.component.html" data-classes="col-md-6 col-sm-12">
+    import { Component, OnInit, Input } from '@angular/core';
+
+    @Component({
+      selector: 'app-server-element',
+      templateUrl: './server-element.component.html',
+      styleUrls: ['./server-element.component.css']
+    })
+    export class ServerElementComponent implements OnInit {
+      // prettier-ignore
+      // tslint:disable-next-line: no-input-rename
+      @Input('srvElement') element: { type: string, name: string, content: string };
+      constructor() {}
+    
+      ngOnInit() {}
+    }
+    
+  </code>
+</section>

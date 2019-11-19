@@ -1,0 +1,72 @@
+<section class="my-section">
+    <h1 class="my-title">Local References</h1>
+    <div class="my-notes">
+                   
+    </div>
+    <code title="3. cockpit.component.html" data-classes="col-md-6 col-sm-12">
+        <div class="row">
+            <div class="col-xs-12">
+            <p>Add new Servers or blueprints!</p>
+            <label>Server Name</label>
+            <input type="text" class="form-control" #serverNameInput />
+            <label>Server Content</label>
+            <input
+                type="text"
+                class="form-control"
+                #serverContentInput
+            />
+            <br />
+            <button class="btn btn-primary" (click)="onAddServer(serverNameInput)">
+                Add Server
+            </button>
+            <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)">
+                Add Server Blueprint
+            </button>
+            </div>
+        </div>
+        </code>
+        <code title="4. cockpit.component.ts" data-classes="col-md-6 col-sm-12">
+        import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+    
+        @Component({
+            selector: 'app-cockpit',
+            templateUrl: './cockpit.component.html',
+            styleUrls: ['./cockpit.component.css']
+        });
+        
+        export class CockpitComponent implements OnInit {
+            @Output() serverCreated = new EventEmitter<{
+                serverName: string;
+                serverContent: string;
+            }>();
+
+            // tslint:disable-next-line: no-output-rename
+            @Output('bpCreated') bluePrintCreated = new EventEmitter<{
+                serverName: string;
+                serverContent: string;
+            }>();
+
+            //newServerName = '';
+            //newServerContent = '';
+            @ViewChild('serverContentInput') serverContentInput: ElementRef
+            constructor() {}
+        
+            ngOnInit() {}
+        
+            onAddServer(nameInput: HTMLInputElement) {
+                this.serverCreated.emit({
+                    serverName: nameInput.value,
+                    serverContent: this.serverContentInput.nativeElement.value;
+                });
+            }
+        
+            onAddBlueprint(nameInput: HTMLInputElement) {
+                this.bluePrintCreated.emit({
+                    serverName: nameInput.value,
+                    serverContent: this.serverContentInput.nativeElement.value;
+                });
+            }
+        }
+        
+        </code>
+</section>

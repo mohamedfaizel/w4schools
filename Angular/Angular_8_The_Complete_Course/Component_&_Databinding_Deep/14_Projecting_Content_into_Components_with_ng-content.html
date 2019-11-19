@@ -1,0 +1,47 @@
+<section class="my-section">
+        <h1 class="my-title">Projecting Content into Component HTMl using &lt;ng-content></h1>
+        <div class="my-notes">
+          Generally, Everthing you place between the opening and closing tag of your own componentis lost by default. is simply removed from the DOM, angular will not take care about it.<br>
+          But you can chane this.<br>
+          There is a special derictive and it is a directive, It doesn't have own template.<br>
+          you can add <strong>&lt;ng-content>&lt;/ng-content></strong> component HTMl template, in the place where i want to render the content.
+
+        </div>
+        <code title="1. app.component.html" data-classes="col-md-6 col-sm-12">
+          <div class="container">
+            <app-cockpit
+              (serverCreated)="onServerAdded($event)"
+              (bpCreated)="onBluePrintAdded($event)"
+            ></app-cockpit>
+      
+            <hr />
+            <div class="row">
+              <div class="col-xs-12">
+                <app-server-element
+                  *ngFor="let serverElement of serverElements"
+                  [srvElement]="serverElement"
+                >
+                <p>
+                        <strong *ngIf="serverElement.type === 'server'" style="color: red">{{
+                                serverElement.content
+                        }}</strong>
+                        <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
+                      </p>
+                    </app-server-element>
+              </div>
+            </div>
+          </div>
+        </code>
+        
+        <code title="5. server-element.component.html" data-classes="col-md-6 col-sm-12">
+          <div class="panel panel-default">
+              <div class="panel-heading">{{ element.name }}</div>
+              <div class="panel-body">
+                <ng-content></ng-content>
+              </div>
+            </div>
+            
+        </code>
+       
+      </section>
+      

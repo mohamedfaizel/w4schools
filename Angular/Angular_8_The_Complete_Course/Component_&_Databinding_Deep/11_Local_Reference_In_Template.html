@@ -1,0 +1,87 @@
+<section class="my-section">
+        <h1 class="my-title">Local References</h1>
+        <div class="my-notes">
+            A local reference can be placed on any HTML element, so not only input element on anything on the template and you add with a hash tag and then name of your choice.<br>
+            Note: <br>
+            1. it will hold a reference to this element and its properties(not only for value),<br>
+            2. you can use them everyware in template But not inside your Typescript code.<br><br><br>
+            <strong>Custom Event and property binding code modified</strong>
+            <ul>
+                <li>replace local reference<br>input Element => [(ngModel)]="newServerName" => #serverNameInput</li>
+                <li>parse local refernce in Param in click function <br>(click)="onAddServer(serverNameInput)"</li>
+                <li>function chnages <br>
+                    <pre>
+                        onAddServer(nameInput: HTMLInputElement) {<br>
+                            this.serverCreated.emit({ <br>
+                                serverName: nameInput.value,<br>
+                                serverContent: this.newServerContent<br>
+                            });<br>
+                            }<br>
+                    </pre>
+                </li>
+                <li></li>
+            </ul>            
+        </div>
+        <code title="3. cockpit.component.html" data-classes="col-md-6 col-sm-12">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <p>Add new Servers or blueprints!</p>
+                    <label>Server Name</label>
+                    <input type="text" class="form-control" #serverNameInput />
+                    <label>Server Content</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="newServerContent"
+                    />
+                    <br />
+                    <button class="btn btn-primary" (click)="onAddServer(serverNameInput)">
+                      Add Server
+                    </button>
+                    <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)">
+                      Add Server Blueprint
+                    </button>
+                  </div>
+                </div>
+              </code>
+              <code title="4. cockpit.component.ts" data-classes="col-md-6 col-sm-12">
+                import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+            
+                @Component({
+                  selector: 'app-cockpit',
+                  templateUrl: './cockpit.component.html',
+                  styleUrls: ['./cockpit.component.css']
+                })
+                export class CockpitComponent implements OnInit {
+                  @Output() serverCreated = new EventEmitter<{
+                    serverName: string;
+                    serverContent: string;
+                  }>();
+                  // tslint:disable-next-line: no-output-rename
+                  @Output('bpCreated') bluePrintCreated = new EventEmitter<{
+                    serverName: string;
+                    serverContent: string;
+                  }>();
+                  //newServerName = '';
+                  newServerContent = '';
+                  constructor() {}
+                
+                  ngOnInit() {}
+                
+                  onAddServer(nameInput: HTMLInputElement) {
+                    this.serverCreated.emit({
+                      serverName: nameInput.value,
+                      serverContent: this.newServerContent
+                    });
+                  }
+                
+                  onAddBlueprint() {
+                    this.bluePrintCreated.emit({
+                      serverName: this.newServerName,
+                      serverContent: this.newServerContent
+                    });
+                  }
+                }
+                
+              </code>
+        </section>

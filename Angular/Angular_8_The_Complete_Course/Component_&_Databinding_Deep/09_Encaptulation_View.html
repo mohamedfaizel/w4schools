@@ -1,0 +1,23 @@
+<section class="my-section">
+    <h1 class="my-title">Encapsulation view</h1>
+    <div class="my-notes">
+        <strong>Shadow DOM Technology</strong><br>
+        How the angular css works. In generally if you define any css rule in anywhere or any stylesheet it will applicable for whole document.
+        But how angular treat this ? Each component works differently. How ?<br>
+          <strong>angular add a unique attribute to Each element in a component </strong>
+          <ul>
+              <li>Emulated => Default <br> Unique attribute added in each Element in a component</li>
+              <li>None <br> No attributes added, so its act alike a normal, which means if you add any css rule in any component css, it'll apply all the components</li>
+              <li>Native <br>same as Emulated</li>
+          </ul>
+
+    </div>
+<code>
+        @Component({
+            selector: 'app-server-element',
+            templateUrl: './server-element.component.html',
+            styleUrls: ['./server-element.component.css'],
+            encapsulation: ViewEncapsulation.None // 
+          })
+</code>
+    </section>
