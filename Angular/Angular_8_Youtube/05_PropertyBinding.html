@@ -89,6 +89,7 @@
         <h3 class="text-special" [class]="successClass">at same time Both are not working. Direct html class attribute will silent.</h3>
         <h3 [class.text-error]="hasError">toggle Class via property</h3>
         <h3 [ngClass]="multiClasses">ngClass or Multi Classes</h3>
+        <h3 [ngClass]="{text-success: hasError !== true}">ngClass with inline condition</h3>
     </div>
   `,
   styles: [`
@@ -135,12 +136,14 @@
         <h3 [style.color]="hasError ? 'red' : 'green'">ternary operation</h3>
         <h3 [style.color]="highlightColor">Set Via DOM Property</h3>
         <h3 [ngStyle]="multiStyle">Multi Inline style</h3>
+        <h3 [ngStyle]="{color: hasError ? 'red' : 'green'}"></h3>
     </div>
   `,
   styles: []
 })
     export class BindingComponent implements OnInit {
           public highlightColor = 'orange';
+          public hasError = true;
           public multiStyle = {
             color : 'blue',
             fontStyle : 'italic'

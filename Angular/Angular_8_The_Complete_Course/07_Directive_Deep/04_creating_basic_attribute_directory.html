@@ -1,0 +1,191 @@
+<section class="my-section">
+    <h1 class="my-title">Module Introduction</h1>
+    <div class="my-notes">
+        <strong>Attribute Vs Structural</strong> 
+        <ul>
+            <li>Attribute directive </li>
+            <li>Looks like a normal HTML Attribute (possibly with databinding or event binding)</li>
+            <li>only affect/ change the element they are added to it.</li>
+            <li></li>
+            <li>Structural directive </li>
+            <li>Looks like a normal HTML Attribute but have a leading *(for desugaring)</li>
+            <li>Affect a whole area in the DOM (elements get added / removed)</li>
+        </ul>
+
+    </div> 
+</section>
+<section class="my-section">
+    <h1 class="my-title">Belo CheckList</h1>
+    <div class="my-notes">
+        <ol>
+            <li>Creating Own Basic Attribute Directory</li>
+            <li>Creating Own Better Attribute Directory with Renderer2</li>
+            <li>Using Host Listner to Listen to Host Event</li>
+            <li>HostBinding to bind the value</li>
+        </ol>
+
+    </div> 
+</section>
+<section class="my-section">
+    <h1 class="my-title">Creating Own Basic Attribute Directory</h1>
+    <div class="my-notes">   
+        <strong>Method 1</strong>     
+       Note : Directive must import and declared in module (Eg : app.module.ts)<br>
+       Note2 : This however  is not the bestway of changing that style because Directly access 
+       the element is not a good practise, Angular actually is also able to render your template without a DOM
+       and then these properties might be not available.
+
+    </div> 
+    <code title="1. basic-highlight.directive.ts" data-classes="col-md-6 col-sm-12">
+        import { Directive, ElementRef, OnInit} from '@angular/core';
+
+        @Directive({
+            selector : '[appBasicHighlight]' //Selector Must be unique
+        })
+
+        export class BasicHighlightDirective implements OnInit {
+            constructor(private elementRef: ElementRef){}
+
+            ngOnInit(){
+                this.elementRef.nativeElement.style.backgroundColor = 'yellow';
+            }
+        }
+    </code>
+    <code title="2. app.component.html" data-classes="col-md-6 col-sm-12">
+        <p appBasicHighlight>This is text for highlight</p>
+    </code>
+</section>
+
+<section class="my-section">
+    <h1 class="my-title">Creating Own Better Attribute Directory with Renderer2</h1>
+    <div class="my-notes"> 
+        <strong>method 2</strong>       
+        Better Approch for accessing the DOM. <br><br>
+        <strong>Why is it a better Approach</strong> <br>
+        Angular is not  limited to running in the browser here, it for example also works with service workers
+        and these are environment wheere you might not have access to the DOM.<br>
+        So if you try to change the DOM as you did here in basic highlight(Method 1) by directly accessing the native element and the style of this element,
+        you might get an error in somecircumstances
+        <br>
+        Note : In most circumstence you probaly dont get error in Method 1, and you probably also know if your app is going to run in the browser or not.<br>
+        still it is a better practice to use the renderer for DOM access.
+    </div> 
+    <code title="1. better-highlight.directive.ts" data-classes="col-md-6 col-sm-12">
+        import { Directive, OnInit, ElementRef, Renderer2} from '@angular/core';
+
+        @Directive({
+            selector : '[appBetterHighlight]' //Selector Must be unique
+        })
+
+        export class BetterHighlightDirective implements OnInit {
+            constructor(private elementRef: ElementRef, private renderer: Renderer2){}
+
+            ngOnInit(){
+                this.renderer.setStyle(this.elementRef.nativeElement, 'background-color', 'blue');
+            }
+        }
+    </code>
+    <code title="2. app.component.html" data-classes="col-md-6 col-sm-12">
+        <p appBetterHighlight>This is text for highlight</p>
+    </code>
+    </section>
+<section class="my-section">
+    <h1 class="my-title">Using Host Listner to Listen to Host Event</h1>
+    <div class="my-notes"> 
+        Decorator that declares a DOM event to listen for, and provides a handler method to run when that event occurs.<br>
+        Ex Events : click, mouseenter, mouseleave...
+    </div> 
+    <code title="1. HostListener-highlight.directive.ts" data-classes="col-md-6 col-sm-12">
+        import { Directive, OnInit, ElementRef, Renderer2, HostListener} from '@angular/core';
+
+        @Directive({
+            selector : '[appHoverHighlight]' //Selector Must be unique
+        })
+
+        export class HostListenerHighlightDirective implements OnInit {
+            constructor(private elementRef: ElementRef, private renderer: Renderer2){}
+
+            ngOnInit(){
+                
+            }
+            @HostListener('mouseenter') mouseover(eventData: Event){
+                this.renderer.setStyle(this.elementRef.nativeElement, 'background-color', 'blue');
+            }
+            @HostListener('mouseleave') mouseleave(eventData: Event){
+                this.renderer.setStyle(this.elementRef.nativeElement, 'background-color', 'transperent');
+            }
+        }
+    </code>
+    <code title="2. app.component.html" data-classes="col-md-6 col-sm-12">
+        <p appHoverHighlight>This is text for highlight</p>
+    </code>
+</section>
+<section class="my-section">
+<h1 class="my-title">Using Host Binding to Listen to Host Event</h1>
+<div class="my-notes"> 
+    Decorator that marks a DOM property as a host-binding property and supplies configuration metadata. Angular automatically checks host property bindings during change detection, and if a binding changes it updates the host element of the directive.<br>
+</div> 
+<code title="1. HostListener-highlight.directive.ts" data-classes="col-md-6 col-sm-12">
+    import { Directive, OnInit, ElementRef, Renderer2, HostListener, HostBinding} from '@angular/core';
+
+    @Directive({
+        selector : '[appHoverHighlight]' //Selector Must be unique
+    })
+
+    export class HostListenerHighlightDirective implements OnInit {
+        //@HostBinding('style.backgroundColor') backgroundColor:string; //initialize only
+        @HostBinding('style.backgroundColor') backgroundColor:string = 'transperent'; //initialize with value
+
+        constructor(private elementRef: ElementRef, private renderer: Renderer2){}
+
+        ngOnInit(){
+            
+        }
+        @HostListener('mouseenter') mouseover(eventData: Event){
+            this.backgroundColor = 'blue';
+        }
+        @HostListener('mouseleave') mouseleave(eventData: Event){
+            this.backgroundColor = 'transperent';
+        }
+    }
+</code>
+<code title="2. app.component.html" data-classes="col-md-6 col-sm-12">
+    <p appHoverHighlight>This is text for highlight</p>
+</code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">custom value binding to directive property</h1>
+    <div class="my-notes"> 
+        The above function is changed to dynamic value sets.<br>
+    </div> 
+    <code title="1. HostListener-highlight.directive.ts" data-classes="col-md-6 col-sm-12">
+        import { Directive, OnInit, ElementRef, Renderer2, HostListener, HostBinding, Input} from '@angular/core';
+    
+        @Directive({
+            selector : '[appHoverHighlight]' //Selector Must be unique
+        })
+    
+        export class HostListenerHighlightDirective implements OnInit {
+            @Input() defaultColor: sting = 'transperent';
+            @Input() HighLightColor: sting = 'blue';
+
+            //@HostBinding('style.backgroundColor') backgroundColor:string; //initialize only
+            @HostBinding('style.backgroundColor') backgroundColor:string = 'transperent'; //initialize with value
+
+            constructor(private elementRef: ElementRef, private renderer: Renderer2){}
+    
+            ngOnInit(){
+                this.backgroundColor = this.defaultColor;
+            }
+            @HostListener('mouseenter') mouseover(eventData: Event){
+                this.backgroundColor = this.HighLightColor;
+            }
+            @HostListener('mouseleave') mouseleave(eventData: Event){
+                this.backgroundColor = this.defaultColor;
+            }
+        }
+    </code>
+    <code title="2. app.component.html" data-classes="col-md-6 col-sm-12">
+        <p appHoverHighlight [defaultColor]="'yellow'" [HighLightColor]="'red'">This is text for highlight</p>
+    </code>
+</section>

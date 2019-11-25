@@ -1,0 +1,502 @@
+<section class="my-section">
+    <h1 class="my-title">Services Introduction</h1>
+    <div class="my-notes">
+        <strong></strong> 
+       Angular act as a central repository, as a central bussiness unit, 
+       Something where you can store, where you can centralized your code in like function method().
+       we also communicate between components.
+    </div> 
+</section>
+<section class="my-section">
+    <h1 class="my-title">Create a new Services</h1>
+    <div class="my-notes">
+        Note : Service doesn't have decorator which means no @Service in Angular.
+    </div> 
+    <code title="Logging.service.ts" data-classes="col-md-6 col-sm-12">
+        export class LooggingService {
+            logStatusChange(status: string) {
+              console.log("A server status changed, new status: " + status);
+            }
+          }          
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Wrong way in using Services</h1>
+    <div class="my-notes">
+        Here the below example working. but its not a correct way because the service instant created manually.
+    </div> 
+    <code title="Logging.service.ts" data-classes="col-md-6 col-sm-12">
+            import { Component, EventEmitter, Output } from "@angular/core";
+            import { LooggingService } from "../logging.service";
+            
+            @Component({
+              selector: "app-new-account",
+              templateUrl: "./new-account.component.html",
+              styleUrls: ["./new-account.component.css"]
+            })
+            export class NewAccountComponent {
+              @Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
+            
+              onCreateAccount(accountName: string, accountStatus: string) {
+                this.accountAdded.emit({
+                  name: accountName,
+                  status: accountStatus
+                });
+                //console.log('A server status changed, new status: ' + accountStatus);
+                const service = new LooggingService(); // Instance created manually
+                service.logStatusChange(accountStatus);
+              }
+            }          
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Proper way to using service in Angular </h1>
+    <div class="my-notes">
+        <strong>Angular Dependency Injector</strong>
+        
+        <ul>
+            <li>Constructor inform angular that we will need an instance of this logging service</li>
+            <li>Angular @Component Decoretor Proprty { Provider : [] } Know to how to give an instance. </li>
+            <li>then we can use it anywhere in that component</li>
+            <li></li>
+        </ul>
+    </div> 
+    <code title="Logging.service.ts" data-classes="col-md-6 col-sm-12">
+            import { Component, EventEmitter, Output } from "@angular/core";
+            import { LoggingService } from "../logging.service";
+            
+            @Component({
+                selector: "app-new-account",
+                templateUrl: "./new-account.component.html",
+                styleUrls: ["./new-account.component.css"],
+                providers : [LoggingService]
+            })
+            export class NewAccountComponent {
+                @Output() accountAdded = new EventEmitter<{ name: string; status: string }>();
+            
+                constructor(private loggingService: LoggingService{}
+                onCreateAccount(accountName: string, accountStatus: string) {
+                this.accountAdded.emit({
+                    name: accountName,
+                    status: accountStatus
+                });
+                //console.log('A server status changed, new status: ' + accountStatus);
+                //const service = new LooggingService();
+                //service.logStatusChange(accountStatus);
+                this.loggingService.logStatusChange(accountStatus);
+                }
+            }
+                    
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Hierachiacal Injector </h1>
+    <div class="my-notes">
+        <strong>The Angular dependency injector is a hierachical injector, 
+            that mean if we provide a service in some place of our app, 
+            same instanse of service is available for the component and all its child components but not for parent components.<br>
+            Like a hierarical tree.
+        </strong>
+        <ul>
+            <li>App Module => same instanse of service is available for Application wide</li>
+            <li>App Component => same instanse of service is available for all components (but not for aother service)</li>
+            <li>Any other component => same instanse of service is available for the component and all its child components</li>
+        </ul>
+        <h3>Note: Hieghest possible is App.Module not app.component.</h3>
+        <h3>one service can inject it into another service.</h3>
+        Here the Error is <strong>@component({ Provider: [AccountsService] })</strong> in three place.<br>
+        <ol>
+            <li>app.component.ts</li>
+            <li>new-accounts.component.ts</li>
+            <li>accounts.component.ts</li>
+        </ol>
+        Notice : here the accounts and new-accounts is a child component of app component.App component already have the <strong>AccountService</strong> provider but the child component try to overwrite it.<br>
+        Solutuion: Simply remove the <strong>AccountSerice </strong> in  Child component providers.
+    </div> 
+    <code title="accounts.service.ts" data-classes="col-md-6 col-sm-12">
+        export class AccountsService {
+            accounts = [
+                {
+                name: "Master Account",
+                status: "active"
+                },
+                {
+                name: "Testaccount",
+                status: "inactive"
+                },
+                {
+                name: "Hidden Account",
+                status: "unknown"
+                }
+            ];
+            
+            addAccount(name: string, status: string) {
+                this.accounts.push({ name: name, status: status });
+            }
+            
+            updateStatus(id: number, status: string) {
+                this.accounts[id].status = status;
+            }
+        }
+              
+                    
+    </code>
+    <code title="app.component.ts" data-classes="col-md-6 col-sm-12">
+        import { Component, OnInit } from "@angular/core";
+        import { AccountsService } from "./accounts.service";
+        
+        @Component({
+            selector: "app-root",
+            templateUrl: "./app.component.html",
+            styleUrls: ["./app.component.css"],
+            providers: [AccountsService]
+        })
+        export class AppComponent implements OnInit {
+            accounts: { name: string; status: string }[] = [];
+        
+            constructor(private accountsService: AccountsService) {}
+            ngOnInit() {
+            this.accounts = this.accountsService.accounts;
+            }
+        }
+            
+    </code>
+    <code title="new-accounts.component.ts" data-classes="col-md-6 col-sm-12">
+        import { Component, EventEmitter, Output } from "@angular/core";
+        import { LoggingService } from "../logging.service";
+        import { AccountsService } from "../accounts.service";
+        
+        @Component({
+            selector: "app-new-account",
+            templateUrl: "./new-account.component.html",
+            styleUrls: ["./new-account.component.css"],
+            providers: [LoggingService] //, AccountsService
+        })
+        export class NewAccountComponent {
+            constructor(
+            private loggingService: LoggingService,
+            private accountsService: AccountsService
+            ) {}
+        
+            onCreateAccount(accountName: string, accountStatus: string) {
+            //console.log('A server status changed, new status: ' + accountStatus);
+            //const service = new LooggingService();
+            //service.logStatusChange(accountStatus);
+            this.accountsService.addAccount(accountName, accountStatus);
+            this.loggingService.logStatusChange(accountStatus);
+            }
+        }
+            
+    </code>
+    <code title="accounts.component.ts" data-classes="col-md-6 col-sm-12">
+        import { Component, EventEmitter, Input, Output } from "@angular/core";
+        import { LoggingService } from "../logging.service";
+        import { AccountsService } from "../accounts.service";
+        
+        @Component({
+            selector: "app-account",
+            templateUrl: "./account.component.html",
+            styleUrls: ["./account.component.css"],
+            providers: [LoggingService] //, AccountsService
+        })
+        export class AccountComponent {
+            @Input() account: { name: string; status: string };
+            @Input() id: number;
+        
+            constructor(
+            private loggingService: LoggingService,
+            private accountsService: AccountsService
+            ) {}
+            onSetTo(status: string) {
+            this.accountsService.updateStatus(this.id, status);
+            //console.log('A server status changed, new status: ' + status);
+            this.loggingService.logStatusChange(status);
+            }
+        }
+            
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Injecting service into service </h1>
+    <div class="my-notes">
+        When we inject another service into a service at that time service must have a @Injectable() Decorator.<br>
+        <ul>
+            <li>app.module.ts => AccountsService, LoggingService Servicess added in providers.</li>
+            <li>logging.service.ts => Here no @Injectable() Metadata, Because no other service is injected in inside here </li>
+            <li>accounts.service.ts => loggingService.logStatusChange() method is write here, so here  @Injectable() Metadata is must. because loggingService is injected here or this service is reciving other service.</li>
+            <li>app.component.ts => no provider is needed here, because service is moved to higher leve(app.module)</li>
+            <li>account.component.ts => Here we removed the loggingService.logStatusChange() because we moved it into account.service, so here we also remove the provider, constuctor and import also.</li>
+            <li>new-account.component.ts => Here we removed the loggingService.logStatusChange() because we moved it into account.service, so here we also remove the provider, constuctor and import also.</li>
+        </ul>
+    </div> 
+    <code title="app.module.ts" data-classes="col-md-6 col-sm-12">
+            import { BrowserModule } from "@angular/platform-browser";
+            import { NgModule } from "@angular/core";
+            import { FormsModule } from "@angular/forms";
+            
+            import { AppComponent } from "./app.component";
+            import { AccountComponent } from "./account/account.component";
+            import { NewAccountComponent } from "./new-account/new-account.component";
+            import { AccountsService } from "./accounts.service";
+            import { LoggingService } from "./logging.service";
+            
+            @NgModule({
+              declarations: [AppComponent, AccountComponent, NewAccountComponent],
+              imports: [BrowserModule, FormsModule],
+              providers: [AccountsService, LoggingService],
+              bootstrap: [AppComponent]
+            })
+            export class AppModule {}
+              
+            
+    </code>
+    <code title="logging.service.ts" data-classes="col-md-6 col-sm-12">
+            export class LoggingService {
+                logStatusChange(status: string) {
+                  console.log("A server status changed, new status: " + status);
+                }
+              }
+              
+    </code>
+    <code title="accounts.service.ts" data-classes="col-md-6 col-sm-12">
+            import { Injectable } from "@angular/core";
+            import { LoggingService } from "./logging.service";
+
+            @Injectable()
+            export class AccountsService {
+              accounts = [
+                {
+                  name: "Master Account",
+                  status: "active"
+                },
+                {
+                  name: "Testaccount",
+                  status: "inactive"
+                },
+                {
+                  name: "Hidden Account",
+                  status: "unknown"
+                }
+              ];
+            
+              constructor(private loggingService: LoggingService) {}
+              addAccount(name: string, status: string) {
+                this.accounts.push({ name: name, status: status });
+                this.loggingService.logStatusChange(status);
+              }
+            
+              updateStatus(id: number, status: string) {
+                this.accounts[id].status = status;
+                this.loggingService.logStatusChange(status);
+              }
+            }
+            
+    </code>
+    <code title="app.component.ts" data-classes="col-md-6 col-sm-12">
+            import { Component, OnInit } from "@angular/core";
+            import { AccountsService } from "./accounts.service";
+            
+            @Component({
+              selector: "app-root",
+              templateUrl: "./app.component.html",
+              styleUrls: ["./app.component.css"]
+              //providers: [AccountsService]
+            })
+            export class AppComponent implements OnInit {
+              accounts: { name: string; status: string }[] = [];
+            
+              constructor(private accountsService: AccountsService) {}
+              ngOnInit() {
+                this.accounts = this.accountsService.accounts;
+              }
+            }
+            
+    </code>
+    <code title="new-account.component.ts" data-classes="col-md-6 col-sm-12">
+            import { Component, EventEmitter, Output } from "@angular/core";
+            import { LoggingService } from "../logging.service";
+            import { AccountsService } from "../accounts.service";
+            
+            @Component({
+              selector: "app-new-account",
+              templateUrl: "./new-account.component.html",
+              styleUrls: ["./new-account.component.css"]
+              //providers: [LoggingService]
+            })
+            export class NewAccountComponent {
+              constructor(
+                private loggingService: LoggingService, //logging injection is not need here
+                private accountsService: AccountsService
+              ) {}
+            
+              onCreateAccount(accountName: string, accountStatus: string) {
+                //console.log('A server status changed, new status: ' + accountStatus);
+                //const service = new LoggingService();
+                //service.logStatusChange(accountStatus);
+                this.accountsService.addAccount(accountName, accountStatus);
+                //this.loggingService.logStatusChange(accountStatus);
+              }
+            }
+            
+    </code>
+    <code title="account.component.ts" data-classes="col-md-6 col-sm-12">
+            import { Component, EventEmitter, Input, Output } from "@angular/core";
+            import { LoggingService } from "../logging.service";
+            import { AccountsService } from "../accounts.service";
+            
+            @Component({
+              selector: "app-account",
+              templateUrl: "./account.component.html",
+              styleUrls: ["./account.component.css"]
+              //providers: [LoggingService]
+            })
+            export class AccountComponent {
+              @Input() account: { name: string; status: string };
+              @Input() id: number;
+            
+              constructor(
+                private loggingService: LoggingService, //Logging injection not necceary here
+                private accountsService: AccountsService
+              ) {}
+              onSetTo(status: string) {
+                this.accountsService.updateStatus(this.id, status);
+                //console.log('A server status changed, new status: ' + status);
+                //this.loggingService.logStatusChange(status);
+              }
+            }
+            
+    </code>
+</section>
+<section class="my-section">
+  <h1 class="my-title"> Using Service for cross-component comunication </h1>
+  <div class="my-notes">
+      Using Service for cross-component comunication is very simple. 
+      <ul>
+        <li>accountsService.statusUpdated</li>
+        <li>EventEmitter method create in service</li>
+        <li>emit(send) the data in account component</li>
+        <li>Subsribe(Receive) the data in new-account.component</li>
+      </ul>
+  </div>
+  <code title="accounts.service.ts" data-classes="col-md-6 col-sm-12">
+      import { Injectable, EventEmitter } from "@angular/core";
+      import { LoggingService } from "./logging.service";
+      @Injectable()
+      export class AccountsService {
+        accounts = [
+          {
+            name: "Master Account",
+            status: "active"
+          },
+          {
+            name: "Testaccount",
+            status: "inactive"
+          },
+          {
+            name: "Hidden Account",
+            status: "unknown"
+          }
+        ];
+      
+        statusUpdated = new EventEmitter<string>();
+      
+        constructor(private loggingService: LoggingService) {}
+        addAccount(name: string, status: string) {
+          this.accounts.push({ name: name, status: status });
+          this.loggingService.logStatusChange(status);
+        }
+      
+        updateStatus(id: number, status: string) {
+          this.accounts[id].status = status;
+          this.loggingService.logStatusChange(status);
+        }
+      }
+      
+  </code>
+  <code title="accounts.component.ts" data-classes="col-md-6 col-sm-12">
+      import { Component, Input } from "@angular/core";
+      import { LoggingService } from "../logging.service";
+      import { AccountsService } from "../accounts.service";
+      
+      @Component({
+        selector: "app-account",
+        templateUrl: "./account.component.html",
+        styleUrls: ["./account.component.css"]
+        //providers: [LoggingService]
+      })
+      export class AccountComponent {
+        @Input() account: { name: string; status: string };
+        @Input() id: number;
+      
+        constructor(
+          private loggingService: LoggingService, //Logging injection not necceary here
+          private accountsService: AccountsService
+        ) {}
+        onSetTo(status: string) {
+          this.accountsService.updateStatus(this.id, status);
+          //console.log('A server status changed, new status: ' + status);
+          //this.loggingService.logStatusChange(status);
+          this.accountsService.statusUpdated.emit(status);
+        }
+      }
+      
+  </code>
+  <code title="new-accounts.component.ts" data-classes="col-md-6 col-sm-12">
+      import { Component, EventEmitter, Output } from "@angular/core";
+      import { LoggingService } from "../logging.service";
+      import { AccountsService } from "../accounts.service";
+      
+      @Component({
+        selector: "app-new-account",
+        templateUrl: "./new-account.component.html",
+        styleUrls: ["./new-account.component.css"]
+        //providers: [LoggingService]
+      })
+      export class NewAccountComponent {
+        constructor(
+          private loggingService: LoggingService, //logging injection is not need here
+          private accountsService: AccountsService
+        ) {
+          this.accountsService.statusUpdated.subscribe((status: string) =>
+            alert("New Status =" + status);
+          );
+        }
+      
+        onCreateAccount(accountName: string, accountStatus: string) {
+          //console.log('A server status changed, new status: ' + accountStatus);
+          //const service = new LoggingService();
+          //service.logStatusChange(accountStatus);
+          this.accountsService.addAccount(accountName, accountStatus);
+          //this.loggingService.logStatusChange(accountStatus);
+        }
+      }
+      
+  </code>
+  </section>
+  <section class="my-section">
+      <h1 class="my-title"> Using Service for cross-component comunication </h1>
+    <code  title="Angular6+" data-classes="col-md-6 col-sm-12">
+        If you're using Angular 6+ (check your package.json  to find out), you can provide application-wide services in a different way.
+
+        Instead of adding a service class to the providers[]  array in AppModule , you can set the following config in @Injectable() :
+        
+        @Injectable({providedIn: 'root'})
+        export class MyService { ... }
+        
+        This is exactly the same as:
+        
+        export class MyService { ... }
+        
+        and
+        
+        import { MyService } from './path/to/my.service';
+        
+        @NgModule({
+            ...
+            providers: [MyService]
+        })
+        export class AppModule { ... }
+        
+        Using this new syntax is completely optional, the traditional syntax (using providers[] ) will still work. The "new syntax" does offer one advantage though: Services can be loaded lazily by Angular (behind the scenes) and redundant code can be removed automatically. This can lead to a better performance and loading speed - though this really only kicks in for bigger services and apps in general.
+    </code>
+  </section>

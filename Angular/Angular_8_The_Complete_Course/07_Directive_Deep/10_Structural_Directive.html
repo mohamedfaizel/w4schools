@@ -1,0 +1,55 @@
+<section class="my-section">
+    <h1 class="my-title">Structural Directive</h1>
+    <div class="my-notes">
+        <strong>What happen Behind the Scene on Structural Directives</strong>
+        <ul>
+            <li>(*ngIf="!onlytrue") => This star indicates to Angular that this is a structural directive.</li>
+            <li>Now Probably see that there its basically the same but that its wrapped in ng-template</li>
+            <li>The Reson that ng-template is an element which itself is not rendered but 
+                which allows us to define a template in the end for Angular to use once it determine that this template,
+            some element needs to be rendered because this condition is true in this case.</li>
+        </ul>
+    </div> 
+    <code title="User Typed Structure" data-classes="col-md-6 col-sm-12">
+        <div *ngIf="!onlyOdd">
+            <li>...</li>
+        </div>
+    </code>
+    <code title="Angular Behind the Scenes" data-classes="col-md-6 col-sm-12">
+        <ng-template  [ngIf]="!onlyOdd">
+            <div>
+                <li>...</li>
+            </div>
+        </ng-template>
+    </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Custom Structural Directive</h1>
+    <div class="my-notes">
+        
+    </div> 
+    <code title="unless.directive.ts" data-classes="col-md-6 col-sm-12">
+        import {Directive, Input, TemplateRef, ViewContainRef} from "@angular/core";
+
+        @Directive({
+            selector: '[appUnless]'
+        })
+
+        export class UnlessDirective{
+            @Input() set appUnless(condition:boolean) {
+                if(!condition){
+                    this.vcRef.createEmbeddedView(this.templateRef);
+                } else {
+                    this.vcRef.clear();
+                } 
+            }
+
+            constructor(private template: TemplateRef<any>, private vcRef: ViewContainrRef){}
+        }
+    </code>
+    <code title="app.component.html" data-classes="col-md-6 col-sm-12">
+        <div  *appUnless="onlyOdd">
+            <li>...</li>
+        </div>
+    </code>
+</section>
