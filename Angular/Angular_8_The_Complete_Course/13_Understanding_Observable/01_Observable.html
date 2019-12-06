@@ -1,0 +1,198 @@
+<section>
+    <h1>Core of observable</h1>
+    <div  class="my-notes">
+      Every time Observable must be unsubscribed when the page is onDestroy(), Otherwise it will leak the memory
+
+      <br>
+      Note: Try comment the onDestroy method and page navigate to other page and comeback to the same page. 2 subscribe is started. so this get an memeory issues.
+    </div>
+    <code  title="1. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+        ...
+        export class HomeComponent implements OnInit, OnDestroy {
+            private firstObsSubscription: Subscription;
+
+            constructor(){}
+
+            ngOnInit(){
+                //interval is a kind of Observable not a actual Observable
+                this.firstObsSubscription = interval(1000).subscribe(count => {console.log(count)});
+            }
+
+            ngOnDestroy(){
+                this.firstObsSubscription.unsubscribe();
+            }
+        }
+    </code>
+</section>
+
+<section>
+    <h1>Custom observable</h1>
+    <div  class="my-notes">
+        <ul>
+            <li>3 Types of observable</li>
+            <li>Data</li>
+            <li>Error</li>
+            <li>Completion</li>
+        </ul>
+        <br>
+        Error Cancel the observer, if you try the error after complete it doesn't work.
+    </div>
+    <code  title="1. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+        ...
+        export class HomeComponent implements OnInit, OnDestroy {
+            private firstObsSubscription: Subscription;
+
+            constructor(){}
+
+            ngOnInit(){
+                //Parameter observer gives by angular rxjx.
+                const customIntervalObservable = Observable.create(observer => {
+                    let count = 0;
+                    setInterval(() => {
+                        //Data Observer
+                        observer.next(count);
+                        if(count === 2){
+                            // complete have no arguments
+                            observer.complete()
+                        }
+                        if(count > 3){
+                            //Error Observer
+                            observer.error(new Error('count is greater then 3!'))
+                        }
+                        count++;
+                    }, 1000);
+                });
+                this.firstObsSubscription = customIntervalObservable.subscribe(data => {
+                    console.log(data)
+                }, error => {
+                    console.log(error);
+                    alert(error.message)
+                }, () => {
+                    console.log('completed!');
+                })
+            }
+
+            ngOnDestroy(){
+                this.firstObsSubscription.unsubscribe();
+            }
+        }
+    </code>
+</section>
+
+<section>
+    <h1>Operators in rxjs</h1>
+    <div  class="my-notes">
+        * before subsribe data can be operate by operators, we can modify the data <br>
+        * multiple operator we can use
+    </div>
+    <code  title="1. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+        ...
+        export class HomeComponent implements OnInit, OnDestroy {
+            private firstObsSubscription: Subscription;
+
+            constructor(){}
+
+            ngOnInit(){
+                //Parameter observer gives by angular rxjx.
+                const customIntervalObservable = Observable.create(observer => {
+                    let count = 0;
+                    setInterval(() => {
+                        //Data Observer
+                        observer.next(count);
+                        if(count === 2){
+                            // complete have no arguments
+                            observer.complete()
+                        }
+                        if(count > 3){
+                            //Error Observer
+                            observer.error(new Error('count is greater then 3!'))
+                        }
+                        count++;
+                    }, 1000);
+                });
+                this.firstObsSubscription = customIntervalObservable
+                .pipe(
+                    //multiple operator we can use
+                    filter(data => {return data > 0 }), 
+                    map((data: number) => {return 'Round: '+ (data + 1); })
+                    )
+                .subscribe(data => {
+                    console.log(data)
+                }, error => {
+                    console.log(error);
+                    alert(error.message)
+                }, () => {
+                    console.log('completed!');
+                })
+            }
+
+            ngOnDestroy(){
+                this.firstObsSubscription.unsubscribe();
+            }
+        }
+    </code>
+</section>
+<section>
+    <h1>Subject in Observable</h1>
+    <div  class="my-notes">
+        Dont use EventEmitter when we get a service data in mannual accross the app.<br>
+        This only counts if you're using them as cross component manually call next() in Subject.<br>
+        if you use @Output use eventEmitter, Here dont use Subject.
+    </div>
+    <code  title="1. User.service.ts" data-classes="col-md-6  col-sm-12">
+            import { Injectable, EventEmitter } from '@angular/core';
+            import { Subject } from 'rxjs';
+            
+            @Injectable({providedIn: 'root'})
+            export class UserService {
+              //activatedEmitter = new EventEmitter<boolean>();
+              activatedEmitter = new Subject<boolean>();
+            }
+            
+    </code>
+
+    <code  title="1. user.component.ts" data-classes="col-md-6  col-sm-12">
+            export class UserComponent implements OnInit {
+              id: number;
+            
+              constructor(private route: ActivatedRoute, private userService: UserService) {
+              }
+            ...
+              onActivate() {
+                //this.userService.activatedEmitter.emit(true);
+                this.userService.activatedEmitter.next(true);
+              }
+            }
+            
+        </code>
+        <code  title="1. app.component.ts" data-classes="col-md-6  col-sm-12">
+                import { Subscription } from 'rxjs';
+                
+                import { UserService } from './user.service';
+                
+                export class AppComponent implements OnInit, OnDestroy {
+                  userActivated = false;
+                  private activatedSub: Subscription;
+                
+                  constructor(private userService: UserService) {
+                  }
+                
+                  ngOnInit() {
+                    this.activatedSub = this.userService.activatedEmitter.subscribe(didActivate => {
+                      this.userActivated = didActivate;
+                    });
+                  }
+                
+                  ngOnDestroy(): void {
+                    this.activatedSub.unsubscribe();
+                  }
+                }
+                
+        </code>
+        <code  title="1. app.component.html" data-classes="col-md-6  col-sm-12">
+                <p *ngIf="userActivated">Activated!</p>
+        </code>
+        <code  title="1. app.component.html" data-classes="col-md-6  col-sm-12">
+
+        </code>
+</section>  

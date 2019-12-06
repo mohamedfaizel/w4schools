@@ -1,0 +1,409 @@
+<section class="my-section">
+    <h1 class="my-title">Routing Setup</h1>
+    <div class="my-notes">
+        <ul>
+          <li>routerLink => Url Path<br>
+            
+            <ul>
+              <li><strong>Absolute Path</strong> => Starts from "/" + Path.<br> Ex: routerLink="/test" </li>
+              <li><strong>Relative Path</strong> => Starts from Path, in front no "/" <br> Ex: routerLink="server"</li>
+              <li>routerLink="['users']" => First Element is URL Path, all other elements are part of your path. Ex like id value we can pass </li>
+              <li></li>
+            </ul>
+          </li>
+          <li>routerLinkActive => apply css class, It will applay li or a, its depend upon you </li>
+          <li>routerLinkActiveOptions => Here "/" is in all apath so we check the whole url path.</li>
+        </ul>
+       
+    </div> 
+    <code title="1. src/app/app.module.ts (updated)" data-classes="col-md-6  col-sm-12">    
+        import { RouterModule, Routes } from '@angular/router';
+        
+        import { TestComponent } from './test/test.component';
+        import { ServerComponent } from './server/server.component';
+        import { usersComponent } from './users/users.component';
+        
+        const routes: Routes = [
+          { path: '', redirectTo: '/test', pathMatch: 'full' },
+          { path: 'test', component: TestComponent },
+          { path: 'server', component: TestComponent },
+          { path: 'users', component: usersComponent },
+          
+        ];
+        @NgModule({
+          imports: [RouterModule.forRoot(routes)]
+        })
+       
+      </code>
+
+    <code title="2. app.comonent.html" data-classes="col-md-6  col-sm-12">  
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+              <li routerLinkActive="my-ative-class" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/">Home</a></li>
+              <li routerLinkActive="my-ative-class"><a routerLink="servers">Server</a></li>
+              <li routerLinkActive="my-ative-class"><a routerLink="/test">Test</a></li>
+              <li routerLinkActive="my-ative-class"><a routerLink="['users']">User</a></li>
+            </ul>
+          </div>
+        </div>
+      </div> 
+
+          <router-outlet></router-outlet>
+        
+    </code>
+</section>
+<section class="my-section">
+  <h1 class="my-title">Routing Via Programatically</h1>
+  <div class="my-notes">
+      onLoadServers() => its a button click function.
+  </div>
+  <code title="2. app.comonent.ts" data-classes="col-md-6  col-sm-12">  
+    import { Router } from '@angular/router';
+    ... 
+    constructor(private router: Router){}
+    onLoadServers() {
+      this.router.navigate(['/server'])
+    }
+  </code>
+</section>
+<section class="my-section">
+    <h1 class="my-title">Fetching Routing Parameter</h1>
+    <div class="my-notes">
+       We can add many parameters dynamically. <br>
+       Ex : 'users/:id/:name',<br>
+       Note : "activatedRoute.snapshot.params[]" => used only when we routing one component to another component or Component Created Time, parameter values only change in path, it doesn't work. 
+    </div>
+    <code title="1. src/app/app.module.ts (updated)" data-classes="col-md-6  col-sm-12">    
+      
+      const routes: Routes = [
+        { path: '', redirectTo: '/test', pathMatch: 'full' },
+        { path: 'test', component: TestComponent },
+        { path: 'server', component: TestComponent },
+        { path: 'users', component: usersComponent },
+        { path: 'users/:id/:name', component: userComponent },
+        
+      ];
+     
+    </code>
+    <code title="2. app.comonent.html" data-classes="col-md-6  col-sm-12">
+      <a [routerLink]="['/users', 10, 'Anna']">Route</a>
+    </code>  
+    <code title="2. app.comonent.ts" data-classes="col-md-6  col-sm-12">  
+      import { Router, ActivatedRoute } from '@angular/router';
+      ... 
+      export class UserComponent implements OnInit {
+        user: {id: number, name: string};
+        constructor(private router: Router, private activatedRoute: ActivatedRoute){}
+        
+
+        ngOnInit(){
+          this.user = {
+            id: this.activatedRoute.snapshot.params['id'],
+            name: this.activatedRoute.snapshot.params['name']
+          }
+        }
+      }      
+    </code>
+  </section>
+  <section class="my-section">
+      <h1 class="my-title">Fetching Routing Parameter Reactively</h1>
+      <div class="my-notes">
+         "activatedRoute.params.subscribe( (params) => {...})" => used only when we routing same component with different parameters
+          <br> Because for Angular performance.
+      </div>
+      <code title="2. app.comonent.ts" data-classes="col-md-6  col-sm-12">  
+        export class UserComponent implements OnInit {
+          user: {id: number, name: string};
+          constructor(private router: Router, private activatedRoute: ActivatedRoute){}
+          
+  
+          ngOnInit(){
+            this.activatedRoute.params.subscribe( (params: Params) => {
+              this.user.id = params['id'];
+              this.user.name = params['name'];
+            })
+          }
+        }      
+      </code>
+    </section>
+    <section class="my-section">
+        <h1 class="my-title">Passing & Retriving URL Query Param and Fragments</h1>
+        <div class="my-notes">
+          URL Formats Ex : localhost:4200/users/10/Anna?mode=editing#loading <br>
+
+        </div>
+        <code title="2. app.module.ts" data-classes="col-md-6  col-sm-12"> 
+          const routes: Routes = [
+          { path: '', redirectTo: '/test', pathMatch: 'full' },
+          { path: 'test', component: TestComponent },
+          { path: 'users', component: usersComponent },
+          { path: 'servers', component: ServersComponent },
+          { path: 'servers/:id/edit', component: EditServerComponent },
+          
+        ];
+        </code>
+        <code title="2. server.comonent.html" data-classes="col-md-6  col-sm-12"> 
+        <a
+          [routerLink] = "['/server', 5, 'edit']"
+          [queryParams]="{allowEdit: '1'}"
+          fragment="loading"
+          class="list-group-item"
+          *ngFor="let server of servers"
+        >
+          {{server.name}}
+        </a>
+        <button class="btn btn-primary" (click)="onLoadServer(1)">Load Server</button>
+      </code>
+      <code title="servers.component.ts" data-classes="col-md-6  col-sm-12">
+        /*For Programatically*/
+        onLoadServer(id: nimber){
+          this.router.navigate(['/server', id, 'edit'], {queryParams: {allowEdit: '1'}, fragment: 'loading'})
+        }
+    </code>
+    <code title="edit-server.component.ts" data-classes="col-md-6  col-sm-12">
+        export class EditServerComponent implements OnInit {
+
+          server: {id: number, name: string, fragment: string};
+          serverName = '';
+          serverStatus = '';
+          constructor(private serverService: ServerService, private activaedRoute: ActivatedRoute){}
+
+          ngOnInit(){
+            console.log(this.activatedRoute.snapshot.queryParams)
+            console.log(this.activatedRoute.snapshot.fragment)
+            this.activatedRoute.queryParams.subscribe( (params: Params) => {
+              
+            })
+            this.activatedRoute.fragment.subscribe( (fragment: string) => {
+              
+            })
+            this.server = this.serverService.getServer(1);
+            this.serverName = this.server.name;
+            this.serverStatus = this.server.status;
+          }
+        }
+    </code>
+
+  </section>
+  <section class="my-section">
+    <h1 class="my-title">Practising and some common usage</h1>
+    <div class="my-notes">
+      
+
+    </div>
+    <code title="1. user.comonent.html" data-classes="col-md-6  col-sm-12"> 
+      <a
+      [routerLink]="['/users', user.id, user.name]"
+      *ngFor="let user of users"
+      class="list-group-item"
+      >{{user.name}}</a>
+    </code>
+    <code title="2. server.comonent.html" data-classes="col-md-6  col-sm-12"> 
+        <a
+          [routerLink] = "['/server', server.id, 'edit']"
+          [queryParams]="{allowEdit: '1'}"
+          fragment="loading"
+          class="list-group-item"
+          *ngFor="let server of servers"
+        >
+          {{server.name}}
+        </a>
+        <button class="btn btn-primary" (click)="onLoadServer(1)">Load Server</button>
+      </code>
+      <code title="2. app.module.ts" data-classes="col-md-6  col-sm-12"> 
+          const routes: Routes = [
+          { path: '', redirectTo: '/test', pathMatch: 'full' },
+          { path: 'test', component: TestComponent },
+          { path: 'users', component: usersComponent },
+          { path: 'users/:id/:name', component: userComponent },
+          { path: 'servers', component: ServersComponent },
+          { path: 'servers/:id', component: ServerComponent },
+          { path: 'servers/:id/edit', component: EditServerComponent },
+          
+        ];
+        </code>
+        <code title="server.component.ts" data-classes="col-md-6  col-sm-12">
+            export class ServerComponent implements OnInit {
+    
+              server: {id: number, name: string, status: string};
+
+              constructor(private serverService: ServerService, private activaedRoute: ActivatedRoute){}
+    
+              ngOnInit(){
+                // + used for convert the string to number
+                const id = +this.activaedRoute.snapshot.params['id'];
+                this.server = this.serverService.getServer(id);
+                
+                this.actevatedRoute.params.subscribe((params: Params) => {
+                  // + used for convert the string to number
+                  this.server = this.serverService.getServer(+params['id'])
+                })
+              }
+            }
+        </code>
+  </section>
+  <section class="my-section">
+    <h1 class="my-title">Child (Nested) Route</h1>
+    <div class="my-notes">
+      
+
+    </div> 
+    <code title="2. app.module.ts" data-classes="col-md-6  col-sm-12"> 
+        const routes: Routes = [
+        { path: '', redirectTo: '/test', pathMatch: 'full' },
+        { path: 'test', component: TestComponent },
+        { path: 'users', component: usersComponent,  children: [
+          { path: ':id/:name', component: userComponent },        
+        ]},
+        { path: 'servers', component: ServersComponent, children: [
+          { path: ':id', component: ServerComponent },
+          { path: ':id/edit', component: EditServerComponent },          
+        ]},
+      ];
+      </code>
+      <code title="2. app.component.html" data-classes="col-md-6  col-sm-12">
+        <h1>App Main Page Header</h1>
+        <p>load Home, user, and server page</p>
+        <router-outlet></router-outlet>  
+      </code>
+      <code title="3. user.component.html" data-classes="col-md-6  col-sm-12">
+        <h1>User Page</h1>
+        <p>load user child page</p>
+        <router-outlet></router-outlet>  
+      </code>
+      <code title="4. server.component.html" data-classes="col-md-6  col-sm-12"> 
+        <h1>server Page</h1>
+        <p>load server child page</p>
+        <router-outlet></router-outlet>  </code>
+  </section>
+  <section class="my-section">
+    <h1 class="my-title">Preserve Query Parameter</h1>
+    <div class="my-notes">
+      Here "server.comonent.ts" => "onEdit()" => Here we use Relativepath for store the queryparam and fragments
+      <br>
+      if we use Realative path we use {RelativeTo: this.router} = > its important<br>
+      queryParamsHandling: 'merge' => Merge old query params with any new we might add here<br>
+       queryParamsHandling: 'preserve' => old query params kept
+    </div>
+    <code title="1. servers.comonent.html" data-classes="col-md-6  col-sm-12"> 
+        <a
+          [routerLink] = "['/server', server.id, 'edit']"
+          [queryParams]="{allowEdit: server.id === 3 ? '1' : '0'}"
+          fragment="loading"
+          class="list-group-item"
+          *ngFor="let server of servers"
+        >
+          {{server.name}}
+        </a>
+        <button class="btn btn-primary" (click)="onLoadServer(1)">Load Server</button>
+        <div class="col-sm-12">
+          <router-outlet></router-outlet>
+        </div>
+      </code>
+      <code title="2. server.comonent.html" data-classes="col-md-6  col-sm-12">
+        <button class="btn btn-primary" (click)="onEdit()">Edit Server</button>
+      </code>
+      <code title="2. server.comonent.ts" data-classes="col-md-6  col-sm-12">
+       export class ServerComponent implements OnInit {
+        server: {id: number, name: string, status: string};
+
+        constructor (private serversService: ServerService, 
+          private: activatedRouter: Activatedrouter, 
+          private router: Router
+        ){}
+
+        ngOnInit(){
+          // + used for convert the string to number
+          const id = +this.activaedRoute.snapshot.params['id'];
+          this.server = this.serverService.getServer(id);
+          
+          this.actevatedRoute.params.subscribe((params: Params) => {
+            // + used for convert the string to number
+            this.server = this.serverService.getServer(+params['id'])
+          })
+        }
+
+        onEdit(){
+          // Relative path
+          // queryParamsHandling: 'merge' => Merge old query params with any new we might add here
+          // queryParamsHandling: 'preserve' => old query params kept
+          this.router.navigate(['edit'], {relativeTo: this.router, queryParamsHandling: 'preserve'})
+        }
+       }
+      </code>
+      <code title="edit-server.component.ts" data-classes="col-md-6  col-sm-12">
+          export class EditServerComponent implements OnInit {
+  
+            server: {id: number, name: string, fragment: string};
+            serverName = '';
+            serverStatus = '';
+            allowEdit = false;
+            constructor(private serverService: ServerService, private activaedRoute: ActivatedRoute){}
+  
+            ngOnInit(){
+              console.log(this.activatedRoute.snapshot.queryParams)
+              console.log(this.activatedRoute.snapshot.fragment)
+              this.activatedRoute.queryParams.subscribe( (queryParams: Params) => {
+                this.allowEdit = queryParams['allowEdit'] === '1' ? true : false;
+              })
+              this.activatedRoute.fragment.subscribe( (fragment: string) => {
+                
+              })
+              this.server = this.serverService.getServer(1);
+              this.serverName = this.server.name;
+              this.serverStatus = this.server.status;
+            }
+          }
+      </code>
+      <code title="edit-server.component.html" data-classes="col-md-6  col-sm-12">
+        <h4 *ngIf="!allowEdit"> You are not allow to Edit!</h4>
+        <div *ngIf="allowEdit">
+          ...
+        </div>
+      </code>
+
+  </section>
+  <section class="my-section">
+      <h1 class="my-title">wildcard Route</h1>
+      <div class="my-notes">
+        
+  
+      </div>
+      <code title="2. app.module.ts" data-classes="col-md-6  col-sm-12"> 
+          const routes: Routes = [
+          { path: '', redirectTo: '/test', pathMatch: 'full' },
+          { path: 'test', component: TestComponent },
+          { path: 'users', component: usersComponent,  children: [
+            { path: ':id/:name', component: userComponent },        
+          ]},
+          { path: 'servers', component: ServersComponent, children: [
+            { path: ':id', component: ServerComponent },
+            { path: ':id/edit', component: EditServerComponent },          
+          ]},
+          {path: 'not-found', component: pageNotFoundComponent }
+          { path : '**', redirectTo: '/not-found'}
+        ];
+      </code>
+  </section>
+  <section>
+    <h1>Extra Notes</h1>
+    <code  title="Extra Notes" data-classes="col-md-6  col-sm-12">
+        In our example, we didn't encounter any issues when we tried to redirect the user. But that's not always the case when adding redirections.
+
+        By default, Angular matches paths by prefix. That means, that the following route will match both /recipes  and just / 
+        
+        { path: '', redirectTo: '/somewhere-else' } 
+        
+        Actually, Angular will give you an error here, because that's a common gotcha: This route will now ALWAYS redirect you! Why?
+        
+        Since the default matching strategy is "prefix" , Angular checks if the path you entered in the URL does start with the path specified in the route. Of course every path starts with ''  (Important: That's no whitespace, it's simply "nothing").
+        
+        To fix this behavior, you need to change the matching strategy to "full" :
+        
+        { path: '', redirectTo: '/somewhere-else', pathMatch: 'full' } 
+        
+        Now, you only get redirected, if the full path is ''  (so only if you got NO other content in your path in this example).
+    </code>
+  </section>

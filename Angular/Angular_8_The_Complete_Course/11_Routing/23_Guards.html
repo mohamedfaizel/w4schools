@@ -1,0 +1,330 @@
+<section>
+        <h1>Routing with Guards</h1>
+        <div  class="my-notes">
+          <ul>
+            <li><strong>authGuard.service.ts</strong>
+              <ul>
+                <li>CanActivate => it have 2 arguments, ActivatedRouteSnapshot & RouterStateSnapshot</li>
+                <li>Angular should execute this data before a route is loaded. it will give us this data(arguments)</li>
+                <li>it will return Observable or promises or boolean</li>
+                <li>canActivate can run both asynchronously return an Observable or a promise or synchonously</li>
+              </ul>
+            </li>
+            <li>
+              <strong> auth.service.ts</strong>
+              <ul>
+                <li>This is fake service for authentication</li>
+                <li>if .authService.isAuthenticated return true; canActivate allow the user to navigathe original Path or it will naviagte to force the user to go somewhere</li>
+              </ul>
+            </li>
+            <li>
+              <strong>app.module.ts</strong>
+              <ul>
+                <li>import and register the service in providers:[...]</li>
+              </ul>
+            </li>
+            <li>
+              <strong>app-routing.module.ts</strong>
+              <ul>
+                <li>path: server => canActivate: [AuthGuard]</li>
+                <li>if we implement the canActivate guard it aplly this path and also apply to its children path automatically. which means whole server path.</li>
+                <li>path: server => canActivateChild: [AuthGuard],</li>
+                <li>if you want to protect only our child path not our root path use this.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <code  title="1. authGuard.service.ts" data-classes="col-md-6  col-sm-12">
+            import {
+              CanActivate,
+              ActivatedRouteSnapshot,
+              RouterStateSnapshot,
+              Router,
+              CanActivateChild
+            } from '@angular/router';
+            import { Observable } from 'rxjs/Observable';
+            import { Injectable } from '@angular/core';
+            
+            import { AuthService } from './auth.service';
+            
+            @Injectable()
+            export class AuthGuard implements CanActivate, CanActivateChild {
+              constructor(private authService: AuthService, private router: Router) {}
+            
+              canActivate(route: ActivatedRouteSnapshot,
+                          state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+                return this.authService.isAuthenticated()
+                  .then(
+                    (authenticated: boolean) => {
+                      if (authenticated) {
+                        return true;
+                      } else {
+                        this.router.navigate(['/']);
+                      }
+                    }
+                  );
+              }
+            
+              canActivateChild(route: ActivatedRouteSnapshot,
+                               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+                return this.canActivate(route, state);
+              }
+            }
+            
+        </code>
+        <code  title="2. auth.service.ts" data-classes="col-md-6  col-sm-12">
+            export class AuthService {
+              loggedIn = false;
+            
+              isAuthenticated() {
+                const promise = new Promise(
+                  (resolve, reject) => {
+                    setTimeout(() => {
+                      resolve(this.loggedIn);
+                    }, 800);
+                  }
+                );
+                return promise;
+              }
+            
+              login() {
+                this.loggedIn = true;
+              }
+            
+              logout() {
+                this.loggedIn = false;
+              }
+            }
+            
+        </code>
+        <code  title="3. app.module.ts" data-classes="col-md-6  col-sm-12">
+            ...
+            import { AppRoutingModule } from './app-routing.module';
+            import { AuthService } from './auth.service';
+            import { AuthGuard } from './auth-guard.service';
+            import { CanDeactivateGuard } from './servers/edit-server/can-deactivate-guard.service';
+            import { ServerResolver } from './servers/server/server-resolver.service';
+            
+            @NgModule({
+              ...
+              ...
+              imports: [
+                BrowserModule,
+                FormsModule,
+                AppRoutingModule
+              ],
+              providers: [ServersService, AuthService, AuthGuard, CanDeactivateGuard, ServerResolver],
+              bootstrap: [AppComponent]
+            })
+            export class AppModule { }
+            
+        </code>
+        <code  title="4. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+            import { NgModule } from '@angular/core';
+            import { Routes, RouterModule } from '@angular/router';
+            
+            import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+            import { EditServerComponent } from './servers/edit-server/edit-server.component';
+            import { ServerComponent } from './servers/server/server.component';
+            import { ServersComponent } from './servers/servers.component';
+            import { UserComponent } from './users/user/user.component';
+            import { UsersComponent } from './users/users.component';
+            import { HomeComponent } from './home/home.component';
+            import { AuthGuard } from './auth-guard.service';
+            import { CanDeactivateGuard } from './servers/edit-server/can-deactivate-guard.service';
+            import { ErrorPageComponent } from './error-page/error-page.component';
+            import { ServerResolver } from './servers/server/server-resolver.service';
+            
+            const appRoutes: Routes = [
+              { path: '', component: HomeComponent },
+              { path: 'users', component: UsersComponent, children: [
+                { path: ':id/:name', component: UserComponent }
+              ] },
+              {
+                path: 'servers',
+                // canActivate: [AuthGuard],
+                canActivateChild: [AuthGuard],
+                component: ServersComponent,
+                children: [
+                { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
+                { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }
+              ] },
+              // { path: 'not-found', component: PageNotFoundComponent },
+              { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
+              { path: '**', redirectTo: '/not-found' }
+            ];
+            
+            @NgModule({
+              imports: [
+                // RouterModule.forRoot(appRoutes, {useHash: true})
+                RouterModule.forRoot(appRoutes)
+              ],
+              exports: [RouterModule]
+            })
+            export class AppRoutingModule {
+            
+            }
+            
+        </code>
+</section>
+<section>
+    <h1>Prevent Accedent Routing</h1>
+    <div  class="my-notes">
+        <ul>
+          <li><Strong>edit-server.component.ts</Strong></li>
+          <li>"changesSaved" Variable is used to find the status of changes saved.</li>
+          <li></li>
+        </ul>
+        Note: "CanDeactivateGuard" import this service in app module Provider[].
+      </div>
+      
+    <code  title="1. edit-server.component.ts" data-classes="col-md-6  col-sm-12">
+      ...
+        export class EditServerComponent implements OnInit, CanComponentDeactivate {
+          server: {id: number, name: string, status: string};
+          serverName = '';
+          serverStatus = '';
+          allowEdit = false;
+          changesSaved = false;
+        
+          constructor(private serversService: ServersService,
+                      private route: ActivatedRoute,
+                      private router: Router) {
+          }
+        
+          ngOnInit() {
+            console.log(this.route.snapshot.queryParams);
+            console.log(this.route.snapshot.fragment);
+            this.route.queryParams
+              .subscribe(
+                (queryParams: Params) => {
+                  this.allowEdit = queryParams['allowEdit'] === '1' ? true : false;
+                }
+              );
+            this.route.fragment.subscribe();
+            const id = +this.route.snapshot.params['id'];
+            this.server = this.serversService.getServer(id);
+            // Subscribe route params to update the id if params change
+            this.serverName = this.server.name;
+            this.serverStatus = this.server.status;
+          }
+        
+          onUpdateServer() {
+            this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
+            this.changesSaved = true;
+            this.router.navigate(['../'], {relativeTo: this.route});
+          }
+        
+          canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+            if (!this.allowEdit) {
+              return true;
+            }
+            if ((this.serverName !== this.server.name || this.serverStatus !== this.server.status) && !this.changesSaved) {
+              return confirm('Do you want to discard the changes?');
+            } else {
+              return true;
+            }
+          }
+        }
+    </code>
+    <code  title="2. can-deactivate-guard.service.ts" data-classes="col-md-6  col-sm-12">
+      import { Observable } from 'rxjs/Observable';
+      import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
+      export interface CanComponentDeactivate {
+        canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
+      }
+
+      export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+
+        canDeactivate(component: CanComponentDeactivate,
+                      currentRoute: ActivatedRouteSnapshot,
+                      currentState: RouterStateSnapshot,
+                      nextState?: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+          return component.canDeactivate();
+        }
+      }
+
+    </code>
+    <code  title="4. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+      ...
+      const appRoutes: Routes = [
+      { path: '', component: HomeComponent },
+      { path: 'users', component: UsersComponent, children: [
+        { path: ':id/:name', component: UserComponent }
+      ] },
+      {
+        path: 'servers',
+        // canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: ServersComponent,
+        children: [
+        { path: ':id', component: ServerComponent, resolve: {server: ServerResolver} },
+        { path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard] }
+      ] },
+      
+    ];
+
+    </code>
+  </section>
+  <section>
+    <h1>Static Data To A Route</h1>
+    <div  class="my-notes">
+     
+    </div>
+    <code title="1. error-page.component.html" data-classes="col-md-6  col-sm-12">
+      <h4>{{ errorMessage }}</h4>
+    </code>
+    <code title="2. error-page.component.ts" data-classes="col-md-6  col-sm-12">
+      import { Component, OnInit } from '@angular/core';
+      import { ActivatedRoute, Data } from '@angular/router';
+
+      @Component({
+        selector: 'app-error-page',
+        templateUrl: './error-page.component.html',
+        styleUrls: ['./error-page.component.css']
+      })
+      export class ErrorPageComponent implements OnInit {
+        errorMessage: string;
+
+        constructor(private route: ActivatedRoute) { }
+
+        ngOnInit() {
+          // this.errorMessage = this.route.snapshot.data['message'];
+          this.route.data.subscribe(
+            (data: Data) => {
+              this.errorMessage = data['message'];
+            }
+          );
+        }
+
+      }
+    </code>
+    <code title="2. error-page.component.ts" data-classes="col-md-6  col-sm-12">
+        const appRoutes: Routes = [       
+        // { path: 'not-found', component: PageNotFoundComponent },
+        { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
+        { path: '**', redirectTo: '/not-found' }
+      ];
+      </code>
+  </section>
+  <section>
+      <h1>Dynamic Data To A Route</h1>
+      <div  class="my-notes">
+       
+      </div>
+      </section>
+  <section>
+    <h1>Location statergy</h1>
+    <div  class="my-notes">
+      Live server and local server url path has change so in that time we can use this.
+    </div>
+    <code  title="1. app-routing.module.ts" data-classes="col-md-6  col-sm-12">
+        @NgModule({
+          imports: [
+            RouterModule.forRoot(appRoutes, {useHash: true})
+          ],
+          exports: [RouterModule]
+        })
+    </code>
+  </section>
