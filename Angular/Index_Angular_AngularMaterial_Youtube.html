@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
+Version: 1.6.0
+Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB06R48S4
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Head -->
+
+<head>
+    <meta charset="utf-8" />
+    <title>W4Schools</title>
+    <base href="../">
+
+    <meta name="description" content="widgets" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="assets/img/sort_both.png" type="image/x-icon">
+
+    <!--Basic Styles-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
+
+    <!--Fonts-->
+    <link
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+        rel="stylesheet" type="text/css">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" />
+    <link href="assets/css/demo.min.css" rel="stylesheet" />
+    <link href="assets/css/typicons.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+    <style>
+        .navbar .navbar-inner .navbar-header .navbar-account .account-area .course-area {
+            padding: 10px;
+            height: 45px;
+            opacity: 1;
+            position: relative;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bolder;
+            font-size:16px !important;
+        }
+        .widget-caption {
+            font-size: 25px !important;
+            font-weight: 500 !important;
+        }
+        .widget p{
+            font-size: 16px;
+        }
+        .widget-body p strong {
+            color : red;
+        }
+        .sidebar-menu a{
+            margin-left:10px !important;
+            line-height: unset !important;
+        }
+        .highlight{
+            color:red;
+        }
+        pre{
+            background-color: #2f3542;
+            color: #eee;
+        }
+        pre.bg-white{
+            color: #222;
+        }
+        
+        pre{
+            scrollbar-face-color: #367CD2;
+            scrollbar-shadow-color: #FFFFFF;
+            scrollbar-highlight-color: #FFFFFF;
+            scrollbar-3dlight-color: #FFFFFF;
+            scrollbar-darkshadow-color: #FFFFFF;
+            scrollbar-track-color: #FFFFFF;
+            scrollbar-arrow-color: #FFFFFF;
+        }
+
+        /* Let's get this party started */
+        pre::-webkit-scrollbar {
+            width: 12px;
+            height: 10px;
+        }
+
+        /* Track */
+        pre::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        /* Handle */        
+        pre::-webkit-scrollbar-thumb {
+            background: -webkit-gradient(linear,left top,left bottom,from(#747d8c),to(#57606f));
+            background: linear-gradient(to bottom,#747d8c,#57606f);
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -webkit-box-shadow: inset 2px 2px 2px rgba(255,255,255,.25), inset -2px -2px 2px rgba(0,0,0,.25);
+            box-shadow: inset 2px 2px 2px rgba(255,255,255,.25), inset -2px -2px 2px rgba(0,0,0,.25);
+        }
+    </style>
+
+    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+    <script src="assets/js/skins.min.js"></script>
+    <script>
+        console.stdlog = console.log.bind(console);
+        console.logs = [];
+        console.log = function () {
+            console.logs.push(Array.from(arguments));
+            console.stdlog.apply(console, arguments);
+        }
+    </script>
+</head>
+<!-- /Head -->
+<!-- Body -->
+
+<body>
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <div class="loader"></div>
+    </div>
+    <!--  /Loading Container -->
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="navbar-container">
+                <!-- Navbar Barnd -->
+                <div class="navbar-header pull-left">
+                    <a href="/" class="navbar-brand" style="padding:10px 25px;">
+                        <strong><i class="fa fa-sort"></i> w4schools</strong>
+                    </a>
+                </div>
+                <!-- /Navbar Barnd -->
+                <!-- Sidebar Collapse -->
+                <div class="sidebar-collapse" id="sidebar-collapse">
+                    <i class="collapse-icon fa fa-bars"></i>
+                </div>
+                <!-- /Sidebar Collapse -->
+                <!-- Main Menu-->
+                <div class="navbar-header pull-left">
+                    <div class="navbar-account" id="projectList">
+                    </div>
+                </div>
+                <!-- /Main Menu-->
+                
+                <!-- Account Area and Settings --->
+                <div class="navbar-header pull-right">
+                    <div class="navbar-account">
+                        <ul class="account-area">                            
+                            <li>
+                                <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                    <div class="avatar" title="View your public profile">
+                                        <img src="assets/img/avatars/adam-jansen.jpg">
+                                    </div>
+                                    <section>
+                                        <h2><span class="profile"><span>Mohammed Faizel</span></span></h2>
+                                    </section>
+                                </a>
+                                <!--Login Area Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                    <li class="username"><a>Mohammed Faizel</a></li>
+                                    <li class="email"><a>m.mohamedfaizel@gmail.com</a></li>
+                                    <!--Avatar Area-->
+                                    
+                                    <!--Theme Selector Area-->
+                                    <li class="theme-area">
+                                        <ul class="colorpicker" id="skin-changer">
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="assets/css/skins/blue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="assets/css/skins/azure.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="assets/css/skins/teal.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="assets/css/skins/green.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="assets/css/skins/orange.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="assets/css/skins/pink.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="assets/css/skins/darkred.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="assets/css/skins/purple.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="assets/css/skins/darkblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="assets/css/skins/gray.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="assets/css/skins/black.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="assets/css/skins/deepblue.min.css"></a></li>
+                                        </ul>
+                                    </li>
+                                    <!--/Theme Selector Area-->                                    
+                                </ul>
+                                <!--/Login Area Dropdown-->
+                            </li>
+                            <!-- /Account Area -->
+                            <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                            <!-- Settings -->
+                        </ul>                        
+                        <!-- Settings -->
+                    </div>
+                </div>
+                <!-- /Account Area and Settings -->
+            </div>
+        </div>
+    </div>
+    <!-- /Navbar -->
+    <!-- Main Container -->
+    <div class="main-container container-fluid">
+        <!-- Page Container -->
+        <div class="page-container">
+            <!-- Page Sidebar -->
+            <div class="page-sidebar" id="sidebar">
+                <!-- Page Sidebar Header-->
+                <div class="sidebar-header-wrapper">
+                    <input type="text" class="searchinput" />
+                    <i class="searchicon fa fa-search"></i>
+                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+                </div>
+                <!-- /Page Sidebar Header -->
+                <!-- Sidebar Menu -->
+                <ul class="nav sidebar-menu">
+                    <!--Dashboard-->
+                    <li>
+                        <a href="~/Angular/Index_Angular_AngularMaterial_Youtube.html">
+                            <i class="menu-icon glyphicon glyphicon-home"></i>
+                            <span class="menu-text"> Index </span>
+                        </a>
+                    </li> 
+                    <!--Databoxes-->
+                    <li>
+                        <a href="javascript:;" class="html-page" data-link="01_Intro.html">
+                            <i class="menu-icon glyphicon glyphicon-home"></i>
+                            <span class="menu-text"> Introduction </span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- /Sidebar Menu -->
+            </div>
+            <!-- /Page Sidebar -->
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Page Breadcrumb -->
+                <div class="page-breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="#">Angular</a>
+                        </li>
+                        <li class="active">Angular Material Youtube</li>
+                    </ul>
+                </div>
+                <!-- /Page Breadcrumb -->
+                <!-- Page Header -->
+                <div class="page-header position-relative">
+                    <div class="header-title">
+                        <h1>
+                            Flexible Viewer
+                        </h1>
+                    </div>
+                    <!--Header Buttons-->
+                    <div class="header-buttons">
+                        <a class="sidebar-toggler" href="#">
+                            <i class="fa fa-arrows-h"></i>
+                        </a>
+                        <a class="refresh" id="refresh-toggler" href="">
+                            <i class="glyphicon glyphicon-refresh"></i>
+                        </a>
+                        <a class="fullscreen" id="fullscreen-toggler" href="#">
+                            <i class="glyphicon glyphicon-fullscreen"></i>
+                        </a>
+                    </div>
+                    <!--Header Buttons End-->
+                </div>
+                <!-- /Page Header -->
+                <!-- Page Body -->
+                <div class="page-body" id="page-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="widget flat">
+                                <div class="widget-header bordered-left bordered-pink">
+                                    <span class="widget-caption"><strong>Welcome</strong></span>
+                                    <div class="widget-buttons">
+                                        <a href="#" data-toggle="collapse">
+                                            <i class="fa fa-minus sky"></i>
+                                        </a>
+                                    </div>
+                                    <!--Widget Buttons-->
+                                </div>
+                                <div class="widget-body bordered-left bordered-purple">
+                                    <p>Welcome to the Angular Material</p>
+                                </div>
+                                <!--Widget Body-->
+                            </div>
+                            <!--Widget-->
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Body -->
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /Page Container -->
+        <!-- Main Container -->
+
+    </div>
+
+    <!--Basic Scripts-->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!--Beyond Scripts-->
+    <script src="assets/js/beyond.min.js"></script>
+
+    <!--Page Related Scripts-->
+    <script>
+        const pathName = '/Angular/Angular_Material_Youtube/';
+        $(document).ready(function(){
+            $(".menu-icon").hide();
+            $("#projectList").load('/assets/projectsList.html');
+            $(".html-page").click(function(){
+                $(".menu-icon").hide();
+                $(this).find(".menu-icon").show();
+                let pageName = $(this).data("link");
+                $("#page-body").load(pathName+''+pageName, htmlManager);            
+
+            })
+        });
+
+        function htmlManager() {
+            $("section.my-section").each(function (index, element) {
+                let widgetHtml = {};
+                widgetHtml["title"] = $(this).find(".my-title").html();
+                widgetHtml["description"] = $(this).find(".my-notes").html();
+                //widgetHtml["code"] = $(this).find("code").html();
+                widgetHtml["output"] = $(this).find("console").html();
+                widgetHtml["count"] = index;
+                
+                let code = $(this).find("code");
+                widgetHtml["code"] = codeCreator(code);
+                
+                
+                let widget = widgetCreator(widgetHtml);
+                $(this).remove();
+                $("#page-body").append(widget);
+            });
+            $(".code-board").each(function(index, element) {
+                let codeHtml = $(this).html();
+                $(this).text(codeHtml.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&'));
+            })
+        }
+
+        function widgetCreator(obj) {
+            let widget_template = `
+            <div class="row">
+    <div class="col-xs-12">
+        <div class="widget">
+            <div class="widget-header bg-palegreen">
+                <span class="widget-caption">${obj.title}</span>
+                <div class="widget-buttons">
+                    <a href="#" data-toggle="collapse">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+                <!--Widget Buttons-->
+            </div>
+            <div class="widget-body work-area">
+                <div class="row"><div class="col-sm-12">${obj.description}</div></div>
+                <div class="row">
+                    ${obj.code ? obj.code : ''}
+                    ${obj.output ? `
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <h5 class="row-title margin-5 padding-5"><i class="fa fa-tags blue"></i>Output</h5>
+                            <code class="output" id="output_${obj.count}">
+<pre class="bg-white">
+${obj.output}
+</pre>
+                            </code>                   
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+            <!--Widget Body-->
+        </div>
+        <!--Widget-->
+    </div>
+</div>
+            `;
+            return widget_template;
+        }
+        
+        function codeCreator(code) {
+            
+            if(code.length == 0){
+                return null;
+            } 
+            
+            let htmlMaker = "";
+            for(let cnt = 0; cnt < code.length; cnt++){
+                let classes = $(code[cnt]).data('classes') ? $(code[cnt]).data('classes') : "col-sm-12";
+                htmlMaker += `
+<div class="${classes}">
+    <h5 class="row-title margin-5 padding-5"><i class="fa fa-tags blue"></i>${$(code[cnt]).attr('title')}</h5>
+        <code>
+<pre class="code-board">
+    ${$(code[cnt]).html()}
+</pre>
+        </code>                    
+</div>
+`;
+            }
+            return htmlMaker;
+            
+        }
+    </script>
+</body>
+<!--  /Body -->
+
+</html>

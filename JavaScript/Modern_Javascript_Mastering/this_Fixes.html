@@ -29,11 +29,49 @@
     </console>
 </section>
 <section class="my-code">
+    <h1> Fix this inside the closure </h1>
+    <p>this is handled by many ways <ul>
+        <li>this assigned to  variable</li>
+        <li>arrow function</li>
+    </ul> </p>
+    <code>
+            var user = {
+                owner : "Muhammed",
+                data : [
+                    {
+                    fname : "Lmj",
+                    lname : "Faizel",
+                    }, {
+                    fname : "Suhail",
+                    lname : "Muttaqin",
+                    }
+                ],
+                clickHandler : function(){
+                    let self= this;
+                    this.data.forEach(function(person){
+                    console.log(person.fname +" "+ self.owner);
+                    })
+                },
+                clickHandler2 : function(){
+                    let self= this;
+                    this.data.forEach((person) => {
+                    console.log(person.fname +" "+ this.owner);
+                    })
+                }
+            }
+            user.clickHandler();
+
+    </code>
+    <console>
+
+    </console>
+</section>
+<section class="my-code">
         <h1> Fix this when method assigned to variable </h1>
-        <p>if you trying to parse a callback function as reference, then you need to fix this, this keyword this object </p>
+        <p> </p>
         <code>
                 var user = {
-                    owner : Muhammed,
+                    owner : "Muhammed",
                     data : [
                         {
                         fname : "Lmj",
@@ -44,9 +82,9 @@
                         }
                     ],
                     clickHandler : function(){
-                        this.data.forEach(function(person)){
-                        console.log(person.fname +" "+ this.lname)
-                        }
+                        this.data.forEach(function(person){
+                        console.log(person.fname +" "+ this.owner)
+                        })
                     }
                 }
                 const userHandler = user.clickHandler;
@@ -62,7 +100,7 @@
     <p>inner function 'this' cant assess the outer variable, so set the 'this' to variable </p>
     <code>
         var user = {
-            owner : Muhammed,
+            owner : "Muhammed",
             data : [
                 {
                 fname : "Lmj",
@@ -73,22 +111,23 @@
                 }
             ],
             clickHandler : function(){
-                this.data.forEach(function(person)){
+                this.data.forEach(function(person){
                 console.log(this); // this indicates the window object
-                console.log(person.fname +" "+ this.lname)
-                }
+                console.log(person.fname +" "+ this.owner)
+                })
             },
             clickHandler2 : function(){
                 let self = this;
                 this.data.forEach(function(person){
                 console.log(this); // this indicates the window object
-                console.log(person.fname +" "+ self.lname)
+                console.log(person.fname +" "+ self.owner)
                 })
             },
             clickHandler3 : function(){
+                let self = this;
                 this.data.forEach( person => {
                 console.log(self); // this indicates the outer object
-                console.log(person.fname +" "+ this.lname)
+                console.log(person.fname +" "+ self.owner)
                 })
             }
         }
