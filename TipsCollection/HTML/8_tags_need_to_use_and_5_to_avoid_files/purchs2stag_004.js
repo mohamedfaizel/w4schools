@@ -1,0 +1,1 @@
+purchs2sutils.processBidResponse({"nonPersonalizedAds":false,"bids":[{"id":"2","divid":"skyscraper-1","size_code":"0","cur":"USD","price":0.01,"bucket":"0.01","bidder":"PAX","bidderName":"Purch-Floor-Bidder","bdrid":"1","private_auction":0}],"pixels":[],"targeting":{"_rid":"4431504773569376903"},"exp":["78","4","104","51"],"refresh":true,"isNonPersonalizedAds":false,"nuv":11});
